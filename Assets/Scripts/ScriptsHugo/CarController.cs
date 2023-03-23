@@ -53,12 +53,12 @@ public class CarController : MonoBehaviour
         {
             if (AttackObject.transform.childCount != 0)
             {
-                if (AttackObject.transform.GetComponentInChildren<MachineGun>())
+                if (AttackObject.transform.GetComponentInChildren<Offensive>())
                 {
                     Vector3 position = transform.position;
                     position += transform.forward * 3;
 
-                    AttackObject.transform.GetChild(0).GetComponent<MachineGun>().Shoot();
+                    AttackObject.transform.GetChild(0).GetComponent<Offensive>().Shoot();
                     _attackBoost = null;
                     //Destroy(AttackObject.gameObject.GetComponent<MachineGun>());
                   
@@ -111,7 +111,7 @@ public class CarController : MonoBehaviour
                         Destroy(collision.gameObject);
 
 
-                        _attackBoost = Instantiate(AttackList[0], AttackObject);
+                        _attackBoost = Instantiate(AttackList[collision.gameObject.GetComponent<Bonus>().rndLvl], AttackObject);
                         //AttackObject.transform.GetChild(0).gameObject.AddComponent<MachineGun>();
                     }
                     break;
@@ -120,7 +120,7 @@ public class CarController : MonoBehaviour
                     else
                     {
                         Destroy(collision.gameObject);
-                        _speedBoost = Instantiate(BoostList[collision.gameObject.GetComponent<Bonus>().rndBoostLvl], BoostObject);
+                        _speedBoost = Instantiate(BoostList[collision.gameObject.GetComponent<Bonus>().rndLvl], BoostObject);
                     }
                     break;
                 default:

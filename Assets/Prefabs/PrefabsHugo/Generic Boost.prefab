@@ -128,8 +128,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Type: 1
-  rndBoostLvl: -1
-  BoostMaterials:
+  rndLvl: -1
+  Materials:
   - {fileID: 2100000, guid: c8071078266a9544bba8e94d08a6d012, type: 2}
   - {fileID: 2100000, guid: 421d9e950f07df64f85ea48aa3c71708, type: 2}
   - {fileID: 2100000, guid: d1b1fd3d9ffd4bd479c0544480bc6cb9, type: 2}
