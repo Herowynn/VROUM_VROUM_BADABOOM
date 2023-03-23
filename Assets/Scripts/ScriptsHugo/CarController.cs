@@ -120,7 +120,7 @@ public class CarController : MonoBehaviour
                     else
                     {
                         Destroy(collision.gameObject);
-                        _speedBoost = Instantiate(BoostList[0], BoostObject);
+                        _speedBoost = Instantiate(BoostList[collision.gameObject.GetComponent<Bonus>().rndBoostLvl], BoostObject);
                     }
                     break;
                 default:

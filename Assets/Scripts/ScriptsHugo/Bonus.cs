@@ -9,15 +9,20 @@ public enum BonusType
 public class Bonus : MonoBehaviour
 {
     public BonusType Type;
+    public int rndBoostLvl = -1;
+    public List<Material> BoostMaterials = new List<Material>();
+    public MeshRenderer BonusMeshRenderer;
     // Start is called before the first frame update
     void Start()
     {
-
+        if (Type == BonusType.Attack) { }
+        if (Type == BonusType.Boost)
+        {
+            rndBoostLvl = Random.Range(0, 3);
+            BonusMeshRenderer.material = BoostMaterials[rndBoostLvl];
+        }
+        
     }
 
-    // Update is called once per frame
-    void Update()
-    {
 
-    }
 }

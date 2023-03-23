@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 7186786979960804690}
   - component: {fileID: 5794879402153962896}
   m_Layer: 0
-  m_Name: Lvl1Boost
+  m_Name: Lvl3Boost
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -62,7 +62,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2895064947943234598, guid: c50658256a7510240a68ad515a13a180, type: 3}
+  - {fileID: 2100000, guid: d1b1fd3d9ffd4bd479c0544480bc6cb9, type: 2}
   - {fileID: -8896051167825165466, guid: c50658256a7510240a68ad515a13a180, type: 3}
   - {fileID: -3215309924938514485, guid: c50658256a7510240a68ad515a13a180, type: 3}
   - {fileID: 5450171525105895273, guid: c50658256a7510240a68ad515a13a180, type: 3}
@@ -99,6 +99,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9fadb4ecbd5581d41996edf206aa77b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _durationAfterActivation: 5
-  _speedAdded: 5
+  _durationAfterActivation: 1.5
+  _speedAdded: 20
   _time: 0.01
