@@ -3,14 +3,20 @@ using System.Collections.Generic;
 using System.Diagnostics.Tracing;
 using UnityEngine;
 
-public class CarControllerAR : MonoBehaviour
+public class CarController : MonoBehaviour
 {
     public Rigidbody SphereRB;
-    public float ForwardAccel = 8f, MaximumSpeed = 50f, TurnStrength = 180f, DragOnGround = 3f, WheelTurnSpeed = 5f;
+    public float forwardAccel;
+    public float maximumSpeed;
+    public float turnStrength;
+    public float dragOnGround;
+    public float dragInTheAir;
+    public float wheelTurnSpeed;
+    public float additionalEarthGravity;
 
     public LayerMask groundMask;
-    public LayerMask arrowMask;
-    public float GroundRayLength = .5f;
+    public int groundLayerNumber;
+    public float GroundRayLength = 0.5f;
     public Transform RayPoint;
 
     public Transform LeftFrontWheel, RightFrontWheel, LeftBackWheel, RightBackWheel;
@@ -28,6 +34,7 @@ public class CarControllerAR : MonoBehaviour
     private bool _canMove;
     private Vector3 _distArrowRayPoint;
     private Vector3 _wantedDirection;
+    private float _yComponentWantedDirection;
 
     private void Start()
     {
@@ -35,6 +42,7 @@ public class CarControllerAR : MonoBehaviour
 
         _distArrowRayPoint = Arrow.transform.position - RayPoint.position;
         _arrayRayLength = _distArrowRayPoint.magnitude + 1f;
+        _yComponentWantedDirection = 0f;
     }
 
     private void Update()
@@ -44,8 +52,8 @@ public class CarControllerAR : MonoBehaviour
 
         if (Mathf.Abs(Input.GetAxis("Vertical")) > 0 || Mathf.Abs(Input.GetAxis("Horizontal")) > 0)
         {
-            _wantedDirection = new Vector3(Input.GetAxis("Horizontal"), 0f, Input.GetAxis("Vertical"));
-            _speedInput = ForwardAccel * 1000f;
+            _wantedDirection = new Vector3(Input.GetAxis("Horizontal"), _yComponentWantedDirection, Input.GetAxis("Vertical"));
+            _speedInput = forwardAccel * 1000f;
 
             LeftBackWheel.transform.Rotate(0f, WheelRotation, 0f);
             RightBackWheel.transform.Rotate(0f, WheelRotation, 0f);
@@ -58,17 +66,23 @@ public class CarControllerAR : MonoBehaviour
                 Vector3 cross2 = Vector3.Cross(_distArrowRayPoint, _wantedDirection);
                 float carSignRotation = Mathf.Sign(cross1.y);
                 float arrowSignRotation = Mathf.Sign(cross2.y);
+                Vector3 velocity = Vector3.zero;
 
-                if (Mathf.Abs(Mathf.Acos(Vector3.Dot(transform.forward.normalized, _wantedDirection.normalized))) > Mathf.Deg2Rad * 1f)
+                if (Mathf.Abs(Mathf.Acos(Vector3.Dot(transform.forward.normalized, _wantedDirection.normalized))) > Mathf.Deg2Rad * 20f)
                 {
-                    transform.rotation = Quaternion.Euler(transform.rotation.eulerAngles + new Vector3(0f, carSignRotation * TurnStrength * Time.deltaTime, 0f));
+                    transform.rotation = Quaternion.Euler(transform.rotation.eulerAngles + new Vector3(0f, carSignRotation * turnStrength * 100 * Time.deltaTime, 0f));
+                    _canMove = false;
+                }
+                else
+                {
+                    transform.forward = _wantedDirection;
+                    _canMove = true;
                 }
 
-                if (Mathf.Abs(Mathf.Acos(Vector3.Dot(_distArrowRayPoint.normalized, _wantedDirection.normalized))) > Mathf.Deg2Rad * 1f)
-                {
-                    ArrowRotationCenter.transform.rotation = Quaternion.Euler(ArrowRotationCenter.transform.rotation.eulerAngles + new Vector3(0f, arrowSignRotation * TurnStrength * Time.deltaTime, 0f));
-                }
-
+                if (Mathf.Abs(Mathf.Acos(Vector3.Dot(ArrowRotationCenter.transform.forward.normalized, _wantedDirection.normalized))) > Mathf.Deg2Rad * 20f)
+                    ArrowRotationCenter.transform.RotateAround(transform.up, carSignRotation * turnStrength * Time.deltaTime);
+                else
+                    ArrowRotationCenter.transform.forward = _wantedDirection;
             }
         }
 
@@ -86,30 +100,39 @@ public class CarControllerAR : MonoBehaviour
             _isGrounded = true;
 
             transform.rotation = Quaternion.FromToRotation(transform.up, hit.normal) * transform.rotation;
-        }
 
-        if (Physics.Raycast(RayPoint.position, transform.forward, out hit, _arrayRayLength, arrowMask))
-        {
-            _canMove = true;
-        }
-        else
-        {
-            _canMove = false;
+            if (hit.normal == new Vector3(0, 1, 0))
+                _yComponentWantedDirection = 0;
+            else
+                _yComponentWantedDirection = transform.forward.y;
         }
 
         if (_isGrounded)
         {
-            SphereRB.drag = DragOnGround;
+            SphereRB.drag = dragOnGround;
 
-            if (Mathf.Abs(_speedInput) > 0f && _canMove) 
+            if (Mathf.Abs(_speedInput) > 0f && _canMove)
             {
-                SphereRB.AddForce(_wantedDirection * _speedInput); ;
-                SphereRB.velocity = Vector3.ClampMagnitude(SphereRB.velocity, MaximumSpeed);
+                SphereRB.AddForce(_wantedDirection * _speedInput); 
+                SphereRB.velocity = Vector3.ClampMagnitude(SphereRB.velocity, maximumSpeed);
             }
         }
         else
         {
-            SphereRB.drag = 0;
+            SphereRB.drag = dragInTheAir;
+            SphereRB.AddForce(new Vector3(0, -1, 0) * SphereRB.mass * additionalEarthGravity * 9.8f);
         }
     }
+
+    /*private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.layer == groundLayerNumber && !_isGrounded)
+            StartCoroutine(GetBackOnWheels());
+    }
+
+    public IEnumerator GetBackOnWheels()
+    {
+        yield return new WaitForSeconds(2f);
+        transform.forward = new Vector3(transform.forward.x, 0, transform.forward.z);
+    }*/
 }
