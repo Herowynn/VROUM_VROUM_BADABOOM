@@ -1,9 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics.Tracing;
 using UnityEngine;
 
-public class CarControllerAR : MonoBehaviour
+public class NewCarController : MonoBehaviour
 {
     public Rigidbody SphereRB;
     public float forwardAccel;
@@ -18,14 +17,22 @@ public class CarControllerAR : MonoBehaviour
     public int groundLayerNumber;
     public float GroundRayLength = 0.5f;
     public Transform RayPoint;
+    public GameObject RightBackWheel;
+    public GameObject RightFrontWheel;
+    public GameObject LeftBackWheel;
+    public GameObject LeftFrontWheel;
 
-    public Transform LeftFrontWheel, RightFrontWheel, LeftBackWheel, RightBackWheel;
     public float MaxWheelTurn = 25f;
 
     public float WheelRotation = 50f;
 
     public GameObject Arrow;
     public GameObject ArrowRotationCenter;
+
+    public Transform AttackObject;
+    public Transform BoostObject;
+    public GameObject[] AttackList;
+    public GameObject[] BoostList;
 
 
     private float _speedInput, _turnInput;
@@ -35,6 +42,9 @@ public class CarControllerAR : MonoBehaviour
     private Vector3 _distArrowRayPoint;
     private Vector3 _wantedDirection;
     private float _yComponentWantedDirection;
+
+    private GameObject _attackBoost;
+    private GameObject _speedBoost;
 
     private void Start()
     {
@@ -55,10 +65,17 @@ public class CarControllerAR : MonoBehaviour
             _wantedDirection = new Vector3(Input.GetAxis("Horizontal"), _yComponentWantedDirection, Input.GetAxis("Vertical"));
             _speedInput = forwardAccel * 1000f;
 
-            LeftBackWheel.transform.Rotate(0f, WheelRotation, 0f);
-            RightBackWheel.transform.Rotate(0f, WheelRotation, 0f);
-            LeftFrontWheel.transform.Rotate(0f, WheelRotation, 0f);
-            RightFrontWheel.transform.Rotate(0f, WheelRotation, 0f);
+            Vector3 wheelsRotationAxis = Quaternion.AngleAxis(90, transform.up) * transform.forward;
+
+/*            LeftBackWheel.transform.Rotate(wheelsRotationAxis);
+            RightBackWheel.transform.Rotate(wheelsRotationAxis);
+            LeftFrontWheel.transform.Rotate(wheelsRotationAxis);
+            RightFrontWheel.transform.Rotate(wheelsRotationAxis);*/
+
+            LeftBackWheel.transform.RotateAround(wheelsRotationAxis, Time.deltaTime);
+            RightBackWheel.transform.RotateAround(wheelsRotationAxis, Time.deltaTime);
+            LeftFrontWheel.transform.RotateAround(wheelsRotationAxis, Time.deltaTime);
+            RightFrontWheel.transform.RotateAround(wheelsRotationAxis, Time.deltaTime);
 
             if (_isGrounded)
             {
@@ -87,6 +104,36 @@ public class CarControllerAR : MonoBehaviour
         }
 
         transform.position = SphereRB.transform.position;
+
+        // Keyboard attack boost button : left CTRL
+        if (_attackBoost != null && Input.GetButton("Fire1"))
+        {
+            if (AttackObject.transform.childCount != 0)
+            {
+                if (AttackObject.transform.GetComponentInChildren<Offensive>())
+                {
+                    Vector3 position = transform.position;
+                    position += transform.forward * 3;
+
+                    AttackObject.transform.GetChild(0).GetComponent<Offensive>().Shoot();
+                    _attackBoost = null;
+                    //Destroy(AttackObject.gameObject.GetComponent<MachineGun>());
+                }
+            }
+            else
+                return;
+        }
+        // Keyboard speed boost button : left SHIFT
+        if (_speedBoost != null && Input.GetButton("Fire3"))
+        {
+            if (BoostObject.transform.childCount != 0)
+            {
+                BoostObject.transform.GetChild(0).GetComponent<Booster>().Boost(SphereRB);
+                _speedBoost = null;
+            }
+            else
+                return;
+        }
     }
 
     private void FixedUpdate()
@@ -113,7 +160,7 @@ public class CarControllerAR : MonoBehaviour
 
             if (Mathf.Abs(_speedInput) > 0f && _canMove)
             {
-                SphereRB.AddForce(_wantedDirection * _speedInput); 
+                SphereRB.AddForce(_wantedDirection * _speedInput);
                 SphereRB.velocity = Vector3.ClampMagnitude(SphereRB.velocity, maximumSpeed);
             }
         }
@@ -121,6 +168,38 @@ public class CarControllerAR : MonoBehaviour
         {
             SphereRB.drag = dragInTheAir;
             SphereRB.AddForce(new Vector3(0, -1, 0) * SphereRB.mass * additionalEarthGravity * 9.8f);
+        }
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.GetComponent<Bonus>() != null)
+        {
+            Debug.Log("Collision with bonus");
+            switch (collision.gameObject.GetComponent<Bonus>().Type)
+            {
+                case BonusType.Attack:
+                    if (AttackObject.transform.childCount != 0) return;
+                    else
+                    {
+                        Destroy(collision.gameObject);
+
+
+                        _attackBoost = Instantiate(AttackList[collision.gameObject.GetComponent<Bonus>().rndLvl], AttackObject);
+                        //AttackObject.transform.GetChild(0).gameObject.AddComponent<MachineGun>();
+                    }
+                    break;
+                case BonusType.Boost:
+                    if (BoostObject.transform.childCount != 0) return;
+                    else
+                    {
+                        Destroy(collision.gameObject);
+                        _speedBoost = Instantiate(BoostList[collision.gameObject.GetComponent<Bonus>().rndLvl], BoostObject);
+                    }
+                    break;
+                default:
+                    break;
+            }
         }
     }
 

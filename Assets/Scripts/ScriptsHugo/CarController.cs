@@ -61,13 +61,10 @@ public class CarController : MonoBehaviour
                     AttackObject.transform.GetChild(0).GetComponent<Offensive>().Shoot();
                     _attackBoost = null;
                     //Destroy(AttackObject.gameObject.GetComponent<MachineGun>());
-                  
                 }
             }
             else
-            {
                 return;
-            }
         }
         if (_speedBoost != null && Input.GetButton("Fire3"))
         {
@@ -77,9 +74,7 @@ public class CarController : MonoBehaviour
                 _speedBoost = null;
             }
             else
-            {
                 return;
-            }
         }
     }
 

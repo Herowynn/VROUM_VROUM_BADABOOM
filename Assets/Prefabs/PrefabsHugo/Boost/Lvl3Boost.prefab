@@ -100,5 +100,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _durationAfterActivation: 1.5
-  _speedAdded: 20
+  _speedAdded: 3
   _time: 0.01
