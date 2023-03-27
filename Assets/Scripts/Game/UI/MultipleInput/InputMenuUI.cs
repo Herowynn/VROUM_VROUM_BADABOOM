@@ -27,9 +27,12 @@ public class InputMenuUI : MonoBehaviour
         playerInputUI.ChangeStatus(isInputValid ? GoodStatus : BadStatus);
     }
 
-    public void CreatePlayersInput(int totalPlayerInput, int nbPlayerInputValid)
+    public void CreatePlayersInput(int totalPlayerInput, int nbPlayerInputValid, bool keyboardPlayer)
     {
         int cpt = 0;
+        
+        if (keyboardPlayer)
+            CreateOnePlayerInput(0, true);
 
         for (int i = 1; i <= totalPlayerInput; i++)
         {
@@ -78,5 +81,10 @@ public class InputMenuUI : MonoBehaviour
         }
         
         StartButton.SetActive(true);
+    }
+
+    public void StartGame()
+    {
+        
     }
 }

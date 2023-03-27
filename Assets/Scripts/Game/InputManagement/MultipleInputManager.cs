@@ -12,7 +12,6 @@ public class MultipleInputManager : MonoBehaviour
     public GameObject PlayerControllerPrefab;
     public GameObject PlayerKeyboardPrefab;
     public GameObject PlayerContainer;
-    public InputMenuUI InputMenuUI;
 
     [Header("Info")]
     public int NumberOfPlayer;
@@ -26,17 +25,15 @@ public class MultipleInputManager : MonoBehaviour
     private int _currentStartPositionIndex;
     private int _controllersConnected;
     private int _controllerNeeded;
+    private InputMenuUI _inputMenuUI;
+
     
     private void Start()
     {
-        int startIndex = 0;
-        _currentStartPositionIndex = 0;
-
         _controllerNeeded = NeedKeyboard ? NumberOfPlayer - 1 : NumberOfPlayer;
-        
         CountControllers();
-        
-        InputMenuUI.CreatePlayersInput(_controllerNeeded, _controllersConnected);
+        _inputMenuUI = GameManager.Instance.UIManager.InputMenuUI;
+        _inputMenuUI.CreatePlayersInput(_controllerNeeded, _controllersConnected, NeedKeyboard);
         
         // Subscribe to Event
         InputSystem.onDeviceChange +=
@@ -47,22 +44,37 @@ public class MultipleInputManager : MonoBehaviour
                     case InputDeviceChange.Added:
                         if (device is XInputController)
                         {
-                            _controllersConnected++;
-                            InputMenuUI.AddOkInput();
+                            if (GameManager.Instance.GameState == GameState.NOT_RACING)
+                            {
+                                DeviceAdded();
+                            }
+                            else if (GameManager.Instance.GameState == GameState.RACING)
+                            {
+                                Debug.Log("You can't add controllers during game");
+                            }
                         }
                         break;
 
                     case InputDeviceChange.Removed:
                         if (device is XInputController)
                         {
-                            _controllersConnected--;
-                            InputMenuUI.RemoveOkInput();
+                            if (GameManager.Instance.GameState == GameState.NOT_RACING)
+                            {
+                                DeviceRemoved();
+                            }
+                            else if (GameManager.Instance.GameState == GameState.RACING)
+                            {
+                                DeviceRemovedDuringRace();
+                            }
                         }
                         break;
                 }
             };
         
         /*
+         int startIndex = 0;
+         _currentStartPositionIndex = 0;
+         
         //Instantiate players
         if (NeedKeyboard)
         {
@@ -74,12 +86,6 @@ public class MultipleInputManager : MonoBehaviour
         {
             CreateNewPlayer(false);
         }*/
-    }
-
-    private void Update()
-    {
-        if (_controllersConnected < _controllerNeeded)
-            Debug.Log("You need to connect more controllers");
     }
 
     private void CreateNewPlayer(bool playerUseKeyboard)
@@ -105,7 +111,24 @@ public class MultipleInputManager : MonoBehaviour
             if (device is XInputController)
                 _controllersConnected++;
         }
-        
-        Debug.Log(_controllersConnected);
+    }
+
+    private void DeviceAdded()
+    {
+        _controllersConnected++;
+        _inputMenuUI.AddOkInput();
+    }
+
+    private void DeviceRemoved()
+    {
+        _controllersConnected--;
+        _inputMenuUI.RemoveOkInput();
+    }
+
+    private void DeviceRemovedDuringRace()
+    {
+        GameManager.Instance.UIManager.DisplayInputMenu();
+        GameManager.Instance.GameState = GameState.NOT_RACING;//will trigger pause menu
+        DeviceRemoved();
     }
 }
