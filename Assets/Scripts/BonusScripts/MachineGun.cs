@@ -13,18 +13,12 @@ public class MachineGun : Offensive
     private float _timeIncrementation;
 
     public GameObject ProjectilePrefab;
-    // Start is called before the first frame update
-    void Start()
-    {
-
-    }
 
     public override void Shoot()
     {
-
         StartCoroutine(MinigunShoot(_fireRate));
     }
-    // Update is called once per frame
+
     void Update()
     {
         _direction = -transform.right;
@@ -38,10 +32,8 @@ public class MachineGun : Offensive
             go.transform.parent = null;
             go.GetComponent<Projectile>().Init(_direction);
             _timeIncrementation += time;
-            //Debug.Log("time incrementation " + _timeIncrementation + " duration " + _durationAfterActivation);
             yield return new WaitForSeconds(time);
         }
         Destroy(gameObject);
-
     }
 }

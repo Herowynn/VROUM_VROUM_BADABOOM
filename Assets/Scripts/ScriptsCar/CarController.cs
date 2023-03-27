@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class NewCarController : MonoBehaviour
+public class CarController : MonoBehaviour
 {
     public Rigidbody SphereRB;
     public float forwardAccel;
@@ -15,7 +15,7 @@ public class NewCarController : MonoBehaviour
 
     public LayerMask groundMask;
     public int groundLayerNumber;
-    public float GroundRayLength = 0.5f;
+    public float arrayRayLength;
     public Transform RayPoint;
     public GameObject RightBackWheel;
     public GameObject RightFrontWheel;
@@ -35,24 +35,22 @@ public class NewCarController : MonoBehaviour
     public GameObject[] BoostList;
 
 
-    private float _speedInput, _turnInput;
-    private float _arrayRayLength;
+    private float _speedInput;
     private bool _isGrounded;
     private bool _canMove;
     private Vector3 _distArrowRayPoint;
     private Vector3 _wantedDirection;
     private float _yComponentWantedDirection;
-
-    private GameObject _attackBoost;
-    private GameObject _speedBoost;
+    private Vector3 _carAltitudeOffset;
 
     private void Start()
     {
         SphereRB.transform.parent = null;
 
         _distArrowRayPoint = Arrow.transform.position - RayPoint.position;
-        _arrayRayLength = _distArrowRayPoint.magnitude + 1f;
         _yComponentWantedDirection = 0f;
+
+        _carAltitudeOffset = new Vector3(0, transform.position.y - SphereRB.transform.position.y, 0);
     }
 
     private void Update()
@@ -67,15 +65,10 @@ public class NewCarController : MonoBehaviour
 
             Vector3 wheelsRotationAxis = Quaternion.AngleAxis(90, transform.up) * transform.forward;
 
-/*            LeftBackWheel.transform.Rotate(wheelsRotationAxis);
-            RightBackWheel.transform.Rotate(wheelsRotationAxis);
-            LeftFrontWheel.transform.Rotate(wheelsRotationAxis);
-            RightFrontWheel.transform.Rotate(wheelsRotationAxis);*/
-
-            LeftBackWheel.transform.RotateAround(wheelsRotationAxis, Time.deltaTime);
-            RightBackWheel.transform.RotateAround(wheelsRotationAxis, Time.deltaTime);
-            LeftFrontWheel.transform.RotateAround(wheelsRotationAxis, Time.deltaTime);
-            RightFrontWheel.transform.RotateAround(wheelsRotationAxis, Time.deltaTime);
+            LeftBackWheel.transform.RotateAround(wheelsRotationAxis, wheelTurnSpeed * Time.deltaTime);
+            RightBackWheel.transform.RotateAround(wheelsRotationAxis, wheelTurnSpeed * Time.deltaTime);
+            LeftFrontWheel.transform.RotateAround(wheelsRotationAxis, wheelTurnSpeed * Time.deltaTime);
+            RightFrontWheel.transform.RotateAround(wheelsRotationAxis, wheelTurnSpeed * Time.deltaTime);
 
             if (_isGrounded)
             {
@@ -103,36 +96,23 @@ public class NewCarController : MonoBehaviour
             }
         }
 
-        transform.position = SphereRB.transform.position;
+        transform.position = SphereRB.transform.position + _carAltitudeOffset;
 
         // Keyboard attack boost button : left CTRL
-        if (_attackBoost != null && Input.GetButton("Fire1"))
+        if (AttackObject.transform.childCount != 0 && Input.GetButton("Fire1"))
         {
-            if (AttackObject.transform.childCount != 0)
+            if (AttackObject.transform.GetComponentInChildren<Offensive>())
             {
-                if (AttackObject.transform.GetComponentInChildren<Offensive>())
-                {
-                    Vector3 position = transform.position;
-                    position += transform.forward * 3;
-
-                    AttackObject.transform.GetChild(0).GetComponent<Offensive>().Shoot();
-                    _attackBoost = null;
-                    //Destroy(AttackObject.gameObject.GetComponent<MachineGun>());
-                }
+                AttackObject.transform.GetChild(0).GetComponent<Offensive>().Shoot();
             }
-            else
-                return;
         }
         // Keyboard speed boost button : left SHIFT
-        if (_speedBoost != null && Input.GetButton("Fire3"))
+        if (BoostObject.transform.childCount != 0 && Input.GetButton("Fire3"))
         {
-            if (BoostObject.transform.childCount != 0)
+            if (BoostObject.transform.GetComponentInChildren<Booster>()) 
             {
-                BoostObject.transform.GetChild(0).GetComponent<Booster>().Boost(SphereRB);
-                _speedBoost = null;
+                BoostObject.transform.GetChild(0).GetComponent<Booster>().Boost(SphereRB, this.gameObject);
             }
-            else
-                return;
         }
     }
 
@@ -142,7 +122,7 @@ public class NewCarController : MonoBehaviour
 
         RaycastHit hit;
 
-        if (Physics.Raycast(RayPoint.position, -transform.up, out hit, GroundRayLength, groundMask))
+        if (Physics.Raycast(RayPoint.position, -transform.up, out hit, arrayRayLength, groundMask))
         {
             _isGrounded = true;
 
@@ -175,7 +155,6 @@ public class NewCarController : MonoBehaviour
     {
         if (collision.gameObject.GetComponent<Bonus>() != null)
         {
-            Debug.Log("Collision with bonus");
             switch (collision.gameObject.GetComponent<Bonus>().Type)
             {
                 case BonusType.Attack:
@@ -183,10 +162,7 @@ public class NewCarController : MonoBehaviour
                     else
                     {
                         Destroy(collision.gameObject);
-
-
-                        _attackBoost = Instantiate(AttackList[collision.gameObject.GetComponent<Bonus>().rndLvl], AttackObject);
-                        //AttackObject.transform.GetChild(0).gameObject.AddComponent<MachineGun>();
+                        Instantiate(AttackList[collision.gameObject.GetComponent<Bonus>().rndLvl], AttackObject);
                     }
                     break;
                 case BonusType.Boost:
@@ -194,7 +170,7 @@ public class NewCarController : MonoBehaviour
                     else
                     {
                         Destroy(collision.gameObject);
-                        _speedBoost = Instantiate(BoostList[collision.gameObject.GetComponent<Bonus>().rndLvl], BoostObject);
+                        Instantiate(BoostList[collision.gameObject.GetComponent<Bonus>().rndLvl], BoostObject);
                     }
                     break;
                 default:
