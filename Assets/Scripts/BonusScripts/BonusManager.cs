@@ -15,13 +15,12 @@ public class BonusManager : MonoBehaviour
     private float _timeIncrementation;
     [SerializeField] private int _maxTimeBetweenBonusSpawn;
     [SerializeField] private int _minTimeBetweenBonusSpawn;
-    // Start is called before the first frame update
+
     void Start()
     {
         _spawnTimer = 4.0f;
     }
 
-    // Update is called once per frame
     void Update()
     {
         _timeIncrementation += Time.deltaTime;
@@ -57,6 +56,5 @@ public class BonusManager : MonoBehaviour
             default:
                 break;
         }
-
     }
 }

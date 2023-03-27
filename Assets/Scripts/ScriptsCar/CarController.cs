@@ -158,7 +158,8 @@ public class CarController : MonoBehaviour
             switch (collision.gameObject.GetComponent<Bonus>().Type)
             {
                 case BonusType.Attack:
-                    if (AttackObject.transform.childCount != 0) return;
+                    if (AttackObject.transform.childCount != 0) 
+                        return;
                     else
                     {
                         Destroy(collision.gameObject);
@@ -166,7 +167,8 @@ public class CarController : MonoBehaviour
                     }
                     break;
                 case BonusType.Boost:
-                    if (BoostObject.transform.childCount != 0) return;
+                    if (BoostObject.transform.childCount != 0) 
+                        return;
                     else
                     {
                         Destroy(collision.gameObject);
@@ -177,10 +179,7 @@ public class CarController : MonoBehaviour
                     break;
             }
         }
-    }
 
-    /*private void OnCollisionEnter(Collision collision)
-    {
         if (collision.gameObject.layer == groundLayerNumber && !_isGrounded)
             StartCoroutine(GetBackOnWheels());
     }
@@ -189,5 +188,5 @@ public class CarController : MonoBehaviour
     {
         yield return new WaitForSeconds(2f);
         transform.forward = new Vector3(transform.forward.x, 0, transform.forward.z);
-    }*/
+    }
 }

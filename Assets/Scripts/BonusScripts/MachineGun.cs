@@ -34,6 +34,7 @@ public class MachineGun : Offensive
             _timeIncrementation += time;
             yield return new WaitForSeconds(time);
         }
+        Debug.Log(_timeIncrementation);
         Destroy(gameObject);
     }
 }
