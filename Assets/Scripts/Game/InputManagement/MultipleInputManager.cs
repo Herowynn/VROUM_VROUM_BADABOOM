@@ -12,6 +12,7 @@ public class MultipleInputManager : MonoBehaviour
     public GameObject PlayerControllerPrefab;
     public GameObject PlayerKeyboardPrefab;
     public GameObject PlayerContainer;
+    public InputMenuUI InputMenuUI;
 
     [Header("Info")]
     public int NumberOfPlayer;
@@ -35,6 +36,8 @@ public class MultipleInputManager : MonoBehaviour
         
         CountControllers();
         
+        InputMenuUI.CreatePlayersInput(_controllerNeeded, _controllersConnected);
+        
         // Subscribe to Event
         InputSystem.onDeviceChange +=
             (device, change) =>
@@ -43,17 +46,23 @@ public class MultipleInputManager : MonoBehaviour
                 {
                     case InputDeviceChange.Added:
                         if (device is XInputController)
+                        {
                             _controllersConnected++;
+                            InputMenuUI.AddOkInput();
+                        }
                         break;
 
                     case InputDeviceChange.Removed:
                         if (device is XInputController)
+                        {
                             _controllersConnected--;
+                            InputMenuUI.RemoveOkInput();
+                        }
                         break;
                 }
             };
         
-        
+        /*
         //Instantiate players
         if (NeedKeyboard)
         {
@@ -64,7 +73,7 @@ public class MultipleInputManager : MonoBehaviour
         for (int i = startIndex; i < NumberOfPlayer; i++)
         {
             CreateNewPlayer(false);
-        }
+        }*/
     }
 
     private void Update()
