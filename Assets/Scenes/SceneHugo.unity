@@ -200,7 +200,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6325248185254959566, guid: a537a6b3c39d0614b896303ca4756020, type: 3}
       propertyPath: AttackList.Array.size
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 6325248185254959566, guid: a537a6b3c39d0614b896303ca4756020, type: 3}
       propertyPath: BoostList.Array.data[1]
@@ -218,6 +218,10 @@ PrefabInstance:
       propertyPath: AttackList.Array.data[2]
       value: 
       objectReference: {fileID: 7221930875229779232, guid: 9624d334089db7c4a920c54bca3642d4, type: 3}
+    - target: {fileID: 6325248185254959566, guid: a537a6b3c39d0614b896303ca4756020, type: 3}
+      propertyPath: AttackList.Array.data[3]
+      value: 
+      objectReference: {fileID: 7251196424414276744, guid: 4e5218639ac98e948a689736467e60c1, type: 3}
     - target: {fileID: 7453678468867683718, guid: a537a6b3c39d0614b896303ca4756020, type: 3}
       propertyPath: m_Name
       value: Car
@@ -711,7 +715,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh25552
+  m_Name: pb_Mesh33746
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2

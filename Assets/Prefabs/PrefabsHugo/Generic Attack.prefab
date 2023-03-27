@@ -133,4 +133,5 @@ MonoBehaviour:
   - {fileID: 2100000, guid: ed7c740ba79cf5e4ca1bc737808787c0, type: 2}
   - {fileID: 2100000, guid: fa39abf0616fe7b469df17c71d49d790, type: 2}
   - {fileID: 2100000, guid: b584ea63baf83fa489af394e0b925dae, type: 2}
+  - {fileID: 2100000, guid: dbea6987eb772f44d800eb5a6284d9a1, type: 2}
   BonusMeshRenderer: {fileID: 4811915868397805591}
