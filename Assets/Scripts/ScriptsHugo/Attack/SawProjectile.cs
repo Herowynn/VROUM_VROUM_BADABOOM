@@ -5,13 +5,13 @@ using UnityEngine;
 public class SawProjectile : MonoBehaviour
 {
     [SerializeField] private float _speed;
-    private Rigidbody ProjectileRB;
+    private Rigidbody _projectileRB;
 
     // Start is called before the first frame update
 
     private void Awake()
     {
-        ProjectileRB = GetComponent<Rigidbody>();
+        _projectileRB = GetComponent<Rigidbody>();
     }
 
     private void FixedUpdate()
@@ -20,7 +20,7 @@ public class SawProjectile : MonoBehaviour
     }
     public void Init(Vector3 direction)
     {
-        ProjectileRB.AddForce(direction * _speed, ForceMode.Acceleration);
+        _projectileRB.AddForce(direction * _speed, ForceMode.Acceleration);
     }
     private void OnCollisionEnter(Collision collision)
     {
@@ -28,4 +28,7 @@ public class SawProjectile : MonoBehaviour
     }
 
 }
+
+
+
 

@@ -10,7 +10,7 @@ public class Bump : Offensive
     public GameObject ProjectilePrefab;
     public LayerMask Ground;
     int _ground;
-    [SerializeField] private List<Collider> _colliders = new List<Collider>();
+    private List<Collider> _colliders = new List<Collider>();
    
 
     void Start()
