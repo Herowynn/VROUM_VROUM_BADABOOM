@@ -7,7 +7,7 @@ public class UIManager : MonoBehaviour
     [Header("Instances")]
     public InputMenuUI InputMenuUI;
     public GameUI GameUI;
-    public GameObject[] UIsGo;
+    public GameObject[] UisGo;
 
     public void DisplayInputMenu()
     {
@@ -15,7 +15,7 @@ public class UIManager : MonoBehaviour
         InputMenuUI.transform.gameObject.SetActive(true);
     }
 
-    public void DisplayGameUI()
+    private void DisplayGameUI()
     {
         HideAllUIs();
         GameUI.transform.gameObject.SetActive(true);
@@ -23,10 +23,22 @@ public class UIManager : MonoBehaviour
 
     private void HideAllUIs()
     {
-        foreach (var ui in UIsGo)
+        foreach (var ui in UisGo)
         {
             ui.SetActive(false);
         }
+    }
+
+    public void TriggerStartGameUi()
+    {
+        InputMenuUI.StartButton.SetActive(false);
+        DisplayGameUI();
+    }
+
+    public void TriggerResumeGameUi()
+    {
+        InputMenuUI.ResumeButton.SetActive(false);
+        DisplayGameUI();
     }
     
 }

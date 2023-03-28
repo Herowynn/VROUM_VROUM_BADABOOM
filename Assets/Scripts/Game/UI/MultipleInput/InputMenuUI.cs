@@ -11,18 +11,16 @@ public class InputMenuUI : MonoBehaviour
     public GameObject PlayerInputPrefab;
     public GameObject PlayerInputsContainer;
     public GameObject StartButton;
+    public GameObject ResumeButton;
 
     private List<PlayerInputUI> _playerInputUIs = new List<PlayerInputUI>();
 
     private void CreateOnePlayerInput(int index, bool isInputValid)
     {
         GameObject go = Instantiate(PlayerInputPrefab, PlayerInputsContainer.transform);
-        Debug.Log(go);
-        
+
         PlayerInputUI playerInputUI = go.GetComponent<PlayerInputUI>();
         _playerInputUIs.Add(playerInputUI);
-        
-        
         
         playerInputUI.ChangeStatus(isInputValid ? GoodStatus : BadStatus);
     }
@@ -39,6 +37,8 @@ public class InputMenuUI : MonoBehaviour
             CreateOnePlayerInput(i, cpt < nbPlayerInputValid);
             cpt++;
         }
+        
+        CheckAllStatus();
     }
 
     public void AddOkInput()
@@ -71,20 +71,17 @@ public class InputMenuUI : MonoBehaviour
 
     private void CheckAllStatus()
     {
+        GameObject buttonToSet = GameManager.Instance.GameState == GameState.PRE_GAME ? StartButton : ResumeButton;
+        
         foreach (var ui in _playerInputUIs)
         {
             if (ui.IsStatusSimilar(BadStatus))
             {
-                StartButton.SetActive(false);
+                buttonToSet.SetActive(false);
                 return;
             }
         }
         
-        StartButton.SetActive(true);
-    }
-
-    public void StartGame()
-    {
-        
+        buttonToSet.SetActive(true);
     }
 }

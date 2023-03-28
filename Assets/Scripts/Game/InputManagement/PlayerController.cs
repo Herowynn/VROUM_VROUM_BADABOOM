@@ -11,7 +11,8 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
-        transform.Translate(new Vector3(movementInput.x, 0, movementInput.y) * speed * Time.deltaTime);
+        if (GameManager.Instance.GameState == GameState.RACING)
+            transform.Translate(new Vector3(movementInput.x, 0, movementInput.y) * speed * Time.deltaTime);
     }
 
     public void OnMove(InputAction.CallbackContext context) => movementInput = context.ReadValue<Vector2>();
