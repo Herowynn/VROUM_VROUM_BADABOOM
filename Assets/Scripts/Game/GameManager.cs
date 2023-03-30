@@ -61,6 +61,15 @@ public class GameManager : MonoBehaviour
         GameState = GameState.RACING;
         UIManager.TriggerResumeGameUi();
     }
+    
+    public void ReturnToMenu()
+    {
+        GameState = GameState.PRE_GAME;
+        DestroyPlayers();
+        UIManager.InputMenuUI.DestroyPlayersInput();
+        
+        SceneManager.Instance.LoadMenu();
+    }
 
     #endregion
 
@@ -97,5 +106,16 @@ public class GameManager : MonoBehaviour
             Players.Add(Instantiate(PlayerControllerPrefab, StartPositions[startPositionIndex].transform.position, Quaternion.identity, PlayerContainer.transform));
         }
     }
+
+    private void DestroyPlayers()
+    {
+        foreach (var player in Players)
+        {
+            Destroy(player);
+        }
+
+        Players = new List<GameObject>();
+    }
+        
     #endregion
 }

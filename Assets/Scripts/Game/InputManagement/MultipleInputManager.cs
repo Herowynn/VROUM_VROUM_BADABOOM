@@ -25,6 +25,8 @@ public class MultipleInputManager : MonoBehaviour
     
     private void Start()
     {
+        Debug.Log("Yo !");
+        
         NumberOfPlayer = MenuManager.Instance.NbLocal;
         NeedKeyboard = MenuManager.Instance.NeedKeyboard;
         NbAi = MenuManager.Instance.NbAi;
@@ -38,40 +40,7 @@ public class MultipleInputManager : MonoBehaviour
         _inputMenuUI.CreatePlayersInput(_controllerNeeded, _controllersConnected, NeedKeyboard);
         
         // Subscribe to Event
-        InputSystem.onDeviceChange +=
-            (device, change) =>
-            {
-                switch (change)
-                {
-                    case InputDeviceChange.Added:
-                        if (device is XInputController)
-                        {
-                            if (GameManager.Instance.GameState != GameState.RACING)
-                            {
-                                DeviceAdded();
-                            }
-                            else if (GameManager.Instance.GameState == GameState.RACING)
-                            {
-                                DeviceAddedDuringRace();
-                            }
-                        }
-                        break;
-
-                    case InputDeviceChange.Removed:
-                        if (device is XInputController)
-                        {
-                            if (GameManager.Instance.GameState != GameState.RACING)
-                            {
-                                DeviceRemoved();
-                            }
-                            else if (GameManager.Instance.GameState == GameState.RACING)
-                            {
-                                DeviceRemovedDuringRace();
-                            }
-                        }
-                        break;
-                }
-            };
+        InputSystem.onDeviceChange += ListenerOnDeviceChange;
     }
 
     private void CountControllers()
@@ -113,5 +82,44 @@ public class MultipleInputManager : MonoBehaviour
         
         GameManager.Instance.LoadPauseGame();
         DeviceRemoved();
+    }
+
+    private void ListenerOnDeviceChange(InputDevice device, InputDeviceChange change)
+    {
+        switch (change)
+        {
+            case InputDeviceChange.Added:
+                if (device is XInputController)
+                {
+                    if (GameManager.Instance.GameState != GameState.RACING)
+                    {
+                        DeviceAdded();
+                    }
+                    else if (GameManager.Instance.GameState == GameState.RACING)
+                    {
+                        DeviceAddedDuringRace();
+                    }
+                }
+                break;
+
+            case InputDeviceChange.Removed:
+                if (device is XInputController)
+                {
+                    if (GameManager.Instance.GameState != GameState.RACING)
+                    {
+                        DeviceRemoved();
+                    }
+                    else if (GameManager.Instance.GameState == GameState.RACING)
+                    {
+                        DeviceRemovedDuringRace();
+                    }
+                }
+                break;
+        }
+    }
+    
+    private void OnDestroy()
+    {
+        InputSystem.onDeviceChange -= ListenerOnDeviceChange;
     }
 }

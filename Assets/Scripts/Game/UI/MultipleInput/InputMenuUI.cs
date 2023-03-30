@@ -84,4 +84,14 @@ public class InputMenuUI : MonoBehaviour
         
         buttonToSet.SetActive(true);
     }
+
+    public void DestroyPlayersInput()
+    {
+        foreach (var ui in _playerInputUIs)
+        {
+            Destroy(ui.transform.gameObject);
+        }
+
+        _playerInputUIs = new List<PlayerInputUI>();
+    }
 }
