@@ -9,12 +9,12 @@ using UnityEngine.InputSystem.XInput;
 public class MultipleInputManager : MonoBehaviour
 {
     [Header("Info")]
-    [HideInInspector] public int NumberOfPlayer;
-    [HideInInspector] public bool NeedKeyboard;
-    [HideInInspector] public int NbAi;
-    [HideInInspector] public string AiDifficulty;
-    [HideInInspector] public string MapName;
-    [HideInInspector] public int ScoreToWin;
+    public int NumberOfPlayer;
+    public bool NeedKeyboard;
+    public int NbAi;
+    public string AiDifficulty;
+    public string MapName;
+    public int ScoreToWin;
     
     // intern var
     private int _currentStartPositionIndex;
@@ -25,14 +25,12 @@ public class MultipleInputManager : MonoBehaviour
     
     private void Start()
     {
-        Debug.Log("Yo !");
-        
-        NumberOfPlayer = MenuManager.Instance.NbLocal;
+        /*NumberOfPlayer = MenuManager.Instance.NbLocal;
         NeedKeyboard = MenuManager.Instance.NeedKeyboard;
         NbAi = MenuManager.Instance.NbAi;
         AiDifficulty = MenuManager.Instance.AiDifficulty;
         MapName = MenuManager.Instance.MapName;
-        ScoreToWin = MenuManager.Instance.ScoreToWin;
+        ScoreToWin = MenuManager.Instance.ScoreToWin;*/
         
         _controllerNeeded = NeedKeyboard ? NumberOfPlayer - 1 : NumberOfPlayer;
         CountControllers();
