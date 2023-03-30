@@ -48,6 +48,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ProjectilePrefab: {fileID: 5199820407507040153, guid: 244aa098d5897814ea19a92c4762edb1, type: 3}
+  _bulletSpawnPoint: {fileID: 3653271020282181873}
 --- !u!65 &1635400357876893140
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -85,7 +86,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3296536846376378028}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 4.727518, y: 1.1435033, z: 0}
+  m_LocalPosition: {x: 2.46, y: 0.43, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

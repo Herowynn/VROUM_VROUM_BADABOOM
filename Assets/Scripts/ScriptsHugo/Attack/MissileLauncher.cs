@@ -24,7 +24,7 @@ public class MissileLauncher : Offensive
         }
         GameObject go = Instantiate(ProjectilePrefab, _bulletSpawnPoint);
         go.transform.parent = null;
-        go.GetComponent<MissileLauncherProjectile>().Init(ClosestGO.GetComponent<Rigidbody>());
+        //go.GetComponent<MissileLauncherProjectile>().Init(ClosestGO.GetComponent<Rigidbody>());
         Destroy(gameObject);
     }
     private void OnTriggerEnter(Collider other)

@@ -16,7 +16,7 @@ public class SawProjectile : MonoBehaviour
 
     private void FixedUpdate()
     {
-        transform.Rotate(5*new Vector3(0, 1, 0));
+        transform.Rotate(30*new Vector3(0, 1, 0));
     }
     public void Init(Vector3 direction)
     {

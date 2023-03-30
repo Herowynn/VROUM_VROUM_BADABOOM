@@ -21,11 +21,15 @@ public class Bump : Offensive
     {
         foreach  (Collider collider in _colliders)
         {
-            Vector3 dir = collider.GetComponent<Transform>().position - GetComponentInParent<CarController>().gameObject.transform.position;
-            collider.gameObject.GetComponent<Rigidbody>().AddForce(dir*10, ForceMode.Impulse);
+            if (collider)
+            {
+                Vector3 dir = collider.GetComponent<Transform>().position - GetComponentInParent<CarController>().gameObject.transform.position;
+                collider.gameObject.GetComponent<Rigidbody>().AddForce(dir * 10, ForceMode.Impulse);
+            }
         }
         Destroy(gameObject);
     }
+
     private void OnTriggerEnter(Collider other)
     {
         if (!_colliders.Contains(other) && other.gameObject.layer != _ground)

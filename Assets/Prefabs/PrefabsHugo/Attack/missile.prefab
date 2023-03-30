@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5199820407507463213}
   - component: {fileID: 5199820407511108705}
+  - component: {fileID: -5182581894771660465}
   m_Layer: 0
   m_Name: missile
   m_TagString: Untagged
@@ -49,6 +50,18 @@ CapsuleCollider:
   m_Height: 65
   m_Direction: 2
   m_Center: {x: 0, y: 0, z: 35}
+--- !u!114 &-5182581894771660465
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5199820407507040153}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b93d7bf7dc23e2f42b53bf492ec3a12b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5199820407507048339
 GameObject:
   m_ObjectHideFlags: 0
@@ -66,7 +79,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &5199820407507496903
 Transform:
   m_ObjectHideFlags: 0
@@ -4876,7 +4889,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &5199820407507460533
 Transform:
   m_ObjectHideFlags: 0
@@ -4886,7 +4899,7 @@ Transform:
   m_GameObject: {fileID: 5199820407507196063}
   m_LocalRotation: {x: 1, y: 0, z: 0, w: -0.00000016292068}
   m_LocalPosition: {x: -0, y: 0, z: 0.1}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.00001, y: 0.000001, z: 0.000001}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5199820407507463213}

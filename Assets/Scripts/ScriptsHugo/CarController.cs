@@ -49,7 +49,7 @@ public class CarController : MonoBehaviour
         Quaternion toRotateTo = Quaternion.FromToRotation(transform.up, hit.normal) * transform.rotation;
         transform.rotation = Quaternion.Slerp(transform.rotation, toRotateTo, alignToGroundTime * Time.deltaTime);
 
-        if (_attackBoost != null && Input.GetButton("Fire1"))
+        if (_attackBoost != null && Input.GetButtonDown("Fire1"))
         {
             if (AttackObject.transform.childCount != 0)
             {
@@ -69,7 +69,7 @@ public class CarController : MonoBehaviour
                 return;
             }
         }
-        if (_speedBoost != null && Input.GetButton("Fire3"))
+        if (_speedBoost != null && Input.GetButtonDown("Fire3"))
         {
             if (BoostObject.transform.childCount != 0)
             {
