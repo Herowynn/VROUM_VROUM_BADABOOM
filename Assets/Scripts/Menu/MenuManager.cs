@@ -25,6 +25,7 @@ public class MenuManager : MonoBehaviour
 
     [Header("Game Parameters Informations")] 
     public int NbLocal;
+    public bool NeedKeyboard;
     public int NbAi;
     public string AiDifficulty;
     public string MapName;
@@ -54,6 +55,12 @@ public class MenuManager : MonoBehaviour
         _currentMenu.Load();
         Title.text = _currentMenu.MenuTitle;
         Footer.text = _currentMenu.MenuFooter;
+    }
+
+    public void LoadGame(Menu menu)
+    {
+        LoadMenu(menu);
+        SceneManager.Instance.LoadGame();
     }
     
     public void QuitGame() {
@@ -109,6 +116,7 @@ public class MenuManager : MonoBehaviour
     {
         NbLocal = PossibleLocalPlayers[index];
     }
+    
     public void UpdateNbAi(int index)
     {
         NbAi = PossibleAiPlayers[index];
@@ -127,6 +135,11 @@ public class MenuManager : MonoBehaviour
     public void UpdateScoreToWin(int index)
     {
         ScoreToWin = PossibleScores[index];
+    }
+
+    public void UpdateKeyboardNeed(bool status)
+    {
+        NeedKeyboard = status;
     }
 
     #endregion

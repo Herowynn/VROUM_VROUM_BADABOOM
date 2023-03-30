@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameParameters : MonoBehaviour
 {
@@ -12,6 +13,7 @@ public class GameParameters : MonoBehaviour
     public TMP_Dropdown AiDifficulty;
     public TMP_Dropdown MapSelection;
     public TMP_Dropdown ScoreToWin;
+    public Toggle NeedKeyboard;
 
     private void Start()
     {
@@ -20,6 +22,7 @@ public class GameParameters : MonoBehaviour
         AiDifficulty.ClearOptions();
         MapSelection.ClearOptions();
         ScoreToWin.ClearOptions();
+        NeedKeyboard.isOn = false;
         MenuManager.Instance.SetDynamicDropdowns();
     }
 
@@ -42,5 +45,10 @@ public class GameParameters : MonoBehaviour
     public void SetScoreToWinEvent(int scoreIndex)
     {
         MenuManager.Instance.UpdateScoreToWin(scoreIndex);
+    }
+
+    public void SetKeyboardNeed(bool needKeyboard)
+    {
+        MenuManager.Instance.UpdateKeyboardNeed(needKeyboard);
     }
 }
