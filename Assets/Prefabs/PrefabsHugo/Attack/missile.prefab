@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 5199820407507463213}
   - component: {fileID: 5199820407511108705}
   - component: {fileID: -5182581894771660465}
+  - component: {fileID: 8802755223812433066}
   m_Layer: 0
   m_Name: missile
   m_TagString: Untagged
@@ -62,6 +63,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b93d7bf7dc23e2f42b53bf492ec3a12b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  FollowSpeed: 1
+--- !u!54 &8802755223812433066
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5199820407507040153}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &5199820407507048339
 GameObject:
   m_ObjectHideFlags: 0
