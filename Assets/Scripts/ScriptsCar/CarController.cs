@@ -99,7 +99,7 @@ public class CarController : MonoBehaviour
         transform.position = SphereRB.transform.position + _carAltitudeOffset;
 
         // Keyboard attack boost button : left CTRL
-        if (AttackObject.transform.childCount != 0 && Input.GetButton("Fire1"))
+        if (AttackObject.transform.childCount != 0 && Input.GetButtonDown("Fire1"))
         {
             if (AttackObject.transform.GetComponentInChildren<Offensive>())
             {
@@ -107,7 +107,7 @@ public class CarController : MonoBehaviour
             }
         }
         // Keyboard speed boost button : left SHIFT
-        if (BoostObject.transform.childCount != 0 && Input.GetButton("Fire3"))
+        if (BoostObject.transform.childCount != 0 && Input.GetButtonDown("Fire3"))
         {
             if (BoostObject.transform.GetComponentInChildren<Booster>()) 
             {

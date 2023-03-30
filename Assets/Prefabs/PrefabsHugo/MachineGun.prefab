@@ -160,7 +160,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d11a72c130254247b50580642477389, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _durationAfterActivation: 2.5
+  _durationAfterActivation: 2.49
   _fireRate: 0.1
   _bulletSpawnPoint: {fileID: 6726465578061475629}
   ProjectilePrefab: {fileID: 3035557110167704657, guid: 893ef373ad8c0a14f9378cd7bb38ba4f, type: 3}
