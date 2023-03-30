@@ -43,6 +43,8 @@ public class CarController : MonoBehaviour
     private float _yComponentWantedDirection;
     private Vector3 _carAltitudeOffset;
 
+    private int _counter = 0;
+
     private void Start()
     {
         SphereRB.transform.parent = null;
@@ -60,6 +62,8 @@ public class CarController : MonoBehaviour
 
         if (Mathf.Abs(Input.GetAxis("Vertical")) > 0 || Mathf.Abs(Input.GetAxis("Horizontal")) > 0)
         {
+            Arrow.SetActive(true);
+
             _wantedDirection = new Vector3(Input.GetAxis("Horizontal"), _yComponentWantedDirection, Input.GetAxis("Vertical"));
             _speedInput = forwardAccel * 1000f;
 
@@ -89,12 +93,12 @@ public class CarController : MonoBehaviour
                     _canMove = true;
                 }
 
-                if (Mathf.Abs(Mathf.Acos(Vector3.Dot(ArrowRotationCenter.transform.forward.normalized, _wantedDirection.normalized))) > Mathf.Deg2Rad * 20f)
-                    ArrowRotationCenter.transform.RotateAround(transform.up, carSignRotation * turnStrength * Time.deltaTime);
-                else
+                if (Mathf.Abs(Mathf.Acos(Vector3.Dot(ArrowRotationCenter.transform.forward.normalized, _wantedDirection.normalized))) > Mathf.Deg2Rad * 1f)
                     ArrowRotationCenter.transform.forward = _wantedDirection;
             }
         }
+        else
+            Arrow.SetActive(false);
 
         transform.position = SphereRB.transform.position + _carAltitudeOffset;
 
