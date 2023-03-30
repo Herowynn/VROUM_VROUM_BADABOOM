@@ -21,6 +21,7 @@ public class MissileLauncherProjectile : MonoBehaviour
     public void InitNoTarget(Vector3 dir)
     {
         direction = dir;
+        
     }
     void Update()
     {
