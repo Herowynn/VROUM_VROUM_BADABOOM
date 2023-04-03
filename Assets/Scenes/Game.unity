@@ -2770,12 +2770,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a85cbbb27f826cf42bca92ff7375cfce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GameState: 0
   MultipleInputManager: {fileID: 439622649}
   UIManager: {fileID: 1164072818}
   PlayerControllerPrefab: {fileID: 6749302607035847204, guid: bf2580db33cfc2b4bba4da523cfe179e, type: 3}
   PlayerKeyboardPrefab: {fileID: 8009130959157824594, guid: caa5c5c6eeb696e4ca848a48bc832d33, type: 3}
   PlayerContainer: {fileID: 1551155569}
+  Camera: {fileID: 874546412}
+  GameState: 0
   Players: []
   StartPositions:
   - {fileID: 1563646658}

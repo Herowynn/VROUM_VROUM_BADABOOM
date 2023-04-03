@@ -15,16 +15,9 @@ public class CameraController : MonoBehaviour
 
     private void Start()
     {
-        if (GameManager.Instance.Players.Count == 0)
+        if (Targets.Count == 0)
         {
             transform.position = Offset;
-        }
-        else
-        {
-            foreach (var player in GameManager.Instance.Players)
-            {
-                if (!Targets.Contains(player)) Targets.Add(player);
-            }
         }
     }
 
@@ -36,21 +29,29 @@ public class CameraController : MonoBehaviour
         Zoom();
     }
 
-    void Move()
+    public void AddTargets()
+    {
+        foreach (var player in GameManager.Instance.Players)
+        {
+            if (!Targets.Contains(player)) Targets.Add(player);
+        }
+    }
+    
+    private void Move()
     {
         Vector3 centerPoint = GetCenterPoint();
 
         transform.position = Vector3.SmoothDamp(transform.position, centerPoint + Offset, ref _velocity, SmoothTime);
     }
 
-    void Zoom()
+    private void Zoom()
     {
         float newZoom = Mathf.Lerp(MaxZoom, MinZoom, GetGreaterDistance() / ZoomLimiter);
 
         GetComponent<Camera>().fieldOfView = Mathf.Lerp(GetComponent<Camera>().fieldOfView, newZoom, Time.deltaTime);
     }
 
-    float GetGreaterDistance()
+    private float GetGreaterDistance()
     {
         var bounds = new Bounds(Targets[0].transform.position, Vector3.zero);
 
@@ -62,7 +63,7 @@ public class CameraController : MonoBehaviour
         return bounds.size.x;
     }
 
-    Vector3 GetCenterPoint()
+    private Vector3 GetCenterPoint()
     {
         if(Targets.Count == 1) return Targets[0].transform.position;
 

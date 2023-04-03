@@ -14,24 +14,27 @@ public class GameManager : MonoBehaviour
         if (Instance == null)
             Instance = this;
         
-        StartGame();
+        
     }
 
     [Header("Instance")]
-    public GameState GameState;
     public MultipleInputManager MultipleInputManager;
     public UIManager UIManager;
     public GameObject PlayerControllerPrefab;
     public GameObject PlayerKeyboardPrefab;
     public GameObject PlayerContainer;
+    public CameraController Camera;
 
     [Header("Info")]
+    public GameState GameState;
     public List<GameObject> Players;
     public GameObject[] StartPositions;
 
     private void Start()
     {
         //LoadPreGame();
+        //test
+        StartGame();
     }
 
     #region Game State
@@ -54,6 +57,8 @@ public class GameManager : MonoBehaviour
         UIManager.TriggerStartGameUi();
         
         InstantiatePlayers(MultipleInputManager.NeedKeyboard, MultipleInputManager.NumberOfPlayer);
+        
+        Camera.AddTargets();
     }
 
     public void ResumeGame()
