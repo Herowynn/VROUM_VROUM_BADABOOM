@@ -14,7 +14,7 @@ public class GameManager : MonoBehaviour
         if (Instance == null)
             Instance = this;
         
-        LoadPreGame();
+        StartGame();
     }
 
     [Header("Instance")]
@@ -31,7 +31,7 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        LoadPreGame();
+        //LoadPreGame();
     }
 
     #region Game State
