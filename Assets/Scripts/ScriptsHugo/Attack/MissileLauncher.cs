@@ -27,7 +27,8 @@ public class MissileLauncher : Offensive
         
         GameObject go = Instantiate(ProjectilePrefab, _bulletSpawnPoint.position, GetComponentInParent<CarController>().gameObject.transform.rotation);
         go.transform.parent = null;
-        go.GetComponent<MissileLauncherProjectile>().Init(closestGO.GetComponent<Rigidbody>(), transform.right);
+        if (closestGO) go.GetComponent<MissileLauncherProjectile>().Init(closestGO.GetComponent<Rigidbody>());
+        else go.GetComponent<MissileLauncherProjectile>().InitNoTarget(transform.right);
         Destroy(gameObject);
     }
     private void OnTriggerEnter(Collider other)

@@ -8,22 +8,22 @@ public class MissileLauncherProjectile : MonoBehaviour
     Rigidbody _projectileRB;
     public int FollowSpeed;
     Vector3 direction;
-    public float _clock;
-    bool _moved = false;
+
     private void Start()
     {
         _projectileRB = GetComponent<Rigidbody>();
     }
-    public void Init(Rigidbody rb, Vector3 dir)
+    public void Init(Rigidbody rb)
     {
         _targetRB = rb;
         direction = dir;
-
+        
     }
 
     void Update()
     {
-        if (_clock < 1 && _moved == false)
+        if (_targetRB == null) _projectileRB.AddForce(direction * FollowSpeed, ForceMode.Acceleration); ;
+        if (_targetRB != null)
         {
             _projectileRB.AddForce(direction * 500, ForceMode.Acceleration);
             _moved = true;
@@ -34,6 +34,5 @@ public class MissileLauncherProjectile : MonoBehaviour
             transform.position = Vector3.Lerp(transform.position, _targetRB.gameObject.transform.position, FollowSpeed * Time.deltaTime);
             transform.LookAt(_targetRB.transform);
         }
-        _clock += Time.deltaTime;
     }
 }
