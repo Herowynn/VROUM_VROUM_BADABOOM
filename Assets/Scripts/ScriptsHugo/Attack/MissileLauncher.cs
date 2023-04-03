@@ -11,20 +11,24 @@ public class MissileLauncher : Offensive
 
     public override void Shoot()
     {
-        float closest = 0;
-        GameObject ClosestGO= null;
+        float closest = int.MaxValue;
+        GameObject closestGO= null;
         for (int i = 0; i < _colliders.Count; i++)
         {
             
             if(closest > (_colliders[i].transform.position - GetComponentInParent<CarController>().gameObject.transform.position).magnitude)
             {
-                ClosestGO = _colliders[i].gameObject;
+                closest = (_colliders[i].transform.position - GetComponentInParent<CarController>().gameObject.transform.position).magnitude;
+                closestGO = _colliders[i].gameObject;
             }
 
         }
-        GameObject go = Instantiate(ProjectilePrefab, _bulletSpawnPoint);
+       
+        
+        GameObject go = Instantiate(ProjectilePrefab, _bulletSpawnPoint.position, GetComponentInParent<CarController>().gameObject.transform.rotation);
         go.transform.parent = null;
-        //go.GetComponent<MissileLauncherProjectile>().Init(ClosestGO.GetComponent<Rigidbody>());
+        if (closestGO) go.GetComponent<MissileLauncherProjectile>().Init(closestGO.GetComponent<Rigidbody>());
+        else go.GetComponent<MissileLauncherProjectile>().InitNoTarget(transform.right);
         Destroy(gameObject);
     }
     private void OnTriggerEnter(Collider other)
