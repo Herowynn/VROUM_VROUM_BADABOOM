@@ -1976,7 +1976,7 @@ PrefabInstance:
       objectReference: {fileID: 1806205885}
     - target: {fileID: 8470477559953587816, guid: 88bed7e26c1dc3e44839fb03cafc3de0, type: 3}
       propertyPath: m_VersionIndex
-      value: 1132
+      value: 1138
       objectReference: {fileID: 0}
     - target: {fileID: 8470477559953587819, guid: 88bed7e26c1dc3e44839fb03cafc3de0, type: 3}
       propertyPath: m_Mesh
@@ -3393,7 +3393,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-7138
+  m_Name: pb_Mesh-1594
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -3756,7 +3756,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-1310
+  m_Name: pb_Mesh-1702
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -3970,26 +3970,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 8470477559293409357, guid: 88bed7e26c1dc3e44839fb03cafc3de0, type: 3}
-      propertyPath: turnStrength
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 8470477559293409357, guid: 88bed7e26c1dc3e44839fb03cafc3de0, type: 3}
-      propertyPath: AttackList.Array.size
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 8470477559293409357, guid: 88bed7e26c1dc3e44839fb03cafc3de0, type: 3}
-      propertyPath: AttackList.Array.data[2]
-      value: 
-      objectReference: {fileID: 7221930875229779232, guid: 9624d334089db7c4a920c54bca3642d4, type: 3}
-    - target: {fileID: 8470477559293409357, guid: 88bed7e26c1dc3e44839fb03cafc3de0, type: 3}
-      propertyPath: AttackList.Array.data[3]
-      value: 
-      objectReference: {fileID: 7251196424414276744, guid: 4e5218639ac98e948a689736467e60c1, type: 3}
-    - target: {fileID: 8470477559293409357, guid: 88bed7e26c1dc3e44839fb03cafc3de0, type: 3}
-      propertyPath: AttackList.Array.data[4]
-      value: 
-      objectReference: {fileID: 553776296881146100, guid: 576da366e290f6145a87282fe3b27a6d, type: 3}
     - target: {fileID: 8470477559293409358, guid: 88bed7e26c1dc3e44839fb03cafc3de0, type: 3}
       propertyPath: m_Name
       value: NewCar
@@ -4000,15 +3980,11 @@ PrefabInstance:
       objectReference: {fileID: 2124130722}
     - target: {fileID: 8470477559953587816, guid: 88bed7e26c1dc3e44839fb03cafc3de0, type: 3}
       propertyPath: m_VersionIndex
-      value: 1129
+      value: 1135
       objectReference: {fileID: 0}
     - target: {fileID: 8470477559953587819, guid: 88bed7e26c1dc3e44839fb03cafc3de0, type: 3}
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 2124130722}
-    - target: {fileID: 8470477560212682793, guid: 88bed7e26c1dc3e44839fb03cafc3de0, type: 3}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 88bed7e26c1dc3e44839fb03cafc3de0, type: 3}

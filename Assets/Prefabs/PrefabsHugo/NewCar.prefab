@@ -99,7 +99,7 @@ MonoBehaviour:
   SphereRB: {fileID: 8470477560212682836}
   forwardAccel: 150
   maximumSpeed: 50
-  turnStrength: 2.3
+  turnStrength: 3
   dragOnGround: 1.3
   dragInTheAir: 0
   wheelTurnSpeed: 4
@@ -121,10 +121,11 @@ MonoBehaviour:
   AttackObject: {fileID: 8470477559394728575}
   BoostObject: {fileID: 8470477558702491913}
   AttackList:
-  - {fileID: 6935124690244183357, guid: 04d98a072f58d2a49a9b1ee5156c541e, type: 3}
-  - {fileID: 8883033362255484860, guid: 0752b767f3fbf124e8b755281030f31b, type: 3}
-  - {fileID: 7251196424414276744, guid: 4e5218639ac98e948a689736467e60c1, type: 3}
+  - {fileID: 6935124690244183357, guid: e119da53b1d3d3745a1ecfbab38f4bf1, type: 3}
+  - {fileID: 8883033362255484860, guid: 7d42549e3050b6643977baba08b100b9, type: 3}
   - {fileID: 7221930875229779232, guid: 9624d334089db7c4a920c54bca3642d4, type: 3}
+  - {fileID: 7251196424414276744, guid: 4e5218639ac98e948a689736467e60c1, type: 3}
+  - {fileID: 553776296881146100, guid: 576da366e290f6145a87282fe3b27a6d, type: 3}
   BoostList:
   - {fileID: 8699939486669796487, guid: 79a2104eac2b2c8449250e67d8284e7e, type: 3}
   - {fileID: 8699939486669796487, guid: 0d1de61016352fc47bf26bd3f2c00117, type: 3}
@@ -414,7 +415,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
-  m_VersionIndex: 1114
+  m_VersionIndex: 1132
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []
