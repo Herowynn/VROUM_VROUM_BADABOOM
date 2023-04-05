@@ -5,7 +5,7 @@ using UnityEngine;
 public class CameraControl : MonoBehaviour
 {
     public GameObject target;
-    public float FollowSpeed, distance = 2;
+    public float FollowSpeed;
     public Vector3 offset;
     private Transform _targetTransform;
 

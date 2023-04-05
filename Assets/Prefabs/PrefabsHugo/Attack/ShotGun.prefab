@@ -163,4 +163,4 @@ MonoBehaviour:
   _durationAfterActivation: 0
   _fireRate: 0
   _bulletSpawnPoint: {fileID: 3900967734755836023}
-  ProjectilePrefab: {fileID: 2766148353986238626, guid: c0e9b044662b2a14bbaf6be69ee19e84, type: 3}
+  ProjectilePrefab: {fileID: 2766148353986238626, guid: a2a377ec41dfd9f47ab5cf13857bb933, type: 3}
