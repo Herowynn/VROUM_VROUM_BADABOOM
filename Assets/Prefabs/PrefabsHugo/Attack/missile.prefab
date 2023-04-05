@@ -60,7 +60,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 5199820407507040153}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b93d7bf7dc23e2f42b53bf492ec3a12b, type: 3}
+  m_Script: {fileID: 11500000, guid: b7b0f4fd03309364ba36e92c040cd0ef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   FollowSpeed: 0.7
