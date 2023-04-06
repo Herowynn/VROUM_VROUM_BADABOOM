@@ -24,6 +24,7 @@ public class GameManager : MonoBehaviour
     public GameObject PlayerKeyboardPrefab;
     public GameObject PlayerContainer;
     public CameraController Camera;
+    public ScoreManager ScoreManager;
 
     [Header("Info")]
     public GameState GameState;
