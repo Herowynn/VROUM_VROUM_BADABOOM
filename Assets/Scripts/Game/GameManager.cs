@@ -56,12 +56,13 @@ public class GameManager : MonoBehaviour
     
     public void StartGame()
     {
-        GameState = GameState.RACING;
         UIManager.TriggerStartGameUi();
 
         InstantiatePlayers(MultipleInputManager.NeedKeyboard, MultipleInputManager.NumberOfPlayer);
-        
+
         Camera.AddTargets();
+        
+        StartCoroutine(RoundManager.StartRound());
     }
 
     public void ResumeGame()
@@ -73,7 +74,7 @@ public class GameManager : MonoBehaviour
     public void ReturnToMenu()
     {
         GameState = GameState.PRE_GAME;
-        DestroyPlayers();
+        DestroyPlayersInstance();
         UIManager.InputMenuUI.DestroyPlayersInput();
         
         SceneManager.Instance.LoadMenu();
@@ -115,7 +116,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    private void DestroyPlayers()
+    private void DestroyPlayersInstance()
     {
         foreach (var player in Players)
         {
@@ -123,6 +124,11 @@ public class GameManager : MonoBehaviour
         }
 
         Players = new List<GameObject>();
+    }
+
+    public void TriggerPlayerDestructionEvent(GameObject playerGo)
+    {
+        RoundManager.PlayerDiedEvent(playerGo);
     }
         
     #endregion

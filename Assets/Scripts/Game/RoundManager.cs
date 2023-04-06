@@ -10,35 +10,46 @@ public class RoundManager : MonoBehaviour
     public int PlayersAlive;
 
     [Header("GD")] 
-    public float PlayerPlacementOffset;
+    public float TimeToRestartRound;
     
     //intern var
     private GameObject _roundWinner;
-    private List<GameObject> _playersToPlaceOnNextRound;
+    private List<GameObject> _playersToPlaceForNextRound;
 
     private void Start()
     {
         RoundNumber = 0;
+        _playersToPlaceForNextRound = new List<GameObject>();
     }
 
-    public void StartRound()
+    public IEnumerator StartRound()
     {
+        yield return new WaitForSeconds(TimeToRestartRound);
+        
         PlayersAlive = GameManager.Instance.Players.Count;
         RoundNumber++;
         GameManager.Instance.GameState = GameState.RACING;
+
+        Debug.Log(RoundNumber);
     }
 
     public void PlayerDiedEvent(GameObject playerGo)
     {
-        _playersToPlaceOnNextRound.Add(playerGo);
+        _playersToPlaceForNextRound.Add(playerGo);
         playerGo.SetActive(false);
         PlayersAlive--;
+
+        if (IsRoundFinished())
+        {
+            PrepareNextRound();
+        }
     }
 
     private bool IsRoundFinished()
     {
         if (PlayersAlive <= 1)
         {
+            GameManager.Instance.GameState = GameState.NOT_RACING;
             return true;
         }
 
@@ -48,7 +59,8 @@ public class RoundManager : MonoBehaviour
     private void PrepareNextRound()
     {
         GetRoundWinner();
-        PlacePlayers();
+        PlacePlayersForNextRound();
+        StartCoroutine(StartRound());
     }
 
     private void GetRoundWinner()
@@ -56,15 +68,27 @@ public class RoundManager : MonoBehaviour
         foreach (var player in GameManager.Instance.Players)
         {
             if (player.activeSelf)
-                _roundWinner = player;
+            {
+                _playersToPlaceForNextRound.Add(player);
+                return;
+            }
         }
     }
 
-    private void PlacePlayers()
-    { 
-        for (int i = _playersToPlaceOnNextRound.Count - 1; i >= 0; i--)
+    private void PlacePlayersForNextRound()
+    {
+        //TODO
+        //Need to find closest node from winner
+        RoundNode closestNode = GameManager.Instance.MapManager.CurrentMap.RoundNodes[0];
+        
+        for (int i = _playersToPlaceForNextRound.Count - 1, j = 0; i >= 0 && j < closestNode.Nodes.Length; i--, j++)
         {
-            _playersToPlaceOnNextRound[i].transform.position = _roundWinner.transform.position;
+            //See if necessary
+            //_playersToPlaceForNextRound[i].transform.rotation = closestNode.Nodes[j].transform.rotation;
+            _playersToPlaceForNextRound[i].transform.position = closestNode.Nodes[j].transform.position;
+            _playersToPlaceForNextRound[i].SetActive(true);
         }
+        
+        _playersToPlaceForNextRound.Clear();
     }
 }

@@ -16,4 +16,10 @@ public class PlayerController : MonoBehaviour
     }
 
     public void OnMove(InputAction.CallbackContext context) => _movementInput = context.ReadValue<Vector2>();
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.GetComponent<DestructorComponent>())
+            GameManager.Instance.TriggerPlayerDestructionEvent(gameObject);
+    }
 }

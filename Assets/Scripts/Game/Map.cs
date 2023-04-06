@@ -7,7 +7,7 @@ public class Map : MonoBehaviour
     [Header("Instance")] 
     public string Name;
     public Transform[] StartPositions;
-    public Transform[] RoundNodes;
+    public RoundNode[] RoundNodes;
 
     public void Load()
     {
