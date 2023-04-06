@@ -25,6 +25,8 @@ public class GameManager : MonoBehaviour
     public GameObject PlayerContainer;
     public CameraController Camera;
     public ScoreManager ScoreManager;
+    public RoundManager RoundManager;
+    public MapManager MapManager;
 
     [Header("Info")]
     public GameState GameState;
@@ -56,7 +58,7 @@ public class GameManager : MonoBehaviour
     {
         GameState = GameState.RACING;
         UIManager.TriggerStartGameUi();
-        
+
         InstantiatePlayers(MultipleInputManager.NeedKeyboard, MultipleInputManager.NumberOfPlayer);
         
         Camera.AddTargets();
@@ -105,11 +107,11 @@ public class GameManager : MonoBehaviour
     {
         if (playerUseKeyboard)
         {
-            Players.Add(Instantiate(PlayerKeyboardPrefab, StartPositions[startPositionIndex].transform.position, Quaternion.identity, PlayerContainer.transform));
+            Players.Add(Instantiate(PlayerKeyboardPrefab, MapManager.CurrentMap.StartPositions[startPositionIndex].transform.position, Quaternion.identity, PlayerContainer.transform));
         }
         else
         {
-            Players.Add(Instantiate(PlayerControllerPrefab, StartPositions[startPositionIndex].transform.position, Quaternion.identity, PlayerContainer.transform));
+            Players.Add(Instantiate(PlayerControllerPrefab, MapManager.CurrentMap.StartPositions[startPositionIndex].transform.position, Quaternion.identity, PlayerContainer.transform));
         }
     }
 
