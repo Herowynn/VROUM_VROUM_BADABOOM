@@ -22,12 +22,12 @@ public class MissileLauncherProjectile : MonoBehaviour
     private void Start()
     {
         _projectileRB = GetComponent<Rigidbody>();
-        _dist = (_targetRB.transform.position - transform.position).magnitude;
+        //_dist = (_targetRB.transform.position - transform.position).magnitude;
     }
 
-    public void Init(Rigidbody rb, Vector3 dir)
+    public void Init(GameObject go, Vector3 dir)
     {
-        _targetRB = rb;
+       if(go) _targetRB = go.GetComponent<Rigidbody>();
         direction = dir;
     }
 
