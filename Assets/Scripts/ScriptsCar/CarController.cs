@@ -82,7 +82,7 @@ public class CarController : MonoBehaviour
                 float arrowSignRotation = Mathf.Sign(cross2.y);
                 Vector3 velocity = Vector3.zero;
 
-                if (Mathf.Abs(Mathf.Acos(Vector3.Dot(transform.forward.normalized, _wantedDirection.normalized))) > Mathf.Deg2Rad * 20f)
+                if (Mathf.Abs(Mathf.Acos(Vector3.Dot(transform.forward.normalized, _wantedDirection.normalized))) > Mathf.Deg2Rad * 10f)
                 {
                     transform.rotation = Quaternion.Euler(transform.rotation.eulerAngles + new Vector3(0f, carSignRotation * turnStrength * 100 * Time.deltaTime, 0f));
                     _canMove = false;

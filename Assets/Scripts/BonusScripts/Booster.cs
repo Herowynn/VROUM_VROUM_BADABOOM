@@ -20,7 +20,6 @@ public class Booster : MonoBehaviour
         _timeIncrementation = 0;
         while (_timeIncrementation < _durationAfterActivation)
         {
-
             sphereRB.AddForce(car.transform.forward * _speedAdded, ForceMode.VelocityChange);
             _timeIncrementation += Time.deltaTime;
             yield return new WaitForSeconds(Time.deltaTime);

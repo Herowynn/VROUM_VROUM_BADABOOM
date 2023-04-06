@@ -492,7 +492,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
-  m_VersionIndex: 200
+  m_VersionIndex: 197
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []
@@ -556,7 +556,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 7221930875229779232}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 923027b0ca9b87542900dd3d86417905, type: 3}
+  m_Script: {fileID: 11500000, guid: e52373695b2c1164c9c3621859b7aadf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   ProjectilePrefab: {fileID: 0}
