@@ -24,14 +24,14 @@ public class MissileLauncherProjectile : MonoBehaviour
     {
 
         _projectileRB = GetComponent<Rigidbody>();
-        transform.Rotate(new Vector3(-30, 0, 0));
+       
         //_dist = (_targetRB.transform.position - transform.position).magnitude;
     }
 
-    public void Init(GameObject go, Vector3 dir)
+    public void Init(GameObject go)
     {
        if(go) _targetRB = go.GetComponent<Rigidbody>();
-        direction = dir;
+        direction = transform.forward;
     }
 
     void Update()
