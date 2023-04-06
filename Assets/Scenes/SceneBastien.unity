@@ -121027,7 +121027,7 @@ MonoBehaviour:
   - {fileID: 663278189}
   terrainSplatTextures:
   - Splat 1 - layer_Grass ER
-  activeTerrain: {fileID: 663278189}
+  activeTerrain: {fileID: 0}
   activeTerrainY: 0
   selectedTerrain: 0
   selectedRoadsOnly: 0
