@@ -19,6 +19,7 @@ public class Projectile : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if(collision.gameObject.GetComponent<CarController>() != null) Destroy(gameObject);
+        if(collision.gameObject.GetComponent<CarController>() != null) 
+            Destroy(gameObject);
     }
 }

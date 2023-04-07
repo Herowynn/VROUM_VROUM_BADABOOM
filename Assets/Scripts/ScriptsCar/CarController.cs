@@ -13,7 +13,10 @@ public class CarController : MonoBehaviour
     public float wheelTurnSpeed;
     public float additionalEarthGravity;
 
-    public LayerMask groundMask;
+    public LayerMask GroundLayerMask;
+    public LayerMask CarLayerMask;
+    public LayerMask CarSphereLayerMask;
+    public LayerMask BonusLayerMask;
     public int groundLayerNumber;
     public float arrayRayLength;
     public Transform RayPoint;
@@ -23,8 +26,11 @@ public class CarController : MonoBehaviour
     public GameObject LeftFrontWheel;
 
     public float MaxWheelTurn = 25f;
-
     public float WheelRotation = 50f;
+
+    public bool IsBumped;
+    public int BumpForce = 10000;
+    public Vector3 BumpDirection;
 
     public GameObject Arrow;
     public GameObject ArrowRotationCenter;
@@ -35,15 +41,15 @@ public class CarController : MonoBehaviour
     public GameObject[] BoostList;
 
 
-    private float _speedInput;
-    private bool _isGrounded;
-    private bool _canMove;
-    private Vector3 _distArrowRayPoint;
-    private Vector3 _wantedDirection;
-    private float _yComponentWantedDirection;
-    private Vector3 _carAltitudeOffset;
+    float _speedInput;
+    bool _isGrounded;
+    bool _canMove;
+    Vector3 _distArrowRayPoint;
+    Vector3 _wantedDirection;
+    float _yComponentWantedDirection;
+    Vector3 _carAltitudeOffset;
 
-    private int _counter = 0;
+    int _counter = 0;
 
     private void Start()
     {
@@ -115,7 +121,7 @@ public class CarController : MonoBehaviour
         {
             if (BoostObject.transform.GetComponentInChildren<Booster>()) 
             {
-                BoostObject.transform.GetChild(0).GetComponent<Booster>().Boost(SphereRB, this.gameObject);
+                BoostObject.transform.GetChild(0).GetComponent<Booster>().Boost(SphereRB, gameObject);
             }
         }
     }
@@ -126,7 +132,7 @@ public class CarController : MonoBehaviour
 
         RaycastHit hit;
 
-        if (Physics.Raycast(RayPoint.position, -transform.up, out hit, arrayRayLength, groundMask))
+        if (Physics.Raycast(RayPoint.position, -transform.up, out hit, arrayRayLength, GroundLayerMask))
         {
             _isGrounded = true;
 
@@ -137,7 +143,6 @@ public class CarController : MonoBehaviour
             else
                 _yComponentWantedDirection = transform.forward.y;
         }
-
         if (_isGrounded)
         {
             SphereRB.drag = dragOnGround;
@@ -153,6 +158,13 @@ public class CarController : MonoBehaviour
             SphereRB.drag = dragInTheAir;
             SphereRB.AddForce(new Vector3(0, -1, 0) * SphereRB.mass * additionalEarthGravity * 9.8f);
         }
+
+        if (IsBumped)
+        {
+            SphereRB.AddForce(BumpDirection * BumpForce, ForceMode.Impulse);
+            IsBumped = false;
+        }
+             
     }
 
     private void OnCollisionEnter(Collision collision)

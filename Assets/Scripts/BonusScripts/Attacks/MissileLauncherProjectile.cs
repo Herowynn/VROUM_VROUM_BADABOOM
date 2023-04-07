@@ -13,16 +13,16 @@ public class MissileLauncherProjectile : MonoBehaviour
     private Rigidbody _projectileRB;
     private Vector3 direction;
 
-    [SerializeField] private float _launchingSpeed;
-    [SerializeField] private float _lastPhaseSpeed;
-    private float _stageOne = 1f;
-    private float _stageTwo = 2f;
-    private int _forceAdded = 500;
-    private float _dist;
-    private bool _isRotated = false;
+    [SerializeField] float _launchingSpeed;
+    [SerializeField] float _lastPhaseSpeed;
+    float _stageOne = 1f;
+    float _stageTwo = 2f;
+    int _forceAdded = 500;
+    float _dist;
+    bool _isRotated = false;
+
     private void Start()
     {
-
         _projectileRB = GetComponent<Rigidbody>();
        
         //_dist = (_targetRB.transform.position - transform.position).magnitude;

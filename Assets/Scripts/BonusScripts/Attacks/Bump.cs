@@ -5,27 +5,63 @@ using UnityEngine.UIElements;
 
 public class Bump : Offensive
 {
-    public GameObject ProjectilePrefab;
-    public LayerMask Ground;
+    GameObject _bumpEffect;
+    CarController _carControl;
     int _ground;
-    [SerializeField] private List<Collider> _colliders = new List<Collider>();
+    List<Collider> _colliders = new List<Collider>();
+
+    [Header("Audio")]
+    AudioSource _source;
+    public AudioClip SonicShotSound;
+
+    private void Awake()
+    {
+        _source = gameObject.AddComponent<AudioSource>();
+    }
 
     void Start()
     {
-        _ground = (int)Mathf.Log(1f * Ground.value, 2f);
+        _ground = (int)Mathf.Log(1f * GetComponentInParent<CarController>().GroundLayerMask.value, 2f);
+
+        _bumpEffect = transform.GetChild(0).gameObject;
+        _bumpEffect.SetActive(false);
     }
+
     public override void Shoot()
     {
-        foreach  (Collider collider in _colliders)
+        _bumpEffect.SetActive(true);
+
+        _source.clip = SonicShotSound;
+        _source.Play();
+
+        foreach (Collider collider in _colliders)
         {
-            if (collider != null)
+            if (collider)
             {
-                Vector3 dir = collider.GetComponent<Transform>().position - GetComponentInParent<CarController>().gameObject.transform.position;
-                collider.gameObject.GetComponent<Rigidbody>().AddForce(dir * 10, ForceMode.Impulse);
+                Vector3 dir = collider.transform.position - GetComponentInParent<CarController>().gameObject.transform.position;
+
+                if (collider.gameObject.TryGetComponent(out _carControl))
+                {
+                    _carControl.IsBumped = true; //SphereRB.AddForce(dir * 20, ForceMode.Impulse);
+                    _carControl.BumpDirection = dir;
+                }
+                    
+
+                else if(collider.gameObject.TryGetComponent<Bonus>(out var bonus))
+                    bonus.GetComponent<Rigidbody>().AddForce(dir * 10, ForceMode.Impulse);
             }
         }
+
+        StartCoroutine(WaitBeforeDestroy());
+    }
+
+    IEnumerator WaitBeforeDestroy()
+    {
+        yield return new WaitForSeconds(1f);
+
         Destroy(gameObject);
     }
+
     private void OnTriggerEnter(Collider other)
     {
         if (!_colliders.Contains(other) && other.gameObject.layer != _ground)

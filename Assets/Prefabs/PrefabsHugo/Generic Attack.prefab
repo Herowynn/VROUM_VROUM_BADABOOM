@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 4811915868397805672}
   - component: {fileID: 4811915868397805673}
   - component: {fileID: 3365447343732414858}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Generic Attack
   m_TagString: Untagged
   m_Icon: {fileID: 0}

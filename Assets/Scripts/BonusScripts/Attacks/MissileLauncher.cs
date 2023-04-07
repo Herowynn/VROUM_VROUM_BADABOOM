@@ -7,8 +7,8 @@ public class MissileLauncher : Offensive
 {
     public GameObject ProjectilePrefab;
 
-    [SerializeField] private Transform _bulletSpawnPoint;
-    private List<Collider> _colliders = new List<Collider>();
+    [SerializeField] Transform _bulletSpawnPoint;
+    List<Collider> _colliders = new List<Collider>();
 
     public override void Shoot()
     {
