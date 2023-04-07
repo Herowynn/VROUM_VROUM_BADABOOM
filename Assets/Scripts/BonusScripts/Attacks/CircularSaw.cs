@@ -12,7 +12,7 @@ public class CircularSaw : Offensive
     {
         GameObject go = Instantiate(ProjectilePrefab, _bulletSpawnPoint);
         go.transform.parent = null;
-        go.GetComponent<SawProjectile>().Init(GetComponentInParent<CarController>().gameObject.transform.forward);
+        go.GetComponent<SawProjectile>().Init(GetComponentInParent<CarController>().gameObject.transform.forward, GetComponentInParent<CarController>().CarLayerMask);
         Destroy(gameObject);
     }
 }

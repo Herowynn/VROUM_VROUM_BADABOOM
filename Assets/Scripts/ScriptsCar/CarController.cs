@@ -28,6 +28,8 @@ public class CarController : MonoBehaviour
     public float MaxWheelTurn = 25f;
     public float WheelRotation = 50f;
 
+    public bool HitBySaw = false;
+
     public bool IsBumped;
     public int BumpForce = 10000;
     public Vector3 BumpDirection;
@@ -143,6 +145,18 @@ public class CarController : MonoBehaviour
             else
                 _yComponentWantedDirection = transform.forward.y;
         }
+
+        if (HitBySaw && _isGrounded)
+        {
+            SphereRB.AddForce(transform.up * 20000, ForceMode.Impulse);
+            StartCoroutine(WaitBeforeHitSawEnd());
+        }
+
+        if (HitBySaw && !_isGrounded)
+        {
+            transform.Rotate(30 * new Vector3(0, 1, 0));
+        }
+
         if (_isGrounded)
         {
             SphereRB.drag = dragOnGround;
@@ -164,7 +178,12 @@ public class CarController : MonoBehaviour
             SphereRB.AddForce(BumpDirection * BumpForce, ForceMode.Impulse);
             IsBumped = false;
         }
-             
+    }
+
+    IEnumerator WaitBeforeHitSawEnd()
+    {
+        yield return new WaitForSeconds(1.2f);
+        HitBySaw = false;
     }
 
     private void OnCollisionEnter(Collision collision)

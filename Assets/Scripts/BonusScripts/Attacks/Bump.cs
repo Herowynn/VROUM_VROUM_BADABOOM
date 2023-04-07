@@ -42,7 +42,7 @@ public class Bump : Offensive
 
                 if (collider.gameObject.TryGetComponent(out _carControl))
                 {
-                    _carControl.IsBumped = true; //SphereRB.AddForce(dir * 20, ForceMode.Impulse);
+                    _carControl.IsBumped = true;
                     _carControl.BumpDirection = dir;
                 }
                     
