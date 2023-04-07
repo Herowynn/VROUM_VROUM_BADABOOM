@@ -31,8 +31,11 @@ public class CarController : MonoBehaviour
     public bool HitBySaw = false;
 
     public bool IsBumped;
+    public bool IsTouchedByMachineGun;
     public int BumpForce = 10000;
+    public int ProjectileForce = 100;
     public Vector3 BumpDirection;
+    public Vector3 ProjectileDirection;
 
     public GameObject Arrow;
     public GameObject ArrowRotationCenter;
@@ -177,6 +180,13 @@ public class CarController : MonoBehaviour
         {
             SphereRB.AddForce(BumpDirection * BumpForce, ForceMode.Impulse);
             IsBumped = false;
+        }
+
+        if (IsTouchedByMachineGun)
+        {
+            Debug.Log("Salut !");
+            SphereRB.AddForce(ProjectileDirection * ProjectileForce, ForceMode.Impulse);
+            IsTouchedByMachineGun = false;
         }
     }
 

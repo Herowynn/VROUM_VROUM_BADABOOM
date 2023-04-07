@@ -14,8 +14,21 @@ public class MachineGun : Offensive
 
     public GameObject ProjectilePrefab;
 
+    [Header("Audio")]
+    public AudioClip MachineGunSound;
+    AudioSource _source;
+
+    private void Awake()
+    {
+        _source = gameObject.AddComponent<AudioSource>();
+    }
+
     public override void Shoot()
     {
+        _source.clip = MachineGunSound;
+        _source.loop = true;
+        _source.Play();
+
         StartCoroutine(MinigunShoot(_fireRate));
     }
 
@@ -23,6 +36,7 @@ public class MachineGun : Offensive
     {
         _direction = -transform.right;
     }
+
     IEnumerator MinigunShoot(float time)
     {
         _timeIncrementation = 0;
@@ -30,10 +44,11 @@ public class MachineGun : Offensive
         {
             GameObject go = Instantiate(ProjectilePrefab, _bulletSpawnPoint);
             go.transform.parent = null;
-            go.GetComponent<Projectile>().Init(_direction);
+            go.GetComponent<Projectile>().Init(_direction, gameObject.GetComponentInParent<CarController>());
             _timeIncrementation += time;
             yield return new WaitForSeconds(time);
         }
+
         Destroy(gameObject);
     }
 }

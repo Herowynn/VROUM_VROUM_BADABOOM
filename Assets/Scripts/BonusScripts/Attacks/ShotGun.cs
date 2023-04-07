@@ -20,7 +20,7 @@ public class ShotGun : Offensive
     {
         GameObject go = Instantiate(ProjectilePrefab, _bulletSpawnPoint);
         go.transform.parent = null;
-        go.GetComponent<Projectile>().Init(_direction);
+        //go.GetComponent<Projectile>().Init(_direction);
         Destroy(gameObject);
     }
 }

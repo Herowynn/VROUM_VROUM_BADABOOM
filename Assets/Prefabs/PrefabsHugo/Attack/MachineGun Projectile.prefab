@@ -127,4 +127,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2abf8cff3c1c9e4eab83145d4bfbdb8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ImpactForce: 1
   _speed: 4000
+  _carControl: {fileID: 0}

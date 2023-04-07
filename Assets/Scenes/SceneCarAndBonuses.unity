@@ -1951,6 +1951,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8470477559293409357, guid: 88bed7e26c1dc3e44839fb03cafc3de0, type: 3}
+      propertyPath: ProjectileForce
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 8470477559293409357, guid: 88bed7e26c1dc3e44839fb03cafc3de0, type: 3}
       propertyPath: CarLayerMask.m_Bits
       value: 128
       objectReference: {fileID: 0}
@@ -1988,7 +1992,7 @@ PrefabInstance:
       objectReference: {fileID: 1806205885}
     - target: {fileID: 8470477559953587816, guid: 88bed7e26c1dc3e44839fb03cafc3de0, type: 3}
       propertyPath: m_VersionIndex
-      value: 1165
+      value: 1180
       objectReference: {fileID: 0}
     - target: {fileID: 8470477559953587819, guid: 88bed7e26c1dc3e44839fb03cafc3de0, type: 3}
       propertyPath: m_Mesh
@@ -4007,7 +4011,7 @@ PrefabInstance:
       objectReference: {fileID: 2124130722}
     - target: {fileID: 8470477559953587816, guid: 88bed7e26c1dc3e44839fb03cafc3de0, type: 3}
       propertyPath: m_VersionIndex
-      value: 1162
+      value: 1177
       objectReference: {fileID: 0}
     - target: {fileID: 8470477559953587819, guid: 88bed7e26c1dc3e44839fb03cafc3de0, type: 3}
       propertyPath: m_Mesh
