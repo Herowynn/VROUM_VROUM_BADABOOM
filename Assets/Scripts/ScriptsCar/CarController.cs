@@ -29,9 +29,9 @@ public class CarController : MonoBehaviour
     public float WheelRotation = 50f;
 
     public bool HitBySaw = false;
-
     public bool IsBumped;
     public bool IsTouchedByMachineGun;
+    public bool IsSlowed = false;
     public int BumpForce = 10000;
     public int ProjectileForce = 100;
     public Vector3 BumpDirection;
