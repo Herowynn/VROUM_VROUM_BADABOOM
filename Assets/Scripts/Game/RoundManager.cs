@@ -14,12 +14,12 @@ public class RoundManager : MonoBehaviour
     
     //intern var
     private GameObject _roundWinner;
-    private List<GameObject> _playersToPlaceForNextRound;
+    [SerializeField] private List<PlayerController> _playersToPlaceForNextRound;
 
     private void Start()
     {
         RoundNumber = 0;
-        _playersToPlaceForNextRound = new List<GameObject>();
+        _playersToPlaceForNextRound = new List<PlayerController>();
     }
 
     public IEnumerator StartRound()
@@ -29,14 +29,14 @@ public class RoundManager : MonoBehaviour
         PlayersAlive = GameManager.Instance.Players.Count;
         RoundNumber++;
         GameManager.Instance.GameState = GameState.RACING;
-
-        Debug.Log(RoundNumber);
     }
 
-    public void PlayerDiedEvent(GameObject playerGo)
+    public void PlayerDiedEvent(PlayerController player)
     {
-        _playersToPlaceForNextRound.Add(playerGo);
-        playerGo.SetActive(false);
+        _playersToPlaceForNextRound.Add(player);
+
+        player.DiedEvent();
+        
         PlayersAlive--;
 
         if (IsRoundFinished())
@@ -67,9 +67,9 @@ public class RoundManager : MonoBehaviour
     {
         foreach (var player in GameManager.Instance.Players)
         {
-            if (player.activeSelf)
+            if (player.GetComponent<PlayerController>().PlayerState == PlayerState.ALIVE)
             {
-                _playersToPlaceForNextRound.Add(player);
+                _playersToPlaceForNextRound.Add(player.GetComponent<PlayerController>());
                 return;
             }
         }
@@ -85,8 +85,8 @@ public class RoundManager : MonoBehaviour
         {
             //See if necessary
             //_playersToPlaceForNextRound[i].transform.rotation = closestNode.Nodes[j].transform.rotation;
-            _playersToPlaceForNextRound[i].transform.position = closestNode.Nodes[j].transform.position;
-            _playersToPlaceForNextRound[i].SetActive(true);
+            _playersToPlaceForNextRound[i].gameObject.transform.position = closestNode.Nodes[j].transform.position;
+            _playersToPlaceForNextRound[i].RebornEvent();
         }
         
         _playersToPlaceForNextRound.Clear();
