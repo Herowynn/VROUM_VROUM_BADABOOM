@@ -126,9 +126,9 @@ public class GameManager : MonoBehaviour
         Players = new List<GameObject>();
     }
 
-    public void TriggerPlayerDestructionEvent(GameObject playerGo)
+    public void TriggerPlayerDestructionEvent(PlayerController player)
     {
-        RoundManager.PlayerDiedEvent(playerGo);
+        RoundManager.PlayerDiedEvent(player);
     }
         
     #endregion
