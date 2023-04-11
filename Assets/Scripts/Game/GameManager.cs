@@ -150,4 +150,13 @@ public class GameManager : MonoBehaviour
     }
     
     #endregion
+
+    #region UI
+
+    public void TriggerUiCreationForPlayerEvent(PlayerController playerInstance)
+    {
+        UIManager.GameUI.CreateUisForPlayer(playerInstance);
+    }
+
+    #endregion
 }

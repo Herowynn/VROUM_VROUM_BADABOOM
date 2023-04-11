@@ -6,10 +6,20 @@ using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
+    [Header("Info")] 
+    public Color Color;
     public float speed = 5;
     public PlayerState PlayerState;
+    
+    //Need to move to separate file (?)
     public int Score;
-
+    
+    //Need to move to separate file (?)
+    [Header("UI")] 
+    public PointsUI PointsUI;
+    public ProfileUI ProfileUI;
+    
+    // Intern Var
     private MeshRenderer _meshRenderer;
     private Rigidbody _rigidbody;
     private BoxCollider _boxCollider;
@@ -20,6 +30,13 @@ public class PlayerController : MonoBehaviour
         _meshRenderer = GetComponent<MeshRenderer>();
         _rigidbody = GetComponent<Rigidbody>();
         _boxCollider = GetComponent<BoxCollider>();
+        
+        CreatePlayerUis();
+        
+        Debug.Log(PointsUI);
+        
+        PointsUI.ChangeVisualColoration(Color);
+        PointsUI.ChangePointsCount(Score);
     }
 
     private void Update()
@@ -28,8 +45,22 @@ public class PlayerController : MonoBehaviour
             transform.Translate(new Vector3(_movementInput.x, 0, _movementInput.y) * speed * Time.deltaTime);
     }
 
+    #region Related to in-game actions
+    
     public void OnMove(InputAction.CallbackContext context) => _movementInput = context.ReadValue<Vector2>();
 
+    public void OnBoost(InputAction.CallbackContext context) => ProfileUI.UseBoost();
+    
+    public void OnAttack(InputAction.CallbackContext context) => ProfileUI.UseWeapon();
+    
+    public void OnNewBoost(InputAction.CallbackContext context) => ProfileUI.TookBoost();
+    
+    public void OnNewWeapon(InputAction.CallbackContext context) => ProfileUI.TookWeapon();
+    
+    #endregion
+
+    #region Related to state in-game
+    
     private void OnTriggerEnter(Collider other)
     {
         if (other.GetComponent<DestructorComponent>())
@@ -54,4 +85,21 @@ public class PlayerController : MonoBehaviour
         
         PlayerState = PlayerState.ALIVE;
     }
+
+    public void AddPointsToScore(int points)
+    {
+        Score += points;
+        PointsUI.ChangePointsCount(Score);
+    }
+    
+    #endregion
+
+    #region Related to UI
+
+    private void CreatePlayerUis()
+    {
+        GameManager.Instance.TriggerUiCreationForPlayerEvent(this);
+    }
+
+    #endregion
 }

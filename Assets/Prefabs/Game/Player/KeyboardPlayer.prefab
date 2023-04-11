@@ -15,6 +15,22 @@ PrefabInstance:
       propertyPath: m_Name
       value: KeyboardPlayer
       objectReference: {fileID: 0}
+    - target: {fileID: 8767379716924850012, guid: 1a10a352fd94157458c406cb12e6575d, type: 3}
+      propertyPath: Color.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8767379716924850012, guid: 1a10a352fd94157458c406cb12e6575d, type: 3}
+      propertyPath: Color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8767379716924850012, guid: 1a10a352fd94157458c406cb12e6575d, type: 3}
+      propertyPath: Color.g
+      value: 0.16342616
+      objectReference: {fileID: 0}
+    - target: {fileID: 8767379716924850012, guid: 1a10a352fd94157458c406cb12e6575d, type: 3}
+      propertyPath: Color.r
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8767379716924850013, guid: 1a10a352fd94157458c406cb12e6575d, type: 3}
       propertyPath: m_DefaultControlScheme
       value: Keyboard

@@ -39,7 +39,9 @@ public class ScoreManager : MonoBehaviour
         foreach (var player in _players)
         {
             if (player.PlayerState == PlayerState.ALIVE)
-                player.Score += PointPerCrash;
+            {
+                player.AddPointsToScore(PointPerCrash);
+            }
         }
         
         if (IsFinished())
