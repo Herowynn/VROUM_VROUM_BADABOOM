@@ -9,9 +9,8 @@ public class HarvesterBlades : MonoBehaviour
 
     private void Start()
     {
-        _ignoredLayersNumbers.Add(HarvesterCoreGame.Instance.GroundLayerNumber);
-        _ignoredLayersNumbers.Add(HarvesterCoreGame.Instance.HarvesterLayerNumber);
-        _ignoredLayersNumbers.Add(HarvesterCoreGame.Instance.CheckPointLayerNumber);
+        _ignoredLayersNumbers.Add(HarvesterCoreGame.Instance.CarLayerNumber);
+        _ignoredLayersNumbers.Add(HarvesterCoreGame.Instance.BonusLayerNumber);
     }
 
     private void Update()
@@ -23,8 +22,13 @@ public class HarvesterBlades : MonoBehaviour
     {
         if (collision != null)
         {
-            if (!_ignoredLayersNumbers.Contains(collision.gameObject.layer))
+            if (_ignoredLayersNumbers.Contains(collision.gameObject.layer))
+            {
+                if (collision.gameObject.GetComponent<CarController>())
+                    Destroy(collision.gameObject.GetComponent<CarController>().SphereRB.gameObject);
+
                 Destroy(collision.gameObject);
+            }
         }
     }
 }

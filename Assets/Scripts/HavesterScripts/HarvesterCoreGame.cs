@@ -8,9 +8,8 @@ public class HarvesterCoreGame : MonoBehaviour
 
     public GameObject CheckPointsParentObject;
     public GameObject Harvester;
-    public int GroundLayerNumber;
-    public int HarvesterLayerNumber;
-    public int CheckPointLayerNumber;
+    public int CarLayerNumber;
+    public int BonusLayerNumber;
 
 
     private List<Transform> _checkPointsList = new List<Transform>();
