@@ -1325,7 +1325,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4117372919553498377, guid: 2e3a351c76469034982fb743113ff6ed, type: 3}
       propertyPath: NumberOfPlayer
-      value: 3
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2e3a351c76469034982fb743113ff6ed, type: 3}
@@ -3073,7 +3073,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 865236726}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 11, y: 0, z: -4}
+  m_LocalPosition: {x: 11, y: 1, z: -4}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -3426,8 +3426,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 80f1b0bafdd44ef418af41baccdedbae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PointPerCrash: 0
-  PointsToWin: 0
+  PointPerCrash: 15
+  PointsToWin: 15
 --- !u!1 &987729645
 GameObject:
   m_ObjectHideFlags: 0

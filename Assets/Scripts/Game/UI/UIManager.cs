@@ -40,5 +40,9 @@ public class UIManager : MonoBehaviour
         InputMenuUI.ResumeButton.SetActive(false);
         DisplayGameUI();
     }
-    
+
+    public void TriggerEndGameUi()
+    {
+        Debug.Log("End game ui");
+    }
 }

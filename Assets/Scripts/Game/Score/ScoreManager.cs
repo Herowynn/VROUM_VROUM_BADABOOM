@@ -10,13 +10,22 @@ public class ScoreManager : MonoBehaviour
     public int PointsToWin;
     
     //intern var
-    private List<PlayerScore> _scores = new List<PlayerScore>();
+    private List<PlayerController> _players;
 
+    public void InitiatePlayersForCurrentMatch()
+    {
+        _players = new List<PlayerController>();
+        foreach (var playerGo in GameManager.Instance.Players)
+        {
+            _players.Add(playerGo.GetComponent<PlayerController>());
+        }
+    }
+    
     public bool IsFinished()
     {
-        foreach (var playerScore in _scores)
+        foreach (var player in _players)
         {
-            if (playerScore.Score >= PointsToWin)
+            if (player.Score >= PointsToWin)
             {
                 return true;
             }
@@ -25,8 +34,15 @@ public class ScoreManager : MonoBehaviour
         return false;
     }
 
-    public void AddPlayerScore(PlayerScore playerScore)
+    public void AddScoreToAlivePlayers()
     {
-        _scores.Add(playerScore);
+        foreach (var player in _players)
+        {
+            if (player.PlayerState == PlayerState.ALIVE)
+                player.Score += PointPerCrash;
+        }
+        
+        if (IsFinished())
+            GameManager.Instance.TriggerEndGameEvent();
     }
 }

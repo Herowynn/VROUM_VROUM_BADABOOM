@@ -2,5 +2,6 @@
 {
     RACING,
     NOT_RACING,
-    PRE_GAME
+    PRE_GAME,
+    POST_GAME
 }

@@ -8,6 +8,7 @@ public class PlayerController : MonoBehaviour
 {
     public float speed = 5;
     public PlayerState PlayerState;
+    public int Score;
 
     private MeshRenderer _meshRenderer;
     private Rigidbody _rigidbody;

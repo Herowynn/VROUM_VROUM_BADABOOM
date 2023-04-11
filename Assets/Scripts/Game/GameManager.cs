@@ -80,6 +80,12 @@ public class GameManager : MonoBehaviour
         SceneManager.Instance.LoadMenu();
     }
 
+    public void LoadEndGame()
+    {
+        GameState = GameState.POST_GAME;
+        UIManager.TriggerEndGameUi();
+    }
+
     #endregion
 
     #region Game
@@ -102,6 +108,8 @@ public class GameManager : MonoBehaviour
             CreateNewPlayer(false, startPositionIndex);
             startPositionIndex++;
         }
+        
+        ScoreManager.InitiatePlayersForCurrentMatch();
     }
     
     private void CreateNewPlayer(bool playerUseKeyboard, int startPositionIndex)
@@ -130,6 +138,16 @@ public class GameManager : MonoBehaviour
     {
         RoundManager.PlayerDiedEvent(player);
     }
-        
+
+    public void TriggerScoreAddEvent()
+    {
+        ScoreManager.AddScoreToAlivePlayers();
+    }
+
+    public void TriggerEndGameEvent()
+    {
+        LoadEndGame();
+    }
+    
     #endregion
 }

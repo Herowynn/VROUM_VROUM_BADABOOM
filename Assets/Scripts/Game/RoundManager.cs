@@ -43,9 +43,12 @@ public class RoundManager : MonoBehaviour
         player.DiedEvent();
         
         PlayersAlive--;
-
-        if (IsRoundFinished())
+        
+        GameManager.Instance.TriggerScoreAddEvent();
+        
+        if (IsRoundFinished() && GameManager.Instance.GameState != GameState.POST_GAME)
         {
+            GameManager.Instance.GameState = GameState.NOT_RACING;
             PrepareNextRound();
         }
     }
@@ -54,7 +57,6 @@ public class RoundManager : MonoBehaviour
     {
         if (PlayersAlive <= 1)
         {
-            GameManager.Instance.GameState = GameState.NOT_RACING;
             return true;
         }
 
