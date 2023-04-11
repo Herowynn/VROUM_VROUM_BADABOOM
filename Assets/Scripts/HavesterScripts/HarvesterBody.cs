@@ -6,7 +6,7 @@ public class HarvesterBody : MonoBehaviour
 {
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.layer != HarvesterCoreGame.Instance.groundLayerNumber)
+        if (collision.gameObject.layer != HarvesterCoreGame.Instance.GroundLayerNumber)
             Destroy(collision.gameObject);
     }
 }

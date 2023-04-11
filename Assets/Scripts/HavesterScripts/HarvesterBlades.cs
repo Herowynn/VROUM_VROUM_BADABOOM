@@ -7,7 +7,7 @@ public class HarvesterBlades : MonoBehaviour
     private void OnCollisionEnter(Collision collision)
     {
         Debug.Log("Harvester enters in collision with an object !");
-        if (collision.gameObject.layer != HarvesterCoreGame.Instance.groundLayerNumber)
+        if (collision.gameObject.layer != HarvesterCoreGame.Instance.GroundLayerNumber)
             Destroy(collision.gameObject);
     }
 }

@@ -6,17 +6,17 @@ public class HarvesterCoreGame : MonoBehaviour
 {
     public static HarvesterCoreGame Instance;
 
-    public GameObject checkpointsParentObject;
-    public GameObject harvester;
-    public int groundLayerNumber;
+    public GameObject CheckPointsParentObject;
+    public GameObject Harvester;
+    public int GroundLayerNumber;
 
 
-    private List<Transform> _checkpointsList = new List<Transform>();
-    private int _nextCheckpointIndex;
+    private List<Transform> _checkPointsList = new List<Transform>();
+    private int _nextCheckPointIndex;
     private Vector3 _direction;
     private Vector3 _realPointToReach;
 
-    public int nextCheckpointIndex { get { return _nextCheckpointIndex; } set { _nextCheckpointIndex = value; } }
+    public int NextCheckpointIndex { get { return _nextCheckPointIndex; } set { _nextCheckPointIndex = value; } }
 
     private void Awake()
     {
@@ -26,18 +26,21 @@ public class HarvesterCoreGame : MonoBehaviour
 
     void Start()
     {
-        for(int i = 0; i < checkpointsParentObject.transform.childCount; i++)
+        for(int i = 0; i < CheckPointsParentObject.transform.childCount; i++)
         {
-            _checkpointsList.Add(checkpointsParentObject.transform.GetChild(i));
+            _checkPointsList.Add(CheckPointsParentObject.transform.GetChild(i));
         }
 
-        _nextCheckpointIndex = 0;
+        _nextCheckPointIndex = 0;
     }
-
+        
     void Update()
     {
-        _realPointToReach = new Vector3(_checkpointsList[_nextCheckpointIndex].position.x, harvester.transform.position.y, _checkpointsList[_nextCheckpointIndex].position.z);
-        _direction = (_realPointToReach - harvester.transform.position).normalized;
-        harvester.GetComponent<Harvester>().direction = _direction;
+        if (_nextCheckPointIndex >= CheckPointsParentObject.transform.GetChildCount())
+            _nextCheckPointIndex = 0;
+
+        _realPointToReach = new Vector3(_checkPointsList[_nextCheckPointIndex].position.x, Harvester.transform.position.y, _checkPointsList[_nextCheckPointIndex].position.z);
+        _direction = (_realPointToReach - Harvester.transform.position).normalized;
+        Harvester.GetComponent<Harvester>().direction = _direction;
     }
 }
