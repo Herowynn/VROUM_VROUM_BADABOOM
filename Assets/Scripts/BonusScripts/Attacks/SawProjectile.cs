@@ -6,7 +6,7 @@ public class SawProjectile : MonoBehaviour
 {
     [SerializeField] float _speed;
     Rigidbody _projectileRB;
-    int _carLayer;
+
     private void Awake()
     {
         _projectileRB = GetComponent<Rigidbody>();
@@ -20,7 +20,6 @@ public class SawProjectile : MonoBehaviour
     public void Init(Vector3 direction, LayerMask carLayerMask)
     {
         _projectileRB.AddForce(direction * _speed, ForceMode.Acceleration);
-        _carLayer = (int)Mathf.Log(1f * carLayerMask.value, 2f);
     }
 
     private void OnTriggerEnter(Collider other)
@@ -29,12 +28,6 @@ public class SawProjectile : MonoBehaviour
         {
             carController.HitBySaw = true;
         }
-
-        //if (other.gameObject.layer == _carLayer)
-        //{
-        //    other.GetComponent<CarController>(). // AddForce(transform.up * 200, ForceMode.Impulse);
-        //    StartCoroutine(WaitTime(.05f, other));
-        //}
     }
 
     IEnumerator WaitTime(float time, Collider other)
@@ -43,6 +36,5 @@ public class SawProjectile : MonoBehaviour
         other.gameObject.GetComponent<CarController>().HitBySaw = true;
         Destroy(gameObject);
     }
-
 }
 
