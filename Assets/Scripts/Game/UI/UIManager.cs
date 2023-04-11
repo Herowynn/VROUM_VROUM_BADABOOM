@@ -7,6 +7,7 @@ public class UIManager : MonoBehaviour
     [Header("Instances")]
     public InputMenuUI InputMenuUI;
     public GameUI GameUI;
+    public PostGameUI PostGameUI;
     public GameObject[] UisGo;
 
     public void DisplayInputMenu()
@@ -21,6 +22,12 @@ public class UIManager : MonoBehaviour
         GameUI.transform.gameObject.SetActive(true);
     }
 
+    private void DisplayPostGameUI()
+    {
+        HideAllUIs();
+        PostGameUI.transform.gameObject.SetActive(true);
+    }
+    
     private void HideAllUIs()
     {
         foreach (var ui in UisGo)
@@ -43,6 +50,6 @@ public class UIManager : MonoBehaviour
 
     public void TriggerEndGameUi()
     {
-        Debug.Log("End game ui");
+        DisplayPostGameUI();
     }
 }
