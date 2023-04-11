@@ -45,6 +45,6 @@ public class ScoreManager : MonoBehaviour
         }
         
         if (IsFinished())
-            GameManager.Instance.TriggerEndGameEvent();
+            GameManager.Instance.TriggerEndGameAfterRoundEvent();
     }
 }

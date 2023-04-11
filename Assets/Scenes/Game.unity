@@ -1213,6 +1213,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   RoundNumber: 0
   PlayersAlive: 0
+  GameFinished: 0
   TimeToRestartRound: 2
 --- !u!1 &662838270
 GameObject:
@@ -1744,7 +1745,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 80f1b0bafdd44ef418af41baccdedbae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PointPerCrash: 1
+  PointPerCrash: 15
   PointsToWin: 15
 --- !u!1 &1081658411
 GameObject:
@@ -2540,7 +2541,7 @@ MonoBehaviour:
   ScoreManager: {fileID: 937070339}
   RoundManager: {fileID: 633866253}
   MapManager: {fileID: 59079940}
-  GameState: 0
+  GameState: 1
   Players: []
   StartPositions:
   - {fileID: 1563646658}

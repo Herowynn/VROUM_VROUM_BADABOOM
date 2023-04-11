@@ -32,9 +32,7 @@ public class PlayerController : MonoBehaviour
         _boxCollider = GetComponent<BoxCollider>();
         
         CreatePlayerUis();
-        
-        Debug.Log(PointsUI);
-        
+
         PointsUI.ChangeVisualColoration(Color);
         PointsUI.ChangePointsCount(Score);
     }

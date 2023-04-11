@@ -144,6 +144,11 @@ public class GameManager : MonoBehaviour
         ScoreManager.AddScoreToAlivePlayers();
     }
 
+    public void TriggerEndGameAfterRoundEvent()
+    {
+        RoundManager.GameFinished = true;
+    }
+
     public void TriggerEndGameEvent()
     {
         LoadEndGame();

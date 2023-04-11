@@ -8,6 +8,7 @@ public class RoundManager : MonoBehaviour
     [Header("Info")] 
     public int RoundNumber;
     public int PlayersAlive;
+    public bool GameFinished;
 
     [Header("GD")] 
     public float TimeToRestartRound;
@@ -48,6 +49,12 @@ public class RoundManager : MonoBehaviour
         
         if (IsRoundFinished() && GameManager.Instance.GameState != GameState.POST_GAME)
         {
+            if (GameFinished)
+            {
+                GameManager.Instance.TriggerEndGameEvent();
+                return;
+            }
+            
             GameManager.Instance.GameState = GameState.NOT_RACING;
             PrepareNextRound();
         }
