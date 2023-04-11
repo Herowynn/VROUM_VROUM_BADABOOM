@@ -13,8 +13,8 @@ public class RoundManager : MonoBehaviour
     public float TimeToRestartRound;
     
     //intern var
-    private GameObject _roundWinner;
-    [SerializeField] private List<PlayerController> _playersToPlaceForNextRound;
+    private List<PlayerController> _playersToPlaceForNextRound;
+    private RoundNode[] _roundNodesForCurrentMap;
 
     private void Start()
     {
@@ -31,6 +31,11 @@ public class RoundManager : MonoBehaviour
         GameManager.Instance.GameState = GameState.RACING;
     }
 
+    public void InitiateRoundNodesForCurrentMap()
+    {
+        _roundNodesForCurrentMap = GameManager.Instance.MapManager.CurrentMap.RoundNodes;
+    }
+    
     public void PlayerDiedEvent(PlayerController player)
     {
         _playersToPlaceForNextRound.Add(player);
@@ -44,7 +49,7 @@ public class RoundManager : MonoBehaviour
             PrepareNextRound();
         }
     }
-
+    
     private bool IsRoundFinished()
     {
         if (PlayersAlive <= 1)
@@ -77,18 +82,37 @@ public class RoundManager : MonoBehaviour
 
     private void PlacePlayersForNextRound()
     {
-        //TODO
-        //Need to find closest node from winner
-        RoundNode closestNode = GameManager.Instance.MapManager.CurrentMap.RoundNodes[0];
-        
-        for (int i = _playersToPlaceForNextRound.Count - 1, j = 0; i >= 0 && j < closestNode.Nodes.Length; i--, j++)
+        RoundNode closestNode =
+            FindClosestNodeFromWinner(_playersToPlaceForNextRound[^1].transform.position);
+
+        int cpt = 0;
+        for (int i = _playersToPlaceForNextRound.Count - 1; i >= 0; i--)
         {
             //See if necessary
             //_playersToPlaceForNextRound[i].transform.rotation = closestNode.Nodes[j].transform.rotation;
-            _playersToPlaceForNextRound[i].gameObject.transform.position = closestNode.Nodes[j].transform.position;
             _playersToPlaceForNextRound[i].RebornEvent();
+            _playersToPlaceForNextRound[i].gameObject.transform.position = closestNode.Nodes[cpt].transform.position;
+            cpt++;
         }
         
         _playersToPlaceForNextRound.Clear();
+    }
+
+    private RoundNode FindClosestNodeFromWinner(Vector3 winnerPosition)
+    {
+        RoundNode closestNode = null;
+
+        float distance = float.MaxValue;
+        
+        for (int i = 0; i < _roundNodesForCurrentMap.Length; i++)
+        {
+            if (distance > Vector3.Distance(_roundNodesForCurrentMap[i].Nodes[0].transform.position, winnerPosition))
+            {
+                closestNode = _roundNodesForCurrentMap[i];
+                distance = Vector3.Distance(_roundNodesForCurrentMap[i].Nodes[0].transform.position, winnerPosition);
+            }
+        }
+
+        return closestNode;
     }
 }
