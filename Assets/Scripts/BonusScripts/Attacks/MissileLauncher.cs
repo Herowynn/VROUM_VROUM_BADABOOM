@@ -30,6 +30,7 @@ public class MissileLauncher : Offensive
         go.GetComponent<MissileLauncherProjectile>().Init(closestGO);
         Destroy(gameObject);
     }
+
     private void OnTriggerEnter(Collider other)
     {
         if (!_colliders.Contains(other) && other.gameObject.GetComponent<CarController>() != null) 

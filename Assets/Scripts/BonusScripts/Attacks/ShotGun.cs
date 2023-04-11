@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class ShotGun : Offensive
 {
-    [SerializeField] private float _durationAfterActivation;
-    [SerializeField] private float _fireRate;
-    [SerializeField] private Transform _bulletSpawnPoint;
-    private Vector3 _direction;
+    [SerializeField] float _durationAfterActivation;
+    [SerializeField] float _fireRate;
+    [SerializeField] Transform _bulletSpawnPoint;
+    Vector3 _direction;
 
     public GameObject ProjectilePrefab;
 

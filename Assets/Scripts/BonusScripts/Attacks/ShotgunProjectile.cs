@@ -5,9 +5,8 @@ using UnityEngine;
 
 public class ShotgunProjectile : MonoBehaviour
 {
-    public float SlowSpeed;
-    [SerializeField] private float _speed;
-    private Rigidbody ProjectileRB;
+    [SerializeField] float _speed;
+    Rigidbody ProjectileRB;
     [SerializeField] CarController _carControl;
 
     private void Awake()
