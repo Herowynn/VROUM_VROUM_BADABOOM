@@ -37,6 +37,9 @@ public class MultipleInputManager : MonoBehaviour
         _inputMenuUI = GameManager.Instance.UIManager.InputMenuUI;
         _inputMenuUI.CreatePlayersInput(_controllerNeeded, _controllersConnected, NeedKeyboard);
         
+        GameManager.Instance.MapManager.LoadMap(MapName);
+        GameManager.Instance.RoundManager.InitiateRoundNodesForCurrentMap();
+        
         // Subscribe to Event
         InputSystem.onDeviceChange += ListenerOnDeviceChange;
     }

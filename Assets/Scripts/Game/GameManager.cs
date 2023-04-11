@@ -24,6 +24,9 @@ public class GameManager : MonoBehaviour
     public GameObject PlayerKeyboardPrefab;
     public GameObject PlayerContainer;
     public CameraController Camera;
+    public ScoreManager ScoreManager;
+    public RoundManager RoundManager;
+    public MapManager MapManager;
 
     [Header("Info")]
     public GameState GameState;
@@ -53,12 +56,13 @@ public class GameManager : MonoBehaviour
     
     public void StartGame()
     {
-        GameState = GameState.RACING;
         UIManager.TriggerStartGameUi();
-        
+
         InstantiatePlayers(MultipleInputManager.NeedKeyboard, MultipleInputManager.NumberOfPlayer);
-        
+
         Camera.AddTargets();
+        
+        StartCoroutine(RoundManager.StartRound());
     }
 
     public void ResumeGame()
@@ -70,10 +74,16 @@ public class GameManager : MonoBehaviour
     public void ReturnToMenu()
     {
         GameState = GameState.PRE_GAME;
-        DestroyPlayers();
+        DestroyPlayersInstance();
         UIManager.InputMenuUI.DestroyPlayersInput();
         
         SceneManager.Instance.LoadMenu();
+    }
+
+    public void LoadEndGame()
+    {
+        GameState = GameState.POST_GAME;
+        UIManager.TriggerEndGameUi();
     }
 
     #endregion
@@ -98,21 +108,23 @@ public class GameManager : MonoBehaviour
             CreateNewPlayer(false, startPositionIndex);
             startPositionIndex++;
         }
+        
+        ScoreManager.InitiatePlayersForCurrentMatch();
     }
     
     private void CreateNewPlayer(bool playerUseKeyboard, int startPositionIndex)
     {
         if (playerUseKeyboard)
         {
-            Players.Add(Instantiate(PlayerKeyboardPrefab, StartPositions[startPositionIndex].transform.position, Quaternion.identity, PlayerContainer.transform));
+            Players.Add(Instantiate(PlayerKeyboardPrefab, MapManager.CurrentMap.StartPositions[startPositionIndex].transform.position, Quaternion.identity, PlayerContainer.transform));
         }
         else
         {
-            Players.Add(Instantiate(PlayerControllerPrefab, StartPositions[startPositionIndex].transform.position, Quaternion.identity, PlayerContainer.transform));
+            Players.Add(Instantiate(PlayerControllerPrefab, MapManager.CurrentMap.StartPositions[startPositionIndex].transform.position, Quaternion.identity, PlayerContainer.transform));
         }
     }
 
-    private void DestroyPlayers()
+    private void DestroyPlayersInstance()
     {
         foreach (var player in Players)
         {
@@ -121,6 +133,21 @@ public class GameManager : MonoBehaviour
 
         Players = new List<GameObject>();
     }
-        
+
+    public void TriggerPlayerDestructionEvent(PlayerController player)
+    {
+        RoundManager.PlayerDiedEvent(player);
+    }
+
+    public void TriggerScoreAddEvent()
+    {
+        ScoreManager.AddScoreToAlivePlayers();
+    }
+
+    public void TriggerEndGameEvent()
+    {
+        LoadEndGame();
+    }
+    
     #endregion
 }
