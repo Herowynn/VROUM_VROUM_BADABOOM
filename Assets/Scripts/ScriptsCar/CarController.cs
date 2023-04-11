@@ -12,6 +12,7 @@ public class CarController : MonoBehaviour
     public float dragInTheAir;
     public float wheelTurnSpeed;
     public float additionalEarthGravity;
+    public float SlowFactor = 1f;
 
     public LayerMask GroundLayerMask;
     public LayerMask CarLayerMask;
@@ -167,7 +168,7 @@ public class CarController : MonoBehaviour
             if (Mathf.Abs(_speedInput) > 0f && _canMove)
             {
                 SphereRB.AddForce(_wantedDirection * _speedInput);
-                SphereRB.velocity = Vector3.ClampMagnitude(SphereRB.velocity, maximumSpeed);
+                SphereRB.velocity = Vector3.ClampMagnitude(SphereRB.velocity, maximumSpeed * SlowFactor);
             }
         }
         else

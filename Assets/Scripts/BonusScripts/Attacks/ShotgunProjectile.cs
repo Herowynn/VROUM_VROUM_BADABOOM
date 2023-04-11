@@ -27,7 +27,7 @@ public class ShotgunProjectile : MonoBehaviour
     {
         if (collision.gameObject.TryGetComponent(out _carControl))
         {
-            _carControl.IsSlowed = true;
+            _carControl.SlowFactor = .5f;
             GetComponent<MeshRenderer>().enabled = false;
             GetComponent<SphereCollider>().enabled = false;
             StartCoroutine(WaitBeforeNormalSpeed());
@@ -37,7 +37,7 @@ public class ShotgunProjectile : MonoBehaviour
     IEnumerator WaitBeforeNormalSpeed()
     {
         yield return new WaitForSeconds(5f);
-        _carControl.IsSlowed = false;
+        _carControl.SlowFactor = 1f;
         Destroy(gameObject);
     }
 

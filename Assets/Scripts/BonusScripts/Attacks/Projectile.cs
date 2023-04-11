@@ -24,10 +24,9 @@ public class Projectile : MonoBehaviour
     }
     private void OnCollisionEnter(Collision collision)
     {
-        Vector3 dir = collision.gameObject.transform.position - _carControl.transform.position;
-
         if (collision.gameObject.TryGetComponent<CarController>(out var carControl))
         {
+            Vector3 dir = collision.gameObject.transform.position - _carControl.transform.position;
             carControl.IsTouchedByMachineGun = true;
             carControl.ProjectileDirection = dir;
             //GameObject go = Instantiate(Particles, collision.gameObject.transform);
