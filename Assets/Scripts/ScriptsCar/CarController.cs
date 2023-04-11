@@ -136,7 +136,6 @@ public class CarController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        Debug.Log(IsExplosed);
         _isGrounded = false;
 
         RaycastHit hit;
