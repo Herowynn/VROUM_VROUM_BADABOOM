@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class MissileLauncherProjectile : MonoBehaviour
 {
@@ -16,39 +17,62 @@ public class MissileLauncherProjectile : MonoBehaviour
     [SerializeField] private float _lastPhaseSpeed;
     private float _stageOne = 1f;
     private float _stageTwo = 2f;
-    private int _forceAdded = 1000;
+    private int _forceAdded = 500;
     private float _dist;
-
+    private bool _isRotated = false;
     private void Start()
     {
+
         _projectileRB = GetComponent<Rigidbody>();
-        _dist = (_targetRB.transform.position - transform.position).magnitude;
+       
+        //_dist = (_targetRB.transform.position - transform.position).magnitude;
     }
 
-    public void Init(Rigidbody rb, Vector3 dir)
+    public void Init(GameObject go)
     {
-        _targetRB = rb;
-        direction = dir;
+       if(go) _targetRB = go.GetComponent<Rigidbody>();
+        direction = transform.forward;
     }
 
     void Update()
     {
         if (_clock < _stageOne)
         {
+            
             _projectileRB.AddForce(direction * _forceAdded, ForceMode.Acceleration);
             _projectileRB.velocity = Vector3.ClampMagnitude(_projectileRB.velocity, _launchingSpeed);
         }
 
-        if (_targetRB != null && _clock > _stageOne && _clock < _stageTwo)
+        if ( _clock > _stageOne && _clock < _stageTwo)
         {
-            _projectileRB.velocity = new Vector3(0, 0, 0);
-            transform.position = Vector3.Lerp(transform.position, transform.position + transform.forward * _dist, FollowSpeed * Time.deltaTime);
-            transform.LookAt(_targetRB.transform);
+            if (_targetRB != null)
+            {
+
+                _projectileRB.velocity = new Vector3(0, 0, 0);
+                transform.position = Vector3.Lerp(transform.position, _targetRB.transform.position, FollowSpeed * Time.deltaTime) ;
+                transform.LookAt(_targetRB.transform);
+            }
+            else
+            {
+                if (_isRotated == false)
+                {
+                    transform.Rotate(new Vector3(30, 0, 0));
+                    direction = transform.forward;
+                    _isRotated = true;
+                }
+                _projectileRB.AddForce(direction * -0.5f, ForceMode.Acceleration);
+            }
+            
         }
 
         if (_clock > _stageTwo)
         {
-            _projectileRB.AddForce(transform.forward * _forceAdded, ForceMode.Acceleration);
+            if(_targetRB == null && _isRotated == true)
+            {
+                transform.Rotate(30, 0, 0);
+                _isRotated = false;
+            }
+            _projectileRB.AddForce(transform.forward * _forceAdded*1.5f, ForceMode.Acceleration);
             _projectileRB.velocity = Vector3.ClampMagnitude(_projectileRB.velocity, _lastPhaseSpeed);
         }
 
