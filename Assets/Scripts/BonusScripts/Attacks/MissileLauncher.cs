@@ -16,7 +16,6 @@ public class MissileLauncher : Offensive
         GameObject closestGO = null;
         for (int i = 0; i < _colliders.Count; i++)
         {
-            
             if(closest > (_colliders[i].transform.position - GetComponentInParent<CarController>().gameObject.transform.position).magnitude)
             {
                 closest = (_colliders[i].transform.position - GetComponentInParent<CarController>().gameObject.transform.position).magnitude;
@@ -27,7 +26,7 @@ public class MissileLauncher : Offensive
        
         GameObject go = Instantiate(ProjectilePrefab, _bulletSpawnPoint.position, GetComponentInParent<CarController>().gameObject.transform.rotation);
         go.transform.parent = null;
-        go.GetComponent<MissileLauncherProjectile>().Init(closestGO);
+        go.GetComponent<MissileLauncherProjectile>().Init(closestGO, GetComponentInParent<CarController>().gameObject.transform.position);
         Destroy(gameObject);
     }
 

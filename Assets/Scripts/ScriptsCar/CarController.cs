@@ -31,11 +31,13 @@ public class CarController : MonoBehaviour
 
     public bool HitBySaw = false;
     public bool IsBumped;
+    public bool IsExplosed;
     public bool IsTouchedByMachineGun;
     public bool IsSlowed = false;
     public int BumpForce = 10000;
     public int ProjectileForce = 100;
     public Vector3 BumpDirection;
+    public Vector3 ExplosionDirection;
     public Vector3 ProjectileDirection;
 
     public GameObject Arrow;
@@ -134,6 +136,7 @@ public class CarController : MonoBehaviour
 
     private void FixedUpdate()
     {
+        Debug.Log(IsExplosed);
         _isGrounded = false;
 
         RaycastHit hit;
@@ -153,12 +156,23 @@ public class CarController : MonoBehaviour
         if (HitBySaw && _isGrounded)
         {
             SphereRB.AddForce(transform.up * 20000, ForceMode.Impulse);
-            StartCoroutine(WaitBeforeHitSawEnd());
+            StartCoroutine(WaitBeforeSawEnd());
         }
 
         if (HitBySaw && !_isGrounded)
         {
             transform.Rotate(30 * new Vector3(0, 1, 0));
+        }
+
+        if(IsExplosed && _isGrounded) 
+        {
+            SphereRB.AddForce((ExplosionDirection + new Vector3(0, 100, 0)) * 200, ForceMode.Impulse);
+            StartCoroutine(WaitBeforeMissileEnd());
+        }
+
+        if (IsExplosed && !_isGrounded)
+        {
+            transform.Rotate(30 * new Vector3(1, 0, 0));
         }
 
         if (_isGrounded)
@@ -185,16 +199,21 @@ public class CarController : MonoBehaviour
 
         if (IsTouchedByMachineGun)
         {
-            Debug.Log("Salut !");
             SphereRB.AddForce(ProjectileDirection * ProjectileForce, ForceMode.Impulse);
             IsTouchedByMachineGun = false;
         }
     }
 
-    IEnumerator WaitBeforeHitSawEnd()
+    IEnumerator WaitBeforeSawEnd()
     {
         yield return new WaitForSeconds(1.2f);
         HitBySaw = false;
+    }
+    
+    IEnumerator WaitBeforeMissileEnd()
+    {
+        yield return new WaitForSeconds(1.2f);
+        IsExplosed = false;
     }
 
     private void OnCollisionEnter(Collision collision)

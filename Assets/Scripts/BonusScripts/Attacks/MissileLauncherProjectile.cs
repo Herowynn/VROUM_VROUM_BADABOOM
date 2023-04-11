@@ -9,17 +9,16 @@ public class MissileLauncherProjectile : MonoBehaviour
     public float _clock;
 
 
-    private Rigidbody _targetRB;
-    private Rigidbody _projectileRB;
-    private Vector3 direction;
-
+    Rigidbody _targetRB;
+    Rigidbody _projectileRB;
+    Vector3 _direction;
     [SerializeField] float _launchingSpeed;
     [SerializeField] float _lastPhaseSpeed;
     float _stageOne = 1f;
     float _stageTwo = 2f;
-    int _forceAdded = 500;
     float _dist;
     bool _isRotated = false;
+    Vector3 _explosionDir;
 
     private void Start()
     {
@@ -28,10 +27,11 @@ public class MissileLauncherProjectile : MonoBehaviour
         //_dist = (_targetRB.transform.position - transform.position).magnitude;
     }
 
-    public void Init(GameObject go)
+    public void Init(GameObject go, Vector3 explodeDir)
     {
        if(go) _targetRB = go.GetComponent<Rigidbody>();
-        direction = transform.forward;
+        _direction = transform.forward;
+        _explosionDir = explodeDir;
     }
 
     void Update()
@@ -39,7 +39,7 @@ public class MissileLauncherProjectile : MonoBehaviour
         if (_clock < _stageOne)
         {
             
-            _projectileRB.AddForce(direction * _forceAdded, ForceMode.Acceleration);
+            _projectileRB.AddForce(_direction, ForceMode.Acceleration);
             _projectileRB.velocity = Vector3.ClampMagnitude(_projectileRB.velocity, _launchingSpeed);
         }
 
@@ -57,10 +57,10 @@ public class MissileLauncherProjectile : MonoBehaviour
                 if (_isRotated == false)
                 {
                     transform.Rotate(new Vector3(30, 0, 0));
-                    direction = transform.forward;
+                    _direction = transform.forward;
                     _isRotated = true;
                 }
-                _projectileRB.AddForce(direction * -0.5f, ForceMode.Acceleration);
+                _projectileRB.AddForce(_direction * -0.5f, ForceMode.Acceleration);
             }
             
         }
@@ -72,10 +72,24 @@ public class MissileLauncherProjectile : MonoBehaviour
                 transform.Rotate(30, 0, 0);
                 _isRotated = false;
             }
-            _projectileRB.AddForce(transform.forward * _forceAdded*1.5f, ForceMode.Acceleration);
+            _projectileRB.AddForce(transform.forward * 1.5f, ForceMode.Acceleration);
             _projectileRB.velocity = Vector3.ClampMagnitude(_projectileRB.velocity, _lastPhaseSpeed);
         }
 
         _clock += Time.deltaTime;
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        Vector3 dir = other.transform.position - _explosionDir;
+
+        if (other.gameObject.TryGetComponent<CarController>(out var carControl))
+        {
+            carControl.ExplosionDirection = dir;
+            carControl.IsExplosed = true;
+            Destroy(gameObject);
+        }
+
+        
     }
 }
