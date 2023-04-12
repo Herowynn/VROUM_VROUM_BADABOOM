@@ -202,6 +202,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PlayerVisual: {fileID: 8360531785050185893}
+  Position: {fileID: 8360531785735270110}
 --- !u!1 &8360531785735270112
 GameObject:
   m_ObjectHideFlags: 0

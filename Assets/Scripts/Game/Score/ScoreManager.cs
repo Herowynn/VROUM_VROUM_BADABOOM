@@ -56,7 +56,7 @@ public class ScoreManager : MonoBehaviour
             if (player1.Score == null && player2.Score == null) return 0;
             else if (player1.Score == null) return -1;
             else if (player2.Score == null) return 1;
-            else return player1.Score.CompareTo(player2.Score);
+            else return -player1.Score.CompareTo(player2.Score);
         });
     }
 }
