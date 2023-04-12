@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class ScoreManager : MonoBehaviour
 {
@@ -10,20 +11,20 @@ public class ScoreManager : MonoBehaviour
     public int PointsToWin;
     
     //intern var
-    private List<PlayerController> _players;
+    public List<PlayerController> Players;
 
     public void InitiatePlayersForCurrentMatch()
     {
-        _players = new List<PlayerController>();
+        Players = new List<PlayerController>();
         foreach (var playerGo in GameManager.Instance.PlayersManager.Players)
         {
-            _players.Add(playerGo.GetComponent<PlayerController>());
+            Players.Add(playerGo.GetComponent<PlayerController>());
         }
     }
     
     public bool IsFinished()
     {
-        foreach (var player in _players)
+        foreach (var player in Players)
         {
             if (player.Score >= PointsToWin)
             {
@@ -36,7 +37,7 @@ public class ScoreManager : MonoBehaviour
 
     public void AddScoreToAlivePlayers()
     {
-        foreach (var player in _players)
+        foreach (var player in Players)
         {
             if (player.PlayerState == PlayerState.ALIVE)
             {
@@ -46,5 +47,16 @@ public class ScoreManager : MonoBehaviour
         
         if (IsFinished())
             GameManager.Instance.TriggerEndGameAfterRoundEvent();
+    }
+
+    public void OrderPlayersAccordingToScore()
+    {
+        Players.Sort(delegate(PlayerController player1, PlayerController player2)
+        {
+            if (player1.Score == null && player2.Score == null) return 0;
+            else if (player1.Score == null) return -1;
+            else if (player2.Score == null) return 1;
+            else return -player1.Score.CompareTo(player2.Score);
+        });
     }
 }

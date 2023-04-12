@@ -79,6 +79,7 @@ public class GameManager : MonoBehaviour
     public void LoadEndGame()
     {
         GameState = GameState.POST_GAME;
+        ScoreManager.OrderPlayersAccordingToScore();
         UIManager.TriggerEndGameUi();
     }
 
