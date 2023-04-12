@@ -20,18 +20,14 @@ public class GameManager : MonoBehaviour
     [Header("Instance")]
     public MultipleInputManager MultipleInputManager;
     public UIManager UIManager;
-    public GameObject PlayerControllerPrefab;
-    public GameObject PlayerKeyboardPrefab;
-    public GameObject PlayerContainer;
     public CameraController Camera;
     public ScoreManager ScoreManager;
     public RoundManager RoundManager;
     public MapManager MapManager;
+    public PlayersManager PlayersManager;
 
     [Header("Info")]
     public GameState GameState;
-    public List<GameObject> Players;
-    public GameObject[] StartPositions;
 
     private void Start()
     {
@@ -99,39 +95,23 @@ public class GameManager : MonoBehaviour
         if (needKeyboard)
         {
             startIndex = 1;
-            CreateNewPlayer(true, startPositionIndex);
+            PlayersManager.CreateNewPlayer(true, startPositionIndex);
             startPositionIndex++;
         }
 
         for (int i = startIndex; i < nbPlayer; i++)
         {
-            CreateNewPlayer(false, startPositionIndex);
+            PlayersManager.CreateNewPlayer(false, startPositionIndex);
             startPositionIndex++;
         }
         
         ScoreManager.InitiatePlayersForCurrentMatch();
     }
     
-    private void CreateNewPlayer(bool playerUseKeyboard, int startPositionIndex)
-    {
-        if (playerUseKeyboard)
-        {
-            Players.Add(Instantiate(PlayerKeyboardPrefab, MapManager.CurrentMap.StartPositions[startPositionIndex].transform.position, Quaternion.identity, PlayerContainer.transform));
-        }
-        else
-        {
-            Players.Add(Instantiate(PlayerControllerPrefab, MapManager.CurrentMap.StartPositions[startPositionIndex].transform.position, Quaternion.identity, PlayerContainer.transform));
-        }
-    }
 
     private void DestroyPlayersInstance()
     {
-        foreach (var player in Players)
-        {
-            Destroy(player);
-        }
-
-        Players = new List<GameObject>();
+        PlayersManager.DestroyPlayers();
     }
 
     public void TriggerPlayerDestructionEvent(PlayerController player)

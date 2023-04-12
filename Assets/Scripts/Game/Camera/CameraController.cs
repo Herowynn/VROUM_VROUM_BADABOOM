@@ -31,10 +31,7 @@ public class CameraController : MonoBehaviour
 
     public void AddTargets()
     {
-        foreach (var player in GameManager.Instance.Players)
-        {
-            if (!Targets.Contains(player)) Targets.Add(player);
-        }
+        Targets = GameManager.Instance.PlayersManager.Players;
     }
     
     private void Move()

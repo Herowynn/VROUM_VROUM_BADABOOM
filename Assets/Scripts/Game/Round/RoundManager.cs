@@ -27,7 +27,7 @@ public class RoundManager : MonoBehaviour
     {
         yield return new WaitForSeconds(TimeToRestartRound);
         
-        PlayersAlive = GameManager.Instance.Players.Count;
+        PlayersAlive = GameManager.Instance.PlayersManager.Players.Count;
         RoundNumber++;
         GameManager.Instance.GameState = GameState.RACING;
     }
@@ -79,7 +79,7 @@ public class RoundManager : MonoBehaviour
 
     private void GetRoundWinner()
     {
-        foreach (var player in GameManager.Instance.Players)
+        foreach (var player in GameManager.Instance.PlayersManager.Players)
         {
             if (player.GetComponent<PlayerController>().PlayerState == PlayerState.ALIVE)
             {

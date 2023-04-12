@@ -15,7 +15,7 @@ public class ScoreManager : MonoBehaviour
     public void InitiatePlayersForCurrentMatch()
     {
         _players = new List<PlayerController>();
-        foreach (var playerGo in GameManager.Instance.Players)
+        foreach (var playerGo in GameManager.Instance.PlayersManager.Players)
         {
             _players.Add(playerGo.GetComponent<PlayerController>());
         }
