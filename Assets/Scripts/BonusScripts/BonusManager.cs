@@ -43,6 +43,7 @@ public class BonusManager : MonoBehaviour
         SpawnPosition += CarPrefab.transform.forward * 3;
         SpawnPosition += CarPrefab.transform.position;
         GameObject go = null;
+
         switch (rndBonusType)
         {
             case 0:

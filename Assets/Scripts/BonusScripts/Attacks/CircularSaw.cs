@@ -8,11 +8,33 @@ public class CircularSaw : Offensive
 
     public GameObject ProjectilePrefab;
 
+    [Header("Audio")]
+    public AudioClip HatchOpenSound;
+    public AudioClip LaunchSawSound;
+    AudioSource _source;
+
+    private void Awake()
+    {
+        _source = gameObject.AddComponent<AudioSource>();
+
+        _source.clip = HatchOpenSound;
+        _source.Play();
+    }
+
     public override void Shoot()
     {
+        _source.clip = LaunchSawSound;
+        _source.Play();
+
         GameObject go = Instantiate(ProjectilePrefab, _bulletSpawnPoint);
         go.transform.parent = null;
-        go.GetComponent<SawProjectile>().Init(GetComponentInParent<CarController>().gameObject.transform.forward);
+        go.GetComponent<SawProjectile>().Init(GetComponentInParent<CarController>().gameObject.transform.forward, GetComponentInParent<CarController>().CarLayerMask);
+        StartCoroutine(WaitBeforeDestroy(go));
+    }
+
+    IEnumerator WaitBeforeDestroy(GameObject go)
+    {
+        yield return new WaitForSeconds(.2f);
         Destroy(gameObject);
     }
 }

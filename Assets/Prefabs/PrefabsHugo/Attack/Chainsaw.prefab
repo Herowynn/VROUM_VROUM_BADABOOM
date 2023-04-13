@@ -176,3 +176,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _bulletSpawnPoint: {fileID: 6967354550390192128}
   ProjectilePrefab: {fileID: 7268142907401930467, guid: 0ca9f05831e65cb4398287c4ad8c7969, type: 3}
+  HatchOpenSound: {fileID: 8300000, guid: 50f960d75e4aa044396bf341d0a8d21f, type: 3}
+  LaunchSawSound: {fileID: 8300000, guid: 518ec5805c7c74e43a2c050445a06f25, type: 3}

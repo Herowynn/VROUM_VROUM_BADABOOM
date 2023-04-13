@@ -12,8 +12,12 @@ public class CarController : MonoBehaviour
     public float dragInTheAir;
     public float wheelTurnSpeed;
     public float additionalEarthGravity;
+    public float SlowFactor = 1f;
 
-    public LayerMask groundMask;
+    public LayerMask GroundLayerMask;
+    public LayerMask CarLayerMask;
+    public LayerMask CarSphereLayerMask;
+    public LayerMask BonusLayerMask;
     public int groundLayerNumber;
     public float arrayRayLength;
     public Transform RayPoint;
@@ -23,8 +27,18 @@ public class CarController : MonoBehaviour
     public GameObject LeftFrontWheel;
 
     public float MaxWheelTurn = 25f;
-
     public float WheelRotation = 50f;
+
+    public bool HitBySaw = false;
+    public bool IsBumped;
+    public bool IsExplosed;
+    public bool IsTouchedByMachineGun;
+    public bool IsSlowed = false;
+    public int BumpForce = 10000;
+    public int ProjectileForce = 100;
+    public Vector3 BumpDirection;
+    public Vector3 ExplosionDirection;
+    public Vector3 ProjectileDirection;
 
     public GameObject Arrow;
     public GameObject ArrowRotationCenter;
@@ -35,15 +49,23 @@ public class CarController : MonoBehaviour
     public GameObject[] BoostList;
 
 
-    private float _speedInput;
-    private bool _isGrounded;
-    private bool _canMove;
-    private Vector3 _distArrowRayPoint;
-    private Vector3 _wantedDirection;
-    private float _yComponentWantedDirection;
-    private Vector3 _carAltitudeOffset;
+    float _speedInput;
+    bool _isGrounded;
+    bool _canMove;
+    Vector3 _distArrowRayPoint;
+    Vector3 _wantedDirection;
+    float _yComponentWantedDirection;
+    Vector3 _carAltitudeOffset;
 
-    private int _counter = 0;
+    int _counter = 0;
+
+    [Header("Audio")]
+    public AudioSource Source;
+
+    private void Awake()
+    {
+        Source = GetComponent<AudioSource>();
+    }
 
     private void Start()
     {
@@ -115,7 +137,7 @@ public class CarController : MonoBehaviour
         {
             if (BoostObject.transform.GetComponentInChildren<Booster>()) 
             {
-                BoostObject.transform.GetChild(0).GetComponent<Booster>().Boost(SphereRB, this.gameObject);
+                BoostObject.transform.GetChild(0).GetComponent<Booster>().Boost(SphereRB, gameObject);
             }
         }
     }
@@ -126,7 +148,7 @@ public class CarController : MonoBehaviour
 
         RaycastHit hit;
 
-        if (Physics.Raycast(RayPoint.position, -transform.up, out hit, arrayRayLength, groundMask))
+        if (Physics.Raycast(RayPoint.position, -transform.up, out hit, arrayRayLength, GroundLayerMask))
         {
             _isGrounded = true;
 
@@ -138,6 +160,28 @@ public class CarController : MonoBehaviour
                 _yComponentWantedDirection = transform.forward.y;
         }
 
+        if (HitBySaw && _isGrounded)
+        {
+            SphereRB.AddForce(transform.up * 20000, ForceMode.Impulse);
+            StartCoroutine(WaitBeforeSawEnd());
+        }
+
+        if (HitBySaw && !_isGrounded)
+        {
+            transform.Rotate(30 * new Vector3(0, 1, 0));
+        }
+
+        if(IsExplosed && _isGrounded) 
+        {
+            SphereRB.AddForce((ExplosionDirection + new Vector3(0, 100, 0)) * 200, ForceMode.Impulse);
+            StartCoroutine(WaitBeforeMissileEnd());
+        }
+
+        if (IsExplosed && !_isGrounded)
+        {
+            transform.Rotate(30 * new Vector3(1, 0, 0));
+        }
+
         if (_isGrounded)
         {
             SphereRB.drag = dragOnGround;
@@ -145,7 +189,7 @@ public class CarController : MonoBehaviour
             if (Mathf.Abs(_speedInput) > 0f && _canMove)
             {
                 SphereRB.AddForce(_wantedDirection * _speedInput);
-                SphereRB.velocity = Vector3.ClampMagnitude(SphereRB.velocity, maximumSpeed);
+                SphereRB.velocity = Vector3.ClampMagnitude(SphereRB.velocity, maximumSpeed * SlowFactor);
             }
         }
         else
@@ -153,6 +197,30 @@ public class CarController : MonoBehaviour
             SphereRB.drag = dragInTheAir;
             SphereRB.AddForce(new Vector3(0, -1, 0) * SphereRB.mass * additionalEarthGravity * 9.8f);
         }
+
+        if (IsBumped)
+        {
+            SphereRB.AddForce(BumpDirection * BumpForce, ForceMode.Impulse);
+            IsBumped = false;
+        }
+
+        if (IsTouchedByMachineGun)
+        {
+            SphereRB.AddForce(ProjectileDirection * ProjectileForce, ForceMode.Impulse);
+            IsTouchedByMachineGun = false;
+        }
+    }
+
+    IEnumerator WaitBeforeSawEnd()
+    {
+        yield return new WaitForSeconds(1.2f);
+        HitBySaw = false;
+    }
+    
+    IEnumerator WaitBeforeMissileEnd()
+    {
+        yield return new WaitForSeconds(1.2f);
+        IsExplosed = false;
     }
 
     private void OnCollisionEnter(Collision collision)

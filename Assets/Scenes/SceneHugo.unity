@@ -195,8 +195,24 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8470477559293409357, guid: 88bed7e26c1dc3e44839fb03cafc3de0, type: 3}
+      propertyPath: CarLayerMask.m_Bits
+      value: 128
+      objectReference: {fileID: 0}
+    - target: {fileID: 8470477559293409357, guid: 88bed7e26c1dc3e44839fb03cafc3de0, type: 3}
+      propertyPath: BonusLayerMask.m_Bits
+      value: 512
+      objectReference: {fileID: 0}
+    - target: {fileID: 8470477559293409357, guid: 88bed7e26c1dc3e44839fb03cafc3de0, type: 3}
+      propertyPath: GroundLayerMask.m_Bits
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 8470477559293409357, guid: 88bed7e26c1dc3e44839fb03cafc3de0, type: 3}
       propertyPath: additionalEarthGravity
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8470477559293409357, guid: 88bed7e26c1dc3e44839fb03cafc3de0, type: 3}
+      propertyPath: CarSphereLayerMask.m_Bits
+      value: 256
       objectReference: {fileID: 0}
     - target: {fileID: 8470477559293409358, guid: 88bed7e26c1dc3e44839fb03cafc3de0, type: 3}
       propertyPath: m_Name
@@ -206,6 +222,10 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 1414840159}
+    - target: {fileID: 8470477559953587816, guid: 88bed7e26c1dc3e44839fb03cafc3de0, type: 3}
+      propertyPath: m_VersionIndex
+      value: 1150
+      objectReference: {fileID: 0}
     - target: {fileID: 8470477559953587819, guid: 88bed7e26c1dc3e44839fb03cafc3de0, type: 3}
       propertyPath: m_Mesh
       value: 
@@ -282,7 +302,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-4858
+  m_Name: pb_Mesh-22476
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -754,6 +774,22 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8470477559293409357, guid: 88bed7e26c1dc3e44839fb03cafc3de0, type: 3}
+      propertyPath: CarLayerMask.m_Bits
+      value: 128
+      objectReference: {fileID: 0}
+    - target: {fileID: 8470477559293409357, guid: 88bed7e26c1dc3e44839fb03cafc3de0, type: 3}
+      propertyPath: BonusLayerMask.m_Bits
+      value: 512
+      objectReference: {fileID: 0}
+    - target: {fileID: 8470477559293409357, guid: 88bed7e26c1dc3e44839fb03cafc3de0, type: 3}
+      propertyPath: GroundLayerMask.m_Bits
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 8470477559293409357, guid: 88bed7e26c1dc3e44839fb03cafc3de0, type: 3}
+      propertyPath: CarSphereLayerMask.m_Bits
+      value: 256
+      objectReference: {fileID: 0}
     - target: {fileID: 8470477559293409358, guid: 88bed7e26c1dc3e44839fb03cafc3de0, type: 3}
       propertyPath: m_Name
       value: NewCar
@@ -762,6 +798,10 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 651028562}
+    - target: {fileID: 8470477559953587816, guid: 88bed7e26c1dc3e44839fb03cafc3de0, type: 3}
+      propertyPath: m_VersionIndex
+      value: 1150
+      objectReference: {fileID: 0}
     - target: {fileID: 8470477559953587819, guid: 88bed7e26c1dc3e44839fb03cafc3de0, type: 3}
       propertyPath: m_Mesh
       value: 
@@ -1120,7 +1160,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-5806
+  m_Name: pb_Mesh-22364
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2

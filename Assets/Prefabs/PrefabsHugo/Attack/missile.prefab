@@ -66,8 +66,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   FollowSpeed: 3
   _clock: 0
-  _launchingSpeed: 0.05
+  _launchingSpeed: 0.005
   _lastPhaseSpeed: 0.15
+  MissileFlySound: {fileID: 8300000, guid: f45424f2a0f24814da7d29e863f7c478, type: 3}
+  MissileExplosionSounds:
+  - {fileID: 8300000, guid: dc39f4345c9a1584eb3f4029c4d7eae4, type: 3}
+  - {fileID: 8300000, guid: b7a6457395ae35443bb7d487dcefd16a, type: 3}
+  - {fileID: 8300000, guid: c595802930b8e0c4ba832850451419dd, type: 3}
 --- !u!54 &8802755223812433066
 Rigidbody:
   m_ObjectHideFlags: 0
