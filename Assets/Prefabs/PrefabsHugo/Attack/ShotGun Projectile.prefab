@@ -127,5 +127,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 40c10bf153393bb4896b0a0ff21a3b6b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  GroundLayerMask:
+    serializedVersion: 2
+    m_Bits: 8
   _speed: 1000
   _carControl: {fileID: 0}
+  ShootSound: {fileID: 8300000, guid: 5070e6faba10bf74d969753d48c0990e, type: 3}
+  BounceSounds:
+  - {fileID: 8300000, guid: 4879fb699da284e49826e8f21656b832, type: 3}
+  - {fileID: 8300000, guid: 06b5d75e4849f4e4d91b9b20c0fce1a4, type: 3}
+  - {fileID: 8300000, guid: a1e2ae6197a0b7b46b0e861ca27c4e49, type: 3}
+  - {fileID: 8300000, guid: 206982d97d5e22246a87f3cfa6278aeb, type: 3}
