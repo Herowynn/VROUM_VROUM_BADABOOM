@@ -20,6 +20,16 @@ public class MissileLauncherProjectile : MonoBehaviour
     bool _isRotated = false;
     Vector3 _explosionDir;
 
+    [Header("Audio")]
+    public AudioClip MissileFlySound;
+    public AudioClip[] MissileExplosionSounds;
+    AudioSource _source;
+
+    private void Awake()
+    {
+        _source = gameObject.AddComponent<AudioSource>();
+    }
+
     private void Start()
     {
         _projectileRB = GetComponent<Rigidbody>();
@@ -29,7 +39,13 @@ public class MissileLauncherProjectile : MonoBehaviour
 
     public void Init(GameObject go, Vector3 explodeDir)
     {
-       if(go) _targetRB = go.GetComponent<Rigidbody>();
+        _source.clip = MissileFlySound;
+        _source.loop = true;
+        _source.Play();
+
+       if(go) 
+            _targetRB = go.GetComponent<Rigidbody>();
+
         _direction = transform.forward;
         _explosionDir = explodeDir;
     }
@@ -85,6 +101,10 @@ public class MissileLauncherProjectile : MonoBehaviour
 
         if (other.gameObject.TryGetComponent<CarController>(out var carControl))
         {
+            carControl.Source.clip = MissileExplosionSounds[Random.Range(0, MissileExplosionSounds.Length)];
+            carControl.Source.loop = false;
+            carControl.Source.Play();
+
             carControl.ExplosionDirection = dir;
             carControl.IsExplosed = true;
             Destroy(gameObject);

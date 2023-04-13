@@ -59,6 +59,14 @@ public class CarController : MonoBehaviour
 
     int _counter = 0;
 
+    [Header("Audio")]
+    public AudioSource Source;
+
+    private void Awake()
+    {
+        Source = GetComponent<AudioSource>();
+    }
+
     private void Start()
     {
         SphereRB.transform.parent = null;
