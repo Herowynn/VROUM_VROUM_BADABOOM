@@ -132,6 +132,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _speed: 2500
   SawFlySound: {fileID: 8300000, guid: 306b8d1b48f6a0b4f989419c2a36422d, type: 3}
+  SawHitCarSounds:
+  - {fileID: 8300000, guid: 8eb8ad430d73d604d8eb5c98981c772c, type: 3}
+  - {fileID: 8300000, guid: 5c9be72640780c1408bcf1141de98936, type: 3}
+  - {fileID: 8300000, guid: 01485be188c968145afccd3df545df75, type: 3}
+  - {fileID: 8300000, guid: 5eb30e30478e9244082c89e4e7b27cf2, type: 3}
 --- !u!54 &-6035449086810118024
 Rigidbody:
   m_ObjectHideFlags: 0

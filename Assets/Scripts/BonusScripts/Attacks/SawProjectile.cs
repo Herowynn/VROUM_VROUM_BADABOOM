@@ -9,6 +9,7 @@ public class SawProjectile : MonoBehaviour
 
     [Header("Audio")]
     public AudioClip SawFlySound;
+    public AudioClip[] SawHitCarSounds;
     AudioSource _source;
 
     private void Awake()
@@ -35,6 +36,10 @@ public class SawProjectile : MonoBehaviour
     {
         if(other.gameObject.TryGetComponent<CarController>(out var carController))
         {
+            carController.Source.clip = SawHitCarSounds[Random.Range(0, SawHitCarSounds.Length)];
+            carController.Source.loop = false;
+            carController.Source.Play();
+
             carController.HitBySaw = true;
             Destroy(gameObject);
         }
