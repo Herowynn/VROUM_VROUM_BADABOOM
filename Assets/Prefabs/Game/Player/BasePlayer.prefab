@@ -162,17 +162,73 @@ MonoBehaviour:
     m_ActionId: ab2de6d0-9275-4ced-9bce-9979f041fd57
     m_ActionName: Player/Join[/XInputControllerWindows/start,/Keyboard/space]
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 8767379716924850012}
+        m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
+        m_MethodName: OnBoost
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: 220c86e1-bac9-4e16-8e84-2fe6e41fac42
     m_ActionName: Player/Boost[/Keyboard/e,/XInputControllerWindows/buttonSouth]
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 8767379716924850012}
+        m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
+        m_MethodName: OnAttack
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: 3ddea4ae-d780-44da-9332-2444e34891f6
     m_ActionName: Player/Attack[/Keyboard/q,/XInputControllerWindows/buttonEast]
   - m_PersistentCalls:
       m_Calls: []
     m_ActionId: 3b3194fb-19d1-4f2c-9bf0-6232e991aff2
     m_ActionName: Player/Pause[/Keyboard/escape,/XInputControllerWindows/select]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 8767379716924850012}
+        m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
+        m_MethodName: OnNewBoost
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: b5b6a400-3b9f-4bcc-9136-33c77ac59b8e
+    m_ActionName: Player/Test[/Keyboard/z]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 8767379716924850012}
+        m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
+        m_MethodName: OnNewWeapon
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 917964c2-88ad-4e97-8d56-8f904c560532
+    m_ActionName: Player/Test2[/Keyboard/x]
   m_NeverAutoSwitchControlSchemes: 1
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
@@ -190,4 +246,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 358721866d73e6c4dbb8bd6843b7fa74, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Color: {r: 0, g: 0, b: 0, a: 0}
   speed: 5
+  PlayerState: 0
+  Score: 0
+  PointsUI: {fileID: 0}
+  ProfileUI: {fileID: 0}

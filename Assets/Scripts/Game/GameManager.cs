@@ -20,15 +20,14 @@ public class GameManager : MonoBehaviour
     [Header("Instance")]
     public MultipleInputManager MultipleInputManager;
     public UIManager UIManager;
-    public GameObject PlayerControllerPrefab;
-    public GameObject PlayerKeyboardPrefab;
-    public GameObject PlayerContainer;
     public CameraController Camera;
+    public ScoreManager ScoreManager;
+    public RoundManager RoundManager;
+    public MapManager MapManager;
+    public PlayersManager PlayersManager;
 
     [Header("Info")]
     public GameState GameState;
-    public List<GameObject> Players;
-    public GameObject[] StartPositions;
 
     private void Start()
     {
@@ -53,12 +52,13 @@ public class GameManager : MonoBehaviour
     
     public void StartGame()
     {
-        GameState = GameState.RACING;
         UIManager.TriggerStartGameUi();
-        
+
         InstantiatePlayers(MultipleInputManager.NeedKeyboard, MultipleInputManager.NumberOfPlayer);
-        
+
         Camera.AddTargets();
+        
+        StartCoroutine(RoundManager.StartRound());
     }
 
     public void ResumeGame()
@@ -70,10 +70,17 @@ public class GameManager : MonoBehaviour
     public void ReturnToMenu()
     {
         GameState = GameState.PRE_GAME;
-        DestroyPlayers();
+        DestroyPlayersInstance();
         UIManager.InputMenuUI.DestroyPlayersInput();
         
         SceneManager.Instance.LoadMenu();
+    }
+
+    public void LoadEndGame()
+    {
+        GameState = GameState.POST_GAME;
+        ScoreManager.OrderPlayersAccordingToScore();
+        UIManager.TriggerEndGameUi();
     }
 
     #endregion
@@ -89,38 +96,53 @@ public class GameManager : MonoBehaviour
         if (needKeyboard)
         {
             startIndex = 1;
-            CreateNewPlayer(true, startPositionIndex);
+            PlayersManager.CreateNewPlayer(true, startPositionIndex);
             startPositionIndex++;
         }
 
         for (int i = startIndex; i < nbPlayer; i++)
         {
-            CreateNewPlayer(false, startPositionIndex);
+            PlayersManager.CreateNewPlayer(false, startPositionIndex);
             startPositionIndex++;
         }
+        
+        ScoreManager.InitiatePlayersForCurrentMatch();
     }
     
-    private void CreateNewPlayer(bool playerUseKeyboard, int startPositionIndex)
+
+    private void DestroyPlayersInstance()
     {
-        if (playerUseKeyboard)
-        {
-            Players.Add(Instantiate(PlayerKeyboardPrefab, StartPositions[startPositionIndex].transform.position, Quaternion.identity, PlayerContainer.transform));
-        }
-        else
-        {
-            Players.Add(Instantiate(PlayerControllerPrefab, StartPositions[startPositionIndex].transform.position, Quaternion.identity, PlayerContainer.transform));
-        }
+        PlayersManager.DestroyPlayers();
     }
 
-    private void DestroyPlayers()
+    public void TriggerPlayerDestructionEvent(PlayerController player)
     {
-        foreach (var player in Players)
-        {
-            Destroy(player);
-        }
-
-        Players = new List<GameObject>();
+        RoundManager.PlayerDiedEvent(player);
     }
-        
+
+    public void TriggerScoreAddEvent()
+    {
+        ScoreManager.AddScoreToAlivePlayers();
+    }
+
+    public void TriggerEndGameAfterRoundEvent()
+    {
+        RoundManager.GameFinished = true;
+    }
+
+    public void TriggerEndGameEvent()
+    {
+        LoadEndGame();
+    }
+    
+    #endregion
+
+    #region UI
+
+    public void TriggerUiCreationForPlayerEvent(PlayerController playerInstance)
+    {
+        UIManager.GameUI.CreateUisForPlayer(playerInstance);
+    }
+
     #endregion
 }

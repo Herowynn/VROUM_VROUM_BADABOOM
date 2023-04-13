@@ -7,9 +7,29 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 8767379716924849985, guid: 1a10a352fd94157458c406cb12e6575d, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: cdca1b5b4fb5ca642aaecde0a7f330f2, type: 2}
     - target: {fileID: 8767379716924849987, guid: 1a10a352fd94157458c406cb12e6575d, type: 3}
       propertyPath: m_Name
       value: KeyboardPlayer
+      objectReference: {fileID: 0}
+    - target: {fileID: 8767379716924850012, guid: 1a10a352fd94157458c406cb12e6575d, type: 3}
+      propertyPath: Color.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8767379716924850012, guid: 1a10a352fd94157458c406cb12e6575d, type: 3}
+      propertyPath: Color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8767379716924850012, guid: 1a10a352fd94157458c406cb12e6575d, type: 3}
+      propertyPath: Color.g
+      value: 0.16342616
+      objectReference: {fileID: 0}
+    - target: {fileID: 8767379716924850012, guid: 1a10a352fd94157458c406cb12e6575d, type: 3}
+      propertyPath: Color.r
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8767379716924850013, guid: 1a10a352fd94157458c406cb12e6575d, type: 3}
       propertyPath: m_DefaultControlScheme
