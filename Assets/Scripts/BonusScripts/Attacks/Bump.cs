@@ -5,13 +5,13 @@ using UnityEngine.UIElements;
 
 public class Bump : Offensive
 {
-    GameObject _bumpEffect;
-    CarController _carControl;
-    int _ground;
-    List<Collider> _colliders = new List<Collider>();
+    private GameObject _bumpEffect;
+    private CarController _carControl;
+    private int _ground;
+    private List<Collider> _colliders = new List<Collider>();
 
     [Header("Audio")]
-    AudioSource _source;
+    private AudioSource _source;
     public AudioClip SonicShotSound;
 
     private void Awake()
@@ -29,8 +29,8 @@ public class Bump : Offensive
 
     public override void Shoot()
     {
-        _bumpEffect.SetActive(true);
-
+/*        _bumpEffect.SetActive(true);
+*/
         _source.clip = SonicShotSound;
         _source.Play();
 
@@ -45,8 +45,6 @@ public class Bump : Offensive
                     _carControl.IsBumped = true;
                     _carControl.BumpDirection = dir;
                 }
-                    
-
                 else if(collider.gameObject.TryGetComponent<Bonus>(out var bonus))
                     bonus.GetComponent<Rigidbody>().AddForce(dir * 10, ForceMode.Impulse);
             }

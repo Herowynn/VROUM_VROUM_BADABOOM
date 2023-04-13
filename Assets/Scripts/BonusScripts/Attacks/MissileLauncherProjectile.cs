@@ -6,24 +6,24 @@ using UnityEngine.UIElements;
 public class MissileLauncherProjectile : MonoBehaviour
 {
     public float FollowSpeed;
-    public float _clock;
 
-
-    Rigidbody _targetRB;
-    Rigidbody _projectileRB;
-    Vector3 _direction;
-    [SerializeField] float _launchingSpeed;
-    [SerializeField] float _lastPhaseSpeed;
-    float _stageOne = 1f;
-    float _stageTwo = 2f;
-    float _dist;
-    bool _isRotated = false;
-    Vector3 _explosionDir;
+    [SerializeField] private float _launchingSpeed;
+    [SerializeField] private float _lastPhaseSpeed;
+    private Rigidbody _targetRB;
+    private Rigidbody _projectileRB;
+    private Vector3 _direction;
+    private float _stageOne = 1f;
+    private float _stageTwo = 2f;
+    private float _dist;
+    private bool _isRotated = false;
+    private Vector3 _explosionDir;
+    private float _clock;
+    private float _actualSpeed;
 
     [Header("Audio")]
     public AudioClip MissileFlySound;
     public AudioClip[] MissileExplosionSounds;
-    AudioSource _source;
+    private AudioSource _source;
 
     private void Awake()
     {
@@ -33,6 +33,7 @@ public class MissileLauncherProjectile : MonoBehaviour
     private void Start()
     {
         _projectileRB = GetComponent<Rigidbody>();
+        _clock = 0;
        
         //_dist = (_targetRB.transform.position - transform.position).magnitude;
     }
@@ -50,20 +51,18 @@ public class MissileLauncherProjectile : MonoBehaviour
         _explosionDir = explodeDir;
     }
 
-    void Update()
+    private void FixedUpdate()
     {
         if (_clock < _stageOne)
         {
-            
-            _projectileRB.AddForce(_direction, ForceMode.Acceleration);
-            _projectileRB.velocity = Vector3.ClampMagnitude(_projectileRB.velocity, _launchingSpeed);
+            _projectileRB.AddForce(_direction * 500f);
+            _actualSpeed = _launchingSpeed;
         }
 
         if ( _clock > _stageOne && _clock < _stageTwo)
         {
             if (_targetRB != null)
             {
-
                 _projectileRB.velocity = new Vector3(0, 0, 0);
                 transform.position = Vector3.Lerp(transform.position, _targetRB.transform.position, FollowSpeed * Time.deltaTime) ;
                 transform.LookAt(_targetRB.transform);
@@ -76,23 +75,24 @@ public class MissileLauncherProjectile : MonoBehaviour
                     _direction = transform.forward;
                     _isRotated = true;
                 }
-                _projectileRB.AddForce(_direction * -0.5f, ForceMode.Acceleration);
+                _projectileRB.AddForce(_direction * 1000f);
+                _actualSpeed = _lastPhaseSpeed;
             }
-            
         }
 
         if (_clock > _stageTwo)
         {
-            if(_targetRB == null && _isRotated == true)
+            if (_targetRB == null && _isRotated == true)
             {
                 transform.Rotate(30, 0, 0);
                 _isRotated = false;
             }
-            _projectileRB.AddForce(transform.forward * 1.5f, ForceMode.Acceleration);
-            _projectileRB.velocity = Vector3.ClampMagnitude(_projectileRB.velocity, _lastPhaseSpeed);
+            _projectileRB.AddForce(transform.forward * 1000f);
+            _actualSpeed = _lastPhaseSpeed;
         }
 
         _clock += Time.deltaTime;
+        _projectileRB.velocity = Vector3.ClampMagnitude(_projectileRB.velocity, _actualSpeed);
     }
 
     private void OnTriggerEnter(Collider other)
@@ -109,7 +109,5 @@ public class MissileLauncherProjectile : MonoBehaviour
             carControl.IsExplosed = true;
             Destroy(gameObject);
         }
-
-        
     }
 }

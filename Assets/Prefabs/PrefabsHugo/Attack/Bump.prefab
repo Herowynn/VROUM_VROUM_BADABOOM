@@ -559,8 +559,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 3.729965, y: 2.7825756, z: 2.0196414}
-  m_Center: {x: 0.5070518, y: -0.89128816, z: 0.50982094}
+  m_Size: {x: 5.912729, y: 5.0907226, z: 6.2294917}
+  m_Center: {x: 0.6725204, y: -2.0453615, z: 2.0555062}
 --- !u!114 &5768892646681682439
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -573,9 +573,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e52373695b2c1164c9c3621859b7aadf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _ground: 0
-  _car: 0
-  _colliders: []
   SonicShotSound: {fileID: 8300000, guid: a4bef7473f0cbf94d88f60513b1c70a5, type: 3}
 --- !u!1 &9179746586866772351
 GameObject:
@@ -590,12 +587,12 @@ GameObject:
   - component: {fileID: 8448599867486770636}
   - component: {fileID: 712047720424386929}
   m_Layer: 0
-  m_Name: Bump
+  m_Name: BumpEffect
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &7068581363142452711
 Transform:
   m_ObjectHideFlags: 0

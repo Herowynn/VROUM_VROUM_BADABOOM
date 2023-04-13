@@ -130,7 +130,7 @@ MonoBehaviour:
   GroundLayerMask:
     serializedVersion: 2
     m_Bits: 8
-  _speed: 1000
+  _force: 8000
   _carControl: {fileID: 0}
   ShootSound: {fileID: 8300000, guid: 5070e6faba10bf74d969753d48c0990e, type: 3}
   BounceSounds:

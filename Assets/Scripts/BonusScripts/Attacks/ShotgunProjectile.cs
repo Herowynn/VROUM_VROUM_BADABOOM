@@ -7,15 +7,15 @@ public class ShotgunProjectile : MonoBehaviour
 {
     public LayerMask GroundLayerMask;
 
-    [SerializeField] float _speed;
-    Rigidbody ProjectileRB;
+    [SerializeField] private float _force;
     [SerializeField] CarController _carControl;
-    int _ground;
+    private Rigidbody ProjectileRB;
+    private int _ground;
 
     [Header("Audio")]
     public AudioClip ShootSound;
     public AudioClip[] BounceSounds;
-    AudioSource _source;
+    private AudioSource _source;
 
     private void Awake()
     {
@@ -23,11 +23,11 @@ public class ShotgunProjectile : MonoBehaviour
         _source = gameObject.AddComponent<AudioSource>();
         _ground = (int)Mathf.Log(1f * GroundLayerMask.value, 2f);
     }
+
     public void Init(Vector3 direction)
     {
-        ProjectileRB.AddForce(direction * _speed, ForceMode.Acceleration);
+        ProjectileRB.AddForce(direction * _force);
         GetComponent<SphereCollider>().enabled = false;
-        Debug.Log(GetComponent<SphereCollider>().enabled);
         _source.clip = ShootSound;
         _source.loop = false;
         _source.Play();
@@ -61,8 +61,7 @@ public class ShotgunProjectile : MonoBehaviour
 
     IEnumerator WaitBeforeActivateCollider()
     {
-        yield return new WaitForSeconds(.2f);
+        yield return new WaitForSeconds(0.1f);
         GetComponent<SphereCollider>().enabled = true;
-        Debug.Log(GetComponent<SphereCollider>().enabled);
     }
 }
