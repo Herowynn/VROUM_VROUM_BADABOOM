@@ -3,9 +3,10 @@
   <component name="ChangeListManager">
     <list default="true" id="237d6d36-ef91-4062-b62e-55ca4359086e" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.VROUM_VROUM_BADABOOM/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.VROUM_VROUM_BADABOOM/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Game/Player/NewPlayer.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Game/Player/NewPlayer.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/BonusScripts/Attacks/MissileLauncherProjectile.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/BonusScripts/Attacks/MissileLauncherProjectile.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Game/Car/CarController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Game/Car/CarController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/Game.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Game.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Game/Camera/CameraController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Game/Camera/CameraController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectSettings/Packages/com.unity.probuilder/Settings.json" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/Packages/com.unity.probuilder/Settings.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UserSettings/Layouts/default-2021.dwlt" beforeDir="false" afterPath="$PROJECT_DIR$/UserSettings/Layouts/default-2021.dwlt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -110,9 +111,7 @@
       <workItem from="1681197157119" duration="6980000" />
       <workItem from="1681240462041" duration="4029000" />
       <workItem from="1681311357626" duration="5617000" />
-      <workItem from="1681732846576" duration="7060000" />
-      <workItem from="1681743325981" duration="1629000" />
-      <workItem from="1681801869912" duration="7291000" />
+      <workItem from="1681378287893" duration="2918000" />
     </task>
     <servers />
   </component>
