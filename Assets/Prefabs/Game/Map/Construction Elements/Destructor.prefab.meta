@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/Prefabs/Game/Map/Construction Elements/Destructor.prefab.meta
 guid: 4e1bc47cb27e1574985440249d9a083e
+========
+guid: e13590a1422e16e4997a24fe280ca7ed
+>>>>>>>> Harvester:Assets/Prefabs/PrefabsHugo/ShotGun.prefab.meta
 PrefabImporter:
   externalObjects: {}
   userData: 

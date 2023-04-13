@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/Prefabs/Game/Input Management/Input Manager.prefab.meta
 guid: 2e3a351c76469034982fb743113ff6ed
+========
+guid: 1ed25a2d83fd44146906c8f9a85b4acb
+>>>>>>>> Harvester:Assets/Prefabs/PrefabsHugo/MachineGun.prefab.meta
 PrefabImporter:
   externalObjects: {}
   userData: 
