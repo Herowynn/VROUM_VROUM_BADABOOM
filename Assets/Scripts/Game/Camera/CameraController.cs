@@ -4,20 +4,37 @@ using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
+    [Header("Instance")]
     public List<GameObject> Targets = new List<GameObject>();
-    public Vector3 Offset;
-    Vector3 _velocity;
-    public float SmoothTime = .5f;
+    public Camera Camera;
 
+    [Header("GD")]
+    public Vector3 Position;
+    public Vector3 Rotation;
     public float MinZoom = 40f;
     public float MaxZoom = 10f;
     public float ZoomLimiter = 50f;
+    
+    [Header("GA")]
+    public float SmoothTime = .5f;
+
+    private Vector3 _velocity;
 
     private void Start()
     {
+        if (Camera == null)
+            Camera = GetComponent<Camera>();
+        
+        transform.position = Position;
+        
+        Quaternion rot = transform.rotation;
+        rot.eulerAngles = Rotation;
+        
+        transform.rotation = rot;
+        
         if (Targets.Count == 0)
         {
-            transform.position = Offset;
+            
         }
     }
 
@@ -38,14 +55,14 @@ public class CameraController : MonoBehaviour
     {
         Vector3 centerPoint = GetCenterPoint();
 
-        transform.position = Vector3.SmoothDamp(transform.position, centerPoint + Offset, ref _velocity, SmoothTime);
+        transform.position = Vector3.SmoothDamp(transform.position, centerPoint + Position, ref _velocity, SmoothTime);
     }
 
     private void Zoom()
     {
         float newZoom = Mathf.Lerp(MaxZoom, MinZoom, GetGreaterDistance() / ZoomLimiter);
 
-        GetComponent<Camera>().fieldOfView = Mathf.Lerp(GetComponent<Camera>().fieldOfView, newZoom, Time.deltaTime);
+        Camera.fieldOfView = Mathf.Lerp(Camera.fieldOfView, newZoom, Time.deltaTime);
     }
 
     private float GetGreaterDistance()
