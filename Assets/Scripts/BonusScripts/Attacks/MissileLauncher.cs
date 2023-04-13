@@ -10,6 +10,17 @@ public class MissileLauncher : Offensive
     [SerializeField] Transform _bulletSpawnPoint;
     List<Collider> _colliders = new List<Collider>();
 
+    [Header("Audio")]
+    public AudioClip HatchOpenSound;
+    AudioSource _source;
+
+    private void Awake()
+    {
+        _source = gameObject.AddComponent<AudioSource>();
+        _source.clip = HatchOpenSound;
+        _source.Play();
+    }
+
     public override void Shoot()
     {
         float closest = int.MaxValue;
@@ -21,12 +32,12 @@ public class MissileLauncher : Offensive
                 closest = (_colliders[i].transform.position - GetComponentInParent<CarController>().gameObject.transform.position).magnitude;
                 closestGO = _colliders[i].gameObject;
             }
-
         }
        
         GameObject go = Instantiate(ProjectilePrefab, _bulletSpawnPoint.position, GetComponentInParent<CarController>().gameObject.transform.rotation);
         go.transform.parent = null;
         go.GetComponent<MissileLauncherProjectile>().Init(closestGO, GetComponentInParent<CarController>().gameObject.transform.position);
+
         Destroy(gameObject);
     }
 
