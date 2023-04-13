@@ -2341,8 +2341,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
-  m_LocalRotation: {x: 0.3420201, y: 0, z: 0, w: 0.9396927}
-  m_LocalPosition: {x: 0, y: 12, z: -12}
+  m_LocalRotation: {x: 0.3420201, y: -0, z: -0, w: 0.9396927}
+  m_LocalPosition: {x: -21.8, y: 15.87, z: -17.86}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2358,12 +2358,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 963194225}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ce85e9fed02deb8438eec2374821e1e7, type: 3}
+  m_Script: {fileID: 11500000, guid: 6a62a2944033c9f40878b1fb1ef38247, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 1504317620798128281}
-  FollowSpeed: 15
-  offset: {x: 0, y: 15, z: -17}
+  FollowSpeed: 0
+  offset: {x: 0, y: 0, z: 0}
 --- !u!1 &1050102445
 GameObject:
   m_ObjectHideFlags: 0
@@ -3509,7 +3509,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-1316
+  m_Name: pb_Mesh-5042
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -3873,7 +3873,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-1440
+  m_Name: pb_Mesh-5154
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2

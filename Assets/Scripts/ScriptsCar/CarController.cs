@@ -14,10 +14,12 @@ public class CarController : MonoBehaviour
     public float additionalEarthGravity;
     public float SlowFactor = 1f;
 
+    [Header("Layers")]
     public LayerMask GroundLayerMask;
     public LayerMask CarLayerMask;
     public LayerMask CarSphereLayerMask;
     public LayerMask BonusLayerMask;
+
     public int groundLayerNumber;
     public float arrayRayLength;
     public Transform RayPoint;
@@ -29,6 +31,7 @@ public class CarController : MonoBehaviour
     public float MaxWheelTurn = 25f;
     public float WheelRotation = 50f;
 
+    [Header("Bonus Effects")]
     public bool HitBySaw = false;
     public bool IsBumped;
     public bool IsExplosed;
@@ -40,9 +43,11 @@ public class CarController : MonoBehaviour
     public Vector3 ExplosionDirection;
     public Vector3 ProjectileDirection;
 
+    [Header("Arrow")]
     public GameObject Arrow;
     public GameObject ArrowRotationCenter;
 
+    [Header("Bonus")]
     public Transform AttackObject;
     public Transform BoostObject;
     public GameObject[] AttackList;
@@ -56,8 +61,6 @@ public class CarController : MonoBehaviour
     Vector3 _wantedDirection;
     float _yComponentWantedDirection;
     Vector3 _carAltitudeOffset;
-
-    int _counter = 0;
 
     [Header("Audio")]
     public AudioSource Source;
@@ -235,7 +238,7 @@ public class CarController : MonoBehaviour
                     else
                     {
                         Destroy(collision.gameObject);
-                        Instantiate(AttackList[collision.gameObject.GetComponent<Bonus>().rndLvl], AttackObject);
+                        Instantiate(AttackList[collision.gameObject.GetComponent<Bonus>().RndLvl], AttackObject);
                     }
                     break;
                 case BonusType.Boost:
@@ -244,7 +247,7 @@ public class CarController : MonoBehaviour
                     else
                     {
                         Destroy(collision.gameObject);
-                        Instantiate(BoostList[collision.gameObject.GetComponent<Bonus>().rndLvl], BoostObject);
+                        Instantiate(BoostList[collision.gameObject.GetComponent<Bonus>().RndLvl], BoostObject);
                     }
                     break;
                 default:

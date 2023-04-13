@@ -164,3 +164,4 @@ MonoBehaviour:
   _fireRate: 0.05
   _bulletSpawnPoint: {fileID: 6726465578061475629}
   ProjectilePrefab: {fileID: 3035557110167704657, guid: 893ef373ad8c0a14f9378cd7bb38ba4f, type: 3}
+  MachineGunSound: {fileID: 8300000, guid: 733b772e86b346b4c8487bdec10390d1, type: 3}

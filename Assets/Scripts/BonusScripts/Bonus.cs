@@ -10,7 +10,7 @@ public enum BonusType
 public class Bonus : MonoBehaviour
 {
     public BonusType Type;
-    public int rndLvl = -1;
+    public int RndLvl = -1;
     public List<Material> Materials = new List<Material>();
     public MeshRenderer BonusMeshRenderer;
 
@@ -18,13 +18,13 @@ public class Bonus : MonoBehaviour
     {
         if (Type == BonusType.Attack) 
         {
-            rndLvl = Random.Range(0, Materials.Count);
-            BonusMeshRenderer.material = Materials[rndLvl];
+            RndLvl = 0;//Random.Range(0, Materials.Count);
+            BonusMeshRenderer.material = Materials[RndLvl];
         }
         if (Type == BonusType.Boost)
         {
-            rndLvl = Random.Range(0, Materials.Count);
-            BonusMeshRenderer.material = Materials[rndLvl];
+            RndLvl = Random.Range(0, Materials.Count);
+            BonusMeshRenderer.material = Materials[RndLvl];
         }
         
     }

@@ -32,12 +32,13 @@ public class BonusManager : MonoBehaviour
             _spawnTimer = Random.Range(_minTimeBetweenBonusSpawn, _maxTimeBetweenBonusSpawn);
         }
     }
+
     private void SpawnBonus()
     {
         int randomX = Random.Range(-5, 5);
         int randomY = Random.Range(3, 10);
         int randomZ = Random.Range(-5, 5);
-        int rndBonusType = Random.Range(0, 2);
+        int rndBonusType = 0; //Random.Range(0, 2);
         
         Vector3 SpawnPosition = new(randomX, randomY, randomZ);
         SpawnPosition += CarPrefab.transform.forward * 3;
