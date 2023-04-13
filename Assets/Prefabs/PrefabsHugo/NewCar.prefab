@@ -108,16 +108,16 @@ MonoBehaviour:
   SlowFactor: 1
   GroundLayerMask:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 8
   CarLayerMask:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 128
   CarSphereLayerMask:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 256
   BonusLayerMask:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 512
   groundLayerNumber: 3
   arrayRayLength: 0.7
   RayPoint: {fileID: 8470477560550397293}
