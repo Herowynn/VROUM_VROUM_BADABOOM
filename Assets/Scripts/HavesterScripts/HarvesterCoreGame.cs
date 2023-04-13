@@ -37,7 +37,7 @@ public class HarvesterCoreGame : MonoBehaviour
         
     void Update()
     {
-        if (_nextCheckPointIndex >= CheckPointsParentObject.transform.GetChildCount())
+        if (_nextCheckPointIndex >= CheckPointsParentObject.transform.childCount)
             _nextCheckPointIndex = 0;
 
         _realPointToReach = new Vector3(_checkPointsList[_nextCheckPointIndex].position.x, Harvester.transform.position.y, _checkPointsList[_nextCheckPointIndex].position.z);
