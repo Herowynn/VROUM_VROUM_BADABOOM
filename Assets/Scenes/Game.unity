@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028352, g: 0.22571376, b: 0.3069224, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -3499,8 +3499,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 191198d30a966b94094839e4a8ecff94, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PlayerKeyboardPrefab: {fileID: 8009130959157824594, guid: caa5c5c6eeb696e4ca848a48bc832d33, type: 3}
-  PlayerControllerPrefab: {fileID: 6749302607035847204, guid: bf2580db33cfc2b4bba4da523cfe179e, type: 3}
+  PlayerKeyboardPrefab: {fileID: 8470477559293409358, guid: 88bed7e26c1dc3e44839fb03cafc3de0, type: 3}
+  PlayerControllerPrefab: {fileID: 8470477559293409358, guid: 88bed7e26c1dc3e44839fb03cafc3de0, type: 3}
   PlayersContainer: {fileID: 1551155569}
   Players: []
   PlayerColors:
@@ -4205,6 +4205,18 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 59079939}
     m_Modifications:
+    - target: {fileID: 2988078232091052585, guid: 15dd1df6507620544a43df51b05386ff, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2988078232365103344, guid: 15dd1df6507620544a43df51b05386ff, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2988078232596966450, guid: 15dd1df6507620544a43df51b05386ff, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 2988078232599891912, guid: 15dd1df6507620544a43df51b05386ff, type: 3}
       propertyPath: m_Name
       value: Test
@@ -4252,6 +4264,22 @@ PrefabInstance:
     - target: {fileID: 2988078232599891913, guid: 15dd1df6507620544a43df51b05386ff, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2988078232614982050, guid: 15dd1df6507620544a43df51b05386ff, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2988078232951935667, guid: 15dd1df6507620544a43df51b05386ff, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2988078233622893269, guid: 15dd1df6507620544a43df51b05386ff, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2988078233952412291, guid: 15dd1df6507620544a43df51b05386ff, type: 3}
+      propertyPath: m_Layer
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 15dd1df6507620544a43df51b05386ff, type: 3}

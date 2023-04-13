@@ -11,14 +11,14 @@ public class ScoreManager : MonoBehaviour
     public int PointsToWin;
     
     //intern var
-    public List<PlayerController> Players;
+    public List<CarController> Players;
 
     public void InitiatePlayersForCurrentMatch()
     {
-        Players = new List<PlayerController>();
+        Players = new List<CarController>();
         foreach (var playerGo in GameManager.Instance.PlayersManager.Players)
         {
-            Players.Add(playerGo.GetComponent<PlayerController>());
+            Players.Add(playerGo.GetComponent<CarController>());
         }
     }
     
@@ -51,7 +51,7 @@ public class ScoreManager : MonoBehaviour
 
     public void OrderPlayersAccordingToScore()
     {
-        Players.Sort(delegate(PlayerController player1, PlayerController player2)
+        Players.Sort(delegate(CarController player1, CarController player2)
         {
             if (player1.Score == null && player2.Score == null) return 0;
             else if (player1.Score == null) return -1;

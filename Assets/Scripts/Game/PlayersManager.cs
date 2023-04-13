@@ -26,7 +26,7 @@ public class PlayersManager : MonoBehaviour
             Players.Add(Instantiate(PlayerControllerPrefab, GameManager.Instance.MapManager.CurrentMap.StartPositions[startPositionIndex].transform.position, Quaternion.identity, PlayersContainer.transform));
         }
 
-        Players[^1].GetComponent<PlayerController>().Color = PlayerColors[startPositionIndex];
+        Players[^1].GetComponent<CarController>().Color = PlayerColors[startPositionIndex];
     }
 
     public void DestroyPlayers()

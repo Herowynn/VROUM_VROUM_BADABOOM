@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class CarController : MonoBehaviour
 {
@@ -65,6 +66,25 @@ public class CarController : MonoBehaviour
     [Header("Audio")]
     public AudioSource Source;
 
+    [Header("Info")]
+    public Color Color;
+    public float speed = 5;
+    public PlayerState PlayerState;
+
+    //Need to move to separate file (?)
+    public int Score;
+
+    //Need to move to separate file (?)
+    [Header("UI")]
+    public PointsUI PointsUI;
+    public ProfileUI ProfileUI;
+
+    // Intern Var
+    private MeshRenderer _meshRenderer;
+    private Rigidbody _rigidbody;
+    private BoxCollider _boxCollider;
+    private Vector2 _movementInput;
+
     private void Awake()
     {
         Source = GetComponent<AudioSource>();
@@ -78,6 +98,15 @@ public class CarController : MonoBehaviour
         _yComponentWantedDirection = 0f;
 
         _carAltitudeOffset = new Vector3(0, transform.position.y - SphereRB.transform.position.y, 0);
+
+        _meshRenderer = GetComponent<MeshRenderer>();
+        _rigidbody = GetComponent<Rigidbody>();
+        _boxCollider = GetComponent<BoxCollider>();
+
+        CreatePlayerUis();
+
+        PointsUI.ChangeVisualColoration(Color);
+        PointsUI.ChangePointsCount(Score);
     }
 
     private void Update()
@@ -85,19 +114,19 @@ public class CarController : MonoBehaviour
         _speedInput = 0f;
         _distArrowRayPoint = Arrow.transform.position - RayPoint.position;
 
-        if (Mathf.Abs(Input.GetAxis("Vertical")) > 0 || Mathf.Abs(Input.GetAxis("Horizontal")) > 0)
+        if (GameManager.Instance.GameState == GameState.RACING && PlayerState == PlayerState.ALIVE)
         {
             Arrow.SetActive(true);
 
-            _wantedDirection = new Vector3(Input.GetAxis("Horizontal"), _yComponentWantedDirection, Input.GetAxis("Vertical"));
+            _wantedDirection = new Vector3(_movementInput.x, _yComponentWantedDirection, _movementInput.y);
             _speedInput = forwardAccel * 1000f;
 
             Vector3 wheelsRotationAxis = Quaternion.AngleAxis(90, transform.up) * transform.forward;
 
-            LeftBackWheel.transform.RotateAround(wheelsRotationAxis, wheelTurnSpeed * Time.deltaTime);
-            RightBackWheel.transform.RotateAround(wheelsRotationAxis, wheelTurnSpeed * Time.deltaTime);
-            LeftFrontWheel.transform.RotateAround(wheelsRotationAxis, wheelTurnSpeed * Time.deltaTime);
-            RightFrontWheel.transform.RotateAround(wheelsRotationAxis, wheelTurnSpeed * Time.deltaTime);
+            LeftBackWheel.transform.Rotate(wheelsRotationAxis, wheelTurnSpeed * Time.deltaTime);
+            RightBackWheel.transform.Rotate(wheelsRotationAxis, wheelTurnSpeed * Time.deltaTime);
+            LeftFrontWheel.transform.Rotate(wheelsRotationAxis, wheelTurnSpeed * Time.deltaTime);
+            RightFrontWheel.transform.Rotate(wheelsRotationAxis, wheelTurnSpeed * Time.deltaTime);
 
             if (_isGrounded)
             {
@@ -264,4 +293,62 @@ public class CarController : MonoBehaviour
         yield return new WaitForSeconds(2f);
         transform.forward = new Vector3(transform.forward.x, 0, transform.forward.z);
     }
+
+    #region Related to in-game actions
+
+    public void OnMove(InputAction.CallbackContext context) => _movementInput = context.ReadValue<Vector2>();
+
+    public void OnBoost(InputAction.CallbackContext context) => ProfileUI.UseBoost();
+
+    public void OnAttack(InputAction.CallbackContext context) => ProfileUI.UseWeapon();
+
+    public void OnNewBoost(InputAction.CallbackContext context) => ProfileUI.TookBoost();
+
+    public void OnNewWeapon(InputAction.CallbackContext context) => ProfileUI.TookWeapon();
+
+    #endregion
+
+    #region Related to state in-game
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.GetComponent<DestructorComponent>())
+            GameManager.Instance.TriggerPlayerDestructionEvent(this);
+    }
+
+    public void DiedEvent()
+    {
+        _meshRenderer.enabled = false;
+        _rigidbody.constraints = RigidbodyConstraints.FreezeAll;
+        _boxCollider.enabled = false;
+        PlayerState = PlayerState.DEAD;
+    }
+
+    public void RebornEvent()
+    {
+        _meshRenderer.enabled = true;
+        _rigidbody.constraints = RigidbodyConstraints.None;
+        _boxCollider.enabled = true;
+        _rigidbody.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationY |
+                                 RigidbodyConstraints.FreezeRotationZ;
+
+        PlayerState = PlayerState.ALIVE;
+    }
+
+    public void AddPointsToScore(int points)
+    {
+        Score += points;
+        PointsUI.ChangePointsCount(Score);
+    }
+
+    #endregion
+
+    #region Related to UI
+
+    private void CreatePlayerUis()
+    {
+        GameManager.Instance.TriggerUiCreationForPlayerEvent(this);
+    }
+
+    #endregion
 }

@@ -14,13 +14,13 @@ public class RoundManager : MonoBehaviour
     public float TimeToRestartRound;
     
     //intern var
-    private List<PlayerController> _playersToPlaceForNextRound;
+    private List<CarController> _playersToPlaceForNextRound;
     private RoundNode[] _roundNodesForCurrentMap;
 
     private void Start()
     {
         RoundNumber = 0;
-        _playersToPlaceForNextRound = new List<PlayerController>();
+        _playersToPlaceForNextRound = new List<CarController>();
     }
 
     public IEnumerator StartRound()
@@ -37,7 +37,7 @@ public class RoundManager : MonoBehaviour
         _roundNodesForCurrentMap = GameManager.Instance.MapManager.CurrentMap.RoundNodes;
     }
     
-    public void PlayerDiedEvent(PlayerController player)
+    public void PlayerDiedEvent(CarController player)
     {
         _playersToPlaceForNextRound.Add(player);
 
@@ -81,9 +81,9 @@ public class RoundManager : MonoBehaviour
     {
         foreach (var player in GameManager.Instance.PlayersManager.Players)
         {
-            if (player.GetComponent<PlayerController>().PlayerState == PlayerState.ALIVE)
+            if (player.GetComponent<CarController>().PlayerState == PlayerState.ALIVE)
             {
-                _playersToPlaceForNextRound.Add(player.GetComponent<PlayerController>());
+                _playersToPlaceForNextRound.Add(player.GetComponent<CarController>());
                 return;
             }
         }
