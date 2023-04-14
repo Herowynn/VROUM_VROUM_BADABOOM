@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028352, g: 0.22571376, b: 0.3069224, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028334, g: 0.22571328, b: 0.3069217, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -3499,8 +3499,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 191198d30a966b94094839e4a8ecff94, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PlayerKeyboardPrefab: {fileID: 8470477559293409358, guid: 88bed7e26c1dc3e44839fb03cafc3de0, type: 3}
-  PlayerControllerPrefab: {fileID: 8470477559293409358, guid: 88bed7e26c1dc3e44839fb03cafc3de0, type: 3}
+  CarPrefab: {fileID: 8470477559293409358, guid: 88bed7e26c1dc3e44839fb03cafc3de0, type: 3}
   PlayersContainer: {fileID: 1551155569}
   Players: []
   PlayerColors:

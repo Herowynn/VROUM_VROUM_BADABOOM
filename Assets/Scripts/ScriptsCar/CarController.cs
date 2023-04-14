@@ -114,12 +114,12 @@ public class CarController : MonoBehaviour
         _speedInput = 0f;
         _distArrowRayPoint = Arrow.transform.position - RayPoint.position;
 
-        if (GameManager.Instance.GameState == GameState.RACING && PlayerState == PlayerState.ALIVE)
+        if (GameManager.Instance.GameState == GameState.RACING && PlayerState == PlayerState.ALIVE && _movementInput != Vector2.zero)
         {
             Arrow.SetActive(true);
 
             _wantedDirection = new Vector3(_movementInput.x, _yComponentWantedDirection, _movementInput.y);
-            _speedInput = forwardAccel * 1000f;
+            _speedInput = forwardAccel;
 
             Vector3 wheelsRotationAxis = Quaternion.AngleAxis(90, transform.up) * transform.forward;
 
@@ -133,12 +133,10 @@ public class CarController : MonoBehaviour
                 Vector3 cross1 = Vector3.Cross(transform.forward, _wantedDirection);
                 Vector3 cross2 = Vector3.Cross(_distArrowRayPoint, _wantedDirection);
                 float carSignRotation = Mathf.Sign(cross1.y);
-                float arrowSignRotation = Mathf.Sign(cross2.y);
-                Vector3 velocity = Vector3.zero;
 
                 if (Mathf.Abs(Mathf.Acos(Vector3.Dot(transform.forward.normalized, _wantedDirection.normalized))) > Mathf.Deg2Rad * 10f)
                 {
-                    transform.rotation = Quaternion.Euler(transform.rotation.eulerAngles + new Vector3(0f, carSignRotation * turnStrength * 100 * Time.deltaTime, 0f));
+                    transform.rotation = Quaternion.Euler(transform.rotation.eulerAngles + new Vector3(0f, carSignRotation * turnStrength * Time.deltaTime, 0f));
                     _canMove = false;
                 }
                 else
@@ -296,7 +294,13 @@ public class CarController : MonoBehaviour
 
     #region Related to in-game actions
 
-    public void OnMove(InputAction.CallbackContext context) => _movementInput = context.ReadValue<Vector2>();
+/*    public void OnMove(InputAction.CallbackContext context) => _movementInput = context.ReadValue<Vector2>();
+*/
+    public void OnMove(InputAction.CallbackContext context)
+    {
+        _movementInput = context.ReadValue<Vector2>();
+        Debug.Log($"OnMove method called and got this Vector2 input : {context.ReadValue<Vector2>()}");
+    }
 
     public void OnBoost(InputAction.CallbackContext context) => ProfileUI.UseBoost();
 

@@ -5,16 +5,12 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    //Singleton
-
     public static GameManager Instance;
 
     private void Awake()
     {
         if (Instance == null)
             Instance = this;
-        
-        
     }
 
     [Header("Instance")]
@@ -54,7 +50,9 @@ public class GameManager : MonoBehaviour
     {
         UIManager.TriggerStartGameUi();
 
-        InstantiatePlayers(MultipleInputManager.NeedKeyboard, MultipleInputManager.NumberOfPlayer);
+        MultipleInputManager.InstantiateMultipleInputManager();
+
+        InstantiatePlayers(MultipleInputManager.NeedKeyboard, MultipleInputManager.NumberOfPlayer + MultipleInputManager.NbAi);
 
         Camera.AddTargets();
         
