@@ -10,7 +10,6 @@ public class BonusManager : MonoBehaviour
     public GameObject BoostParent;
     public GameObject AttackPrefab;
     public GameObject AttackParent;
-    public List<GameObject> Players;
     private float _spawnTimer;
     private float _timeIncrementation;
     [SerializeField] private int _maxTimeBetweenBonusSpawn;
