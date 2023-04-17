@@ -1,11 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="237d6d36-ef91-4062-b62e-55ca4359086e" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Game/UI/PlayerPos.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Game/UI/PlayerPos.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scenes/Game.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Game.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Game/Score/ScoreManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Game/Score/ScoreManager.cs" afterDir="false" />
-    </list>
+    <list default="true" id="237d6d36-ef91-4062-b62e-55ca4359086e" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
