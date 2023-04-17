@@ -337,7 +337,6 @@ public class CarController : MonoBehaviour
         if (other.GetComponent<DestructorComponent>())
         {
             GameManager.Instance.TriggerPlayerDestructionEvent(this);
-            Debug.Log(other.name);
         }
     }
 
