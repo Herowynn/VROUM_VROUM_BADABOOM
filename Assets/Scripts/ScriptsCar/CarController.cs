@@ -66,17 +66,14 @@ public class CarController : MonoBehaviour
     [Header("Audio")]
     public AudioSource Source;
 
-    [Header("Instance")]
-    public GameObject Visual;
-    public GameObject SphereReference;
-    
+ 
     [Header("Info")]
     public Color Color;
     public List<Material> CarColors;
     public PlayerState PlayerState;
     public GameObject Visual;
     public MeshRenderer BodyColor;
-    
+    public GameObject SphereReference;
 
     //Need to move to separate file (?)
     public int Score;
@@ -114,7 +111,6 @@ public class CarController : MonoBehaviour
 
         PointsUI.ChangeVisualColoration(Color);
         PointsUI.ChangePointsCount(Score);
-        Debug.Log(GameManager.Instance.PlayersManager.PlayerColors.IndexOf(Color));
         BodyColor.material = CarColors[GameManager.Instance.PlayersManager.PlayerColors.IndexOf(Color)];
     }
 
