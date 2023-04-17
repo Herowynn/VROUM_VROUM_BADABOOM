@@ -68,8 +68,8 @@ public class CarController : MonoBehaviour
 
     [Header("Info")]
     public Color Color;
-    public float speed = 5;
     public PlayerState PlayerState;
+    public GameObject Visual;
 
     //Need to move to separate file (?)
     public int Score;
@@ -293,13 +293,10 @@ public class CarController : MonoBehaviour
     }
 
     #region Related to in-game actions
-
-/*    public void OnMove(InputAction.CallbackContext context) => _movementInput = context.ReadValue<Vector2>();
-*/
+    
     public void OnMove(InputAction.CallbackContext context)
     {
         _movementInput = context.ReadValue<Vector2>();
-        Debug.Log($"OnMove method called and got this Vector2 input : {context.ReadValue<Vector2>()}");
     }
 
     public void OnBoost(InputAction.CallbackContext context) => ProfileUI.UseBoost();
@@ -317,12 +314,15 @@ public class CarController : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         if (other.GetComponent<DestructorComponent>())
+        {
             GameManager.Instance.TriggerPlayerDestructionEvent(this);
+                Debug.Log("Destructor component collider");
+        }
     }
 
     public void DiedEvent()
     {
-        _meshRenderer.enabled = false;
+        Visual.SetActive(false);
         _rigidbody.constraints = RigidbodyConstraints.FreezeAll;
         _boxCollider.enabled = false;
         PlayerState = PlayerState.DEAD;
@@ -330,7 +330,7 @@ public class CarController : MonoBehaviour
 
     public void RebornEvent()
     {
-        _meshRenderer.enabled = true;
+        Visual.SetActive(true);
         _rigidbody.constraints = RigidbodyConstraints.None;
         _boxCollider.enabled = true;
         _rigidbody.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationY |

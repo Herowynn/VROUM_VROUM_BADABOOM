@@ -41,12 +41,12 @@ GameObject:
   m_Component:
   - component: {fileID: 8470477559293409345}
   - component: {fileID: 8470477559293409346}
-  - component: {fileID: 8470477559293409357}
   - component: {fileID: 7823043666654587697}
+  - component: {fileID: 8470477559293409357}
   - component: {fileID: 6860740909563417045}
   - component: {fileID: 4181034262726389727}
   m_Layer: 7
-  m_Name: NewCar
+  m_Name: NewPlayer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -86,6 +86,22 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1.9861401, y: 1.4800947, z: 4.7263026}
   m_Center: {x: 0.0041784644, y: -0.08970019, z: 0.0138299465}
+--- !u!54 &7823043666654587697
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8470477559293409358}
+  serializedVersion: 2
+  m_Mass: 0.0000001
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 112
+  m_CollisionDetection: 0
 --- !u!114 &8470477559293409357
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -154,27 +170,11 @@ MonoBehaviour:
   - {fileID: 8699939486669796487, guid: 2e2b076c4168d07498673ec290040b07, type: 3}
   Source: {fileID: 0}
   Color: {r: 0, g: 0, b: 0, a: 0}
-  speed: 5
   PlayerState: 0
+  Visual: {fileID: 2277440396937974388}
   Score: 0
   PointsUI: {fileID: 0}
   ProfileUI: {fileID: 0}
---- !u!54 &7823043666654587697
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8470477559293409358}
-  serializedVersion: 2
-  m_Mass: 0.0000001
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_UseGravity: 0
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 112
-  m_CollisionDetection: 0
 --- !u!82 &6860740909563417045
 AudioSource:
   m_ObjectHideFlags: 0
@@ -1002,6 +1002,10 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 7
       objectReference: {fileID: 0}
+    - target: {fileID: 7644360707672163555, guid: f430073c636116b4b9c0f5e6ddcde097, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7928230234934386138, guid: f430073c636116b4b9c0f5e6ddcde097, type: 3}
       propertyPath: m_Layer
       value: 7
@@ -1020,6 +1024,11 @@ GameObject:
 --- !u!4 &1499917844239648974 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7016020133083651673, guid: f430073c636116b4b9c0f5e6ddcde097, type: 3}
+  m_PrefabInstance: {fileID: 8470477560161769111}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &2277440396937974388 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7644360707672163555, guid: f430073c636116b4b9c0f5e6ddcde097, type: 3}
   m_PrefabInstance: {fileID: 8470477560161769111}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &4146829921669097665 stripped
