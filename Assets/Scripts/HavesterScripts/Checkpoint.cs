@@ -15,7 +15,7 @@ public class Checkpoint : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Harvester") && !_harvesterAlreadyWalkedOn)
         {
-            HarvesterCoreGame.Instance.NextCheckpointIndex++;
+            GameManager.Instance.NextCheckpointIndex++;
             _harvesterAlreadyWalkedOn = true;
             StartCoroutine(ResetWalkedOnBool());
         }

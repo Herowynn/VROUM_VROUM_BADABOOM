@@ -262,6 +262,9 @@ public class CarController : MonoBehaviour
             Destroy(collision.gameObject);
         }
 
+        if (collision.gameObject.GetComponent<DestructorComponent>())
+            GameManager.Instance.TriggerPlayerDestructionEvent(this);
+
         if (collision.gameObject.layer == groundLayerNumber && !_isGrounded)
             StartCoroutine(GetBackOnWheels());
     }
@@ -332,9 +335,7 @@ public class CarController : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         if (other.GetComponent<DestructorComponent>())
-        {
             GameManager.Instance.TriggerPlayerDestructionEvent(this);
-        }
     }
 
     public void DiedEvent()
