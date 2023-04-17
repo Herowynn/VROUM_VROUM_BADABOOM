@@ -66,10 +66,13 @@ public class CarController : MonoBehaviour
     [Header("Audio")]
     public AudioSource Source;
 
+    [Header("Instance")]
+    public GameObject Visual;
+    public GameObject SphereReference;
+    
     [Header("Info")]
     public Color Color;
     public PlayerState PlayerState;
-    public GameObject Visual;
 
     //Need to move to separate file (?)
     public int Score;
@@ -316,20 +319,21 @@ public class CarController : MonoBehaviour
         if (other.GetComponent<DestructorComponent>())
         {
             GameManager.Instance.TriggerPlayerDestructionEvent(this);
-                Debug.Log("Destructor component collider");
         }
     }
 
     public void DiedEvent()
     {
+        SphereReference.SetActive(false);
         Visual.SetActive(false);
         _rigidbody.constraints = RigidbodyConstraints.FreezeAll;
         _boxCollider.enabled = false;
         PlayerState = PlayerState.DEAD;
     }
 
-    public void RebornEvent()
+    public void RebornEvent(Transform positionOnReborn)
     {
+        SphereReference.SetActive(true);
         Visual.SetActive(true);
         _rigidbody.constraints = RigidbodyConstraints.None;
         _boxCollider.enabled = true;
@@ -337,6 +341,9 @@ public class CarController : MonoBehaviour
                                  RigidbodyConstraints.FreezeRotationZ;
 
         PlayerState = PlayerState.ALIVE;
+
+        transform.rotation = positionOnReborn.rotation;
+        SphereReference.transform.position = positionOnReborn.position;
     }
 
     public void AddPointsToScore(int points)

@@ -98,9 +98,8 @@ public class RoundManager : MonoBehaviour
         for (int i = _playersToPlaceForNextRound.Count - 1; i >= 0; i--)
         {
             //See if necessary
-            //_playersToPlaceForNextRound[i].transform.rotation = closestNode.Nodes[j].transform.rotation;
-            _playersToPlaceForNextRound[i].RebornEvent();
-            _playersToPlaceForNextRound[i].gameObject.transform.position = closestNode.Nodes[cpt].transform.position;
+            _playersToPlaceForNextRound[i].RebornEvent(closestNode.Nodes[cpt].transform);
+            //_playersToPlaceForNextRound[i].gameObject.transform.position = closestNode.Nodes[cpt].transform.position;
             cpt++;
         }
         

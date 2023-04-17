@@ -169,9 +169,10 @@ MonoBehaviour:
   - {fileID: 8699939486669796487, guid: 0d1de61016352fc47bf26bd3f2c00117, type: 3}
   - {fileID: 8699939486669796487, guid: 2e2b076c4168d07498673ec290040b07, type: 3}
   Source: {fileID: 0}
+  Visual: {fileID: 2277440396937974388}
+  SphereReference: {fileID: 8470477560212682837}
   Color: {r: 0, g: 0, b: 0, a: 0}
   PlayerState: 0
-  Visual: {fileID: 2277440396937974388}
   Score: 0
   PointsUI: {fileID: 0}
   ProfileUI: {fileID: 0}
@@ -658,7 +659,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
-  m_VersionIndex: 1138
+  m_VersionIndex: 1144
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []

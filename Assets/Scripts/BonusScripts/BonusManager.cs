@@ -22,6 +22,9 @@ public class BonusManager : MonoBehaviour
 
     void Update()
     {
+        if(GameManager.Instance.GameState != GameState.RACING)
+            return;
+
         _timeIncrementation += Time.deltaTime;
 
         if (_timeIncrementation >= _spawnTimer)
