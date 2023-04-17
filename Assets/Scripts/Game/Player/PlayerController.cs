@@ -62,7 +62,7 @@ public class PlayerController : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         /*if (other.GetComponent<DestructorComponent>())
-            //GameManager.Instance.TriggerPlayerDestructionEvent(this);*/
+            //GameManager.Instance.TriggerPlayerDestructionEvent(this);*/   
     }
 
     public void DiedEvent()

@@ -172,7 +172,14 @@ MonoBehaviour:
   Visual: {fileID: 2277440396937974388}
   SphereReference: {fileID: 8470477560212682837}
   Color: {r: 0, g: 0, b: 0, a: 0}
+  CarColors:
+  - {fileID: 2100000, guid: 07f44fe3e9c462146a7769b976c50ec4, type: 2}
+  - {fileID: 2100000, guid: d2344366b80fe3d4f886ec412e0174fa, type: 2}
+  - {fileID: 2100000, guid: c4c2ee3e832cffd48bb9d156c2b21376, type: 2}
+  - {fileID: 2100000, guid: 74196cf5d503c14488ae1ef1dbc6c9a4, type: 2}
   PlayerState: 0
+  Visual: {fileID: 2277440396937974388}
+  BodyColor: {fileID: 3528213296557987843}
   Score: 0
   PointsUI: {fileID: 0}
   ProfileUI: {fileID: 0}
@@ -1030,6 +1037,11 @@ Transform:
 --- !u!1 &2277440396937974388 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7644360707672163555, guid: f430073c636116b4b9c0f5e6ddcde097, type: 3}
+  m_PrefabInstance: {fileID: 8470477560161769111}
+  m_PrefabAsset: {fileID: 0}
+--- !u!23 &3528213296557987843 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 5006759489953205908, guid: f430073c636116b4b9c0f5e6ddcde097, type: 3}
   m_PrefabInstance: {fileID: 8470477560161769111}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &4146829921669097665 stripped
