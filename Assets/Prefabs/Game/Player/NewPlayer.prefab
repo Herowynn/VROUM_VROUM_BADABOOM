@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8470477558702491913}
   m_Layer: 7
-  m_Name: BoostObject
+  m_Name: Boosts
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -156,8 +156,8 @@ MonoBehaviour:
   ProjectileDirection: {x: 0, y: 0, z: 0}
   Arrow: {fileID: 8470477559953588117}
   ArrowRotationCenter: {fileID: 8470477559387477689}
-  AttackObject: {fileID: 8470477559394728575}
-  BoostObject: {fileID: 8470477558702491913}
+  AttacksContainer: {fileID: 8470477559394728575}
+  BoostsContainer: {fileID: 8470477558702491913}
   AttackList:
   - {fileID: 6935124690244183357, guid: 04d98a072f58d2a49a9b1ee5156c541e, type: 3}
   - {fileID: 8883033362255484860, guid: 0752b767f3fbf124e8b755281030f31b, type: 3}
@@ -170,15 +170,15 @@ MonoBehaviour:
   - {fileID: 8699939486669796487, guid: 2e2b076c4168d07498673ec290040b07, type: 3}
   Source: {fileID: 0}
   Color: {r: 0, g: 0, b: 0, a: 0}
+  PlayerState: 0
+  Visual: {fileID: 2277440396937974388}
+  SphereReference: {fileID: 8470477560212682837}
+  BodyColor: {fileID: 3528213296557987843}
   CarColors:
   - {fileID: 2100000, guid: 07f44fe3e9c462146a7769b976c50ec4, type: 2}
   - {fileID: 2100000, guid: d2344366b80fe3d4f886ec412e0174fa, type: 2}
   - {fileID: 2100000, guid: c4c2ee3e832cffd48bb9d156c2b21376, type: 2}
   - {fileID: 2100000, guid: 74196cf5d503c14488ae1ef1dbc6c9a4, type: 2}
-  PlayerState: 0
-  Visual: {fileID: 2277440396937974388}
-  BodyColor: {fileID: 3528213296557987843}
-  SphereReference: {fileID: 8470477560212682837}
   Score: 0
   PointsUI: {fileID: 0}
   ProfileUI: {fileID: 0}
@@ -414,7 +414,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8470477559394728575}
   m_Layer: 7
-  m_Name: AttackObject
+  m_Name: Attacks
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

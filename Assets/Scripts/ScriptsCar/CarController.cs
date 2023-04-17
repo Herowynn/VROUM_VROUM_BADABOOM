@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Serialization;
 
 public class CarController : MonoBehaviour
 {
@@ -49,31 +50,23 @@ public class CarController : MonoBehaviour
     public GameObject ArrowRotationCenter;
 
     [Header("Bonus")]
-    public Transform AttackObject;
-    public Transform BoostObject;
+    public Transform AttacksContainer;
+    public Transform BoostsContainer;
     public GameObject[] AttackList;
     public GameObject[] BoostList;
-
-
-    float _speedInput;
-    bool _isGrounded;
-    bool _canMove;
-    Vector3 _distArrowRayPoint;
-    Vector3 _wantedDirection;
-    float _yComponentWantedDirection;
-    Vector3 _carAltitudeOffset;
-
+    
     [Header("Audio")]
     public AudioSource Source;
-
- 
+    
     [Header("Info")]
     public Color Color;
-    public List<Material> CarColors;
     public PlayerState PlayerState;
+    
+    [Header("Instance")]
     public GameObject Visual;
-    public MeshRenderer BodyColor;
     public GameObject SphereReference;
+    public MeshRenderer BodyColor;
+    public List<Material> CarColors;
 
     //Need to move to separate file (?)
     public int Score;
@@ -84,10 +77,16 @@ public class CarController : MonoBehaviour
     public ProfileUI ProfileUI;
 
     // Intern Var
-    private MeshRenderer _meshRenderer;
     private Rigidbody _rigidbody;
     private BoxCollider _boxCollider;
     private Vector2 _movementInput;
+    float _speedInput;
+    bool _isGrounded;
+    bool _canMove;
+    Vector3 _distArrowRayPoint;
+    Vector3 _wantedDirection;
+    float _yComponentWantedDirection;
+    Vector3 _carAltitudeOffset;
 
     private void Awake()
     {
@@ -102,8 +101,7 @@ public class CarController : MonoBehaviour
         _yComponentWantedDirection = 0f;
 
         _carAltitudeOffset = new Vector3(0, transform.position.y - SphereRB.transform.position.y, 0);
-
-        _meshRenderer = GetComponent<MeshRenderer>();
+        
         _rigidbody = GetComponent<Rigidbody>();
         _boxCollider = GetComponent<BoxCollider>();
 
@@ -248,20 +246,20 @@ public class CarController : MonoBehaviour
             switch (collision.gameObject.GetComponent<Bonus>().Type)
             {
                 case BonusType.Attack:
-                    if (AttackObject.transform.childCount != 0) 
+                    if (AttacksContainer.transform.childCount != 0) 
                         return;
-                    Destroy(collision.gameObject);
-                    Instantiate(AttackList[collision.gameObject.GetComponent<Bonus>().RndLvl], AttackObject);
+                    Instantiate(AttackList[collision.gameObject.GetComponent<Bonus>().RndLvl], AttacksContainer);
                     ProfileUI.TookWeapon();
                     break;
                 case BonusType.Boost:
-                    if (BoostObject.transform.childCount != 0) 
+                    if (BoostsContainer.transform.childCount != 0) 
                         return;
-                    Destroy(collision.gameObject);
-                    Instantiate(BoostList[collision.gameObject.GetComponent<Bonus>().RndLvl], BoostObject);
+                    Instantiate(BoostList[collision.gameObject.GetComponent<Bonus>().RndLvl], BoostsContainer);
                     ProfileUI.TookBoost();
                     break;
             }
+            
+            Destroy(collision.gameObject);
         }
 
         if (collision.gameObject.layer == groundLayerNumber && !_isGrounded)
@@ -274,6 +272,16 @@ public class CarController : MonoBehaviour
         transform.forward = new Vector3(transform.forward.x, 0, transform.forward.z);
     }
 
+    private void ClearMyBonus()
+    {
+        if (BoostsContainer.transform.childCount != 0)
+            Destroy(BoostsContainer.transform.GetChild(0).gameObject);
+
+        if (AttacksContainer.transform.childCount != 0)
+            Destroy(AttacksContainer.transform.GetChild(0).gameObject);
+        
+    }
+
     #region Related to in-game actions
     
     public void OnMove(InputAction.CallbackContext context)
@@ -283,12 +291,12 @@ public class CarController : MonoBehaviour
 
     public void OnBoost(InputAction.CallbackContext context)
     {
-        if (BoostObject.transform.childCount == 0)
+        if (BoostsContainer.transform.childCount == 0)
             return;
         
-        if (BoostObject.transform.GetComponentInChildren<Booster>()) 
+        if (BoostsContainer.transform.GetComponentInChildren<Booster>()) 
         {
-            BoostObject.transform.GetChild(0).GetComponent<Booster>().Boost(SphereRB, gameObject);
+            BoostsContainer.transform.GetChild(0).GetComponent<Booster>().Boost(SphereRB, gameObject);
         }
         
         ProfileUI.UseBoost();
@@ -296,12 +304,12 @@ public class CarController : MonoBehaviour
 
     public void OnAttack(InputAction.CallbackContext context)
     {
-        if (AttackObject.transform.childCount == 0)
+        if (AttacksContainer.transform.childCount == 0)
             return;
         
-        if (AttackObject.transform.GetComponentInChildren<Offensive>())
+        if (AttacksContainer.transform.GetComponentInChildren<Offensive>())
         {
-            AttackObject.transform.GetChild(0).GetComponent<Offensive>().Shoot();
+            AttacksContainer.transform.GetChild(0).GetComponent<Offensive>().Shoot();
         }
         
         ProfileUI.UseWeapon();
@@ -334,6 +342,10 @@ public class CarController : MonoBehaviour
 
     public void RebornEvent(Transform positionOnReborn)
     {
+        ClearMyBonus();
+
+        ProfileUI.ResetProfile();
+        
         SphereReference.SetActive(true);
         Visual.SetActive(true);
         _rigidbody.constraints = RigidbodyConstraints.None;
