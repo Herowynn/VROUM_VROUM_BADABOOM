@@ -73,6 +73,7 @@ public class RoundManager : MonoBehaviour
     private void PrepareNextRound()
     {
         GetRoundWinner();
+        ClearEveryBonus();
         PlacePlayersForNextRound();
         StartCoroutine(StartRound());
     }
@@ -104,6 +105,11 @@ public class RoundManager : MonoBehaviour
         }
         
         _playersToPlaceForNextRound.Clear();
+    }
+
+    private void ClearEveryBonus()
+    {
+        GameManager.Instance.DestroyBonusEvent();
     }
 
     private RoundNode FindClosestNodeFromWinner(Vector3 winnerPosition)

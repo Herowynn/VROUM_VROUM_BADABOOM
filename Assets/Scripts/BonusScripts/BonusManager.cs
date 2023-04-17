@@ -6,18 +6,26 @@ using UnityEngine;
 
 public class BonusManager : MonoBehaviour
 {
+    [Header("Instaces")]
     public GameObject BoostPrefab;
     public GameObject BoostParent;
     public GameObject AttackPrefab;
     public GameObject AttackParent;
-    private float _spawnTimer;
-    private float _timeIncrementation;
+    
+    [Header("GD")]
     [SerializeField] private int _maxTimeBetweenBonusSpawn;
     [SerializeField] private int _minTimeBetweenBonusSpawn;
+    [SerializeField] private float _firstBonusSpawnTime;
+
+    //intern var
+    private float _spawnTimer;
+    private float _timeIncrementation;
+    private List<GameObject> _allBonus;
 
     void Start()
     {
-        _spawnTimer = 4.0f;
+        _spawnTimer = _firstBonusSpawnTime;
+        _allBonus = new List<GameObject>();
     }
 
     void Update()
@@ -44,23 +52,28 @@ public class BonusManager : MonoBehaviour
         int rndPlayer = Random.Range(0, GameManager.Instance.PlayersManager.Players.Count);
 
         
-        Vector3 SpawnPosition = new(randomX, randomY, randomZ);
-        SpawnPosition += GameManager.Instance.PlayersManager.Players[rndPlayer].transform.forward * 3;
-        SpawnPosition += GameManager.Instance.PlayersManager.Players[rndPlayer].transform.position;
-        GameObject go = null;
+        Vector3 spawnPosition = new(randomX, randomY, randomZ);
+        spawnPosition += GameManager.Instance.PlayersManager.Players[rndPlayer].transform.forward * 3;
+        spawnPosition += GameManager.Instance.PlayersManager.Players[rndPlayer].transform.position;
 
         switch (rndBonusType)
         {
             case 0:
-                go = Instantiate(AttackPrefab, SpawnPosition, Quaternion.identity);
-                go.transform.parent = AttackParent.transform;
+                _allBonus.Add(Instantiate(AttackPrefab, spawnPosition, Quaternion.identity, AttackParent.transform));
                 break;
             case 1:
-                go = Instantiate(BoostPrefab, SpawnPosition, Quaternion.identity);
-                go.transform.parent = BoostParent.transform;
-                break;
-            default:
+                _allBonus.Add(Instantiate(BoostPrefab, spawnPosition, Quaternion.identity, BoostParent.transform));
                 break;
         }
+    }
+
+    public void ClearBonus()
+    {
+        foreach (var bonus in _allBonus)
+        {
+            Destroy(bonus);
+        }
+        
+        _allBonus.Clear();
     }
 }

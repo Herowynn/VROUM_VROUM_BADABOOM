@@ -2380,7 +2380,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PointPerCrash: 1
-  PointsToWin: 100
+  PointsToWin: 15
   Players: []
 --- !u!1 &939687499
 GameObject:
@@ -3511,8 +3511,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1504117033}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 5.7246866, y: 0.82323396, z: 0.6192987}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -3539,6 +3539,7 @@ MonoBehaviour:
   AttackParent: {fileID: 655431331}
   _maxTimeBetweenBonusSpawn: 7
   _minTimeBetweenBonusSpawn: 3
+  _firstBonusSpawnTime: 0
 --- !u!1 &1551155569
 GameObject:
   m_ObjectHideFlags: 0
@@ -4163,6 +4164,7 @@ MonoBehaviour:
   RoundManager: {fileID: 633866253}
   MapManager: {fileID: 59079940}
   PlayersManager: {fileID: 1551155571}
+  BonusManager: {fileID: 1504117035}
   GameState: 1
 --- !u!1 &1999519600
 GameObject:

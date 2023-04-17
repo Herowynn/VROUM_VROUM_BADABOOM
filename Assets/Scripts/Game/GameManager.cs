@@ -21,6 +21,7 @@ public class GameManager : MonoBehaviour
     public RoundManager RoundManager;
     public MapManager MapManager;
     public PlayersManager PlayersManager;
+    public BonusManager BonusManager;
 
     [Header("Info")]
     public GameState GameState;
@@ -131,6 +132,11 @@ public class GameManager : MonoBehaviour
     public void TriggerEndGameEvent()
     {
         LoadEndGame();
+    }
+
+    public void DestroyBonusEvent()
+    {
+        BonusManager.ClearBonus();
     }
     
     #endregion
