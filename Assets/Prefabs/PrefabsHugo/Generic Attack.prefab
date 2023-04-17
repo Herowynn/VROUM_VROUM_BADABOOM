@@ -9,8 +9,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4811915868397805674}
-  - component: {fileID: 4811915868397805590}
-  - component: {fileID: 4811915868397805591}
   - component: {fileID: 4811915868397805672}
   - component: {fileID: 4811915868397805673}
   - component: {fileID: 3365447343732414858}
@@ -36,56 +34,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!33 &4811915868397805590
-MeshFilter:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4811915868397805675}
-  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!23 &4811915868397805591
-MeshRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4811915868397805675}
-  m_Enabled: 1
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
-  m_DynamicOccludee: 1
-  m_StaticShadowCaster: 0
-  m_MotionVectors: 1
-  m_LightProbeUsage: 1
-  m_ReflectionProbeUsage: 1
-  m_RayTracingMode: 2
-  m_RayTraceProcedural: 0
-  m_RenderingLayerMask: 1
-  m_RendererPriority: 0
-  m_Materials:
-  - {fileID: 2100000, guid: ed7c740ba79cf5e4ca1bc737808787c0, type: 2}
-  m_StaticBatchInfo:
-    firstSubMesh: 0
-    subMeshCount: 0
-  m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 0}
-  m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
-  m_PreserveUVs: 0
-  m_IgnoreNormalsForChartDetection: 0
-  m_ImportantGI: 0
-  m_StitchLightmapSeams: 1
-  m_SelectedEditorRenderState: 3
-  m_MinimumChartSize: 4
-  m_AutoUVMaxDistance: 0.5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_AdditionalVertexStreams: {fileID: 0}
 --- !u!65 &4811915868397805672
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -128,11 +76,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Type: 0
-  rndLvl: -1
-  Materials:
-  - {fileID: 2100000, guid: ed7c740ba79cf5e4ca1bc737808787c0, type: 2}
-  - {fileID: 2100000, guid: fa39abf0616fe7b469df17c71d49d790, type: 2}
-  - {fileID: 2100000, guid: b584ea63baf83fa489af394e0b925dae, type: 2}
-  - {fileID: 2100000, guid: dbea6987eb772f44d800eb5a6284d9a1, type: 2}
-  - {fileID: 2100000, guid: dd99317915e675c499fccb6136eaf265, type: 2}
-  BonusMeshRenderer: {fileID: 4811915868397805591}
+  RndLvl: -1
+  BonusSkin:
+  - {fileID: 5580632508604555011, guid: 9ac0b6a2a58b3ab42af33e55737fa7ee, type: 3}
+  - {fileID: 796695811592680456, guid: 6995f940c970bf245926f4663eaaff23, type: 3}
+  - {fileID: 7221930875229779232, guid: 5f6e514cd590ced4fb6429db55321ac1, type: 3}
+  - {fileID: 4719076941979770649, guid: a593d06800f800f4eba9c8ac72f654d8, type: 3}
+  - {fileID: 2503067443012749242, guid: b931a8f0ead32e746bba331e75e292ae, type: 3}
