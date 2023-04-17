@@ -6,19 +6,19 @@ using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
-    [Header("Info")] 
+    [Header("Info")]
     public Color Color;
     public float speed = 5;
     public PlayerState PlayerState;
-    
+
     //Need to move to separate file (?)
     public int Score;
-    
+
     //Need to move to separate file (?)
-    [Header("UI")] 
+    [Header("UI")]
     public PointsUI PointsUI;
     public ProfileUI ProfileUI;
-    
+
     // Intern Var
     private MeshRenderer _meshRenderer;
     private Rigidbody _rigidbody;
@@ -30,7 +30,7 @@ public class PlayerController : MonoBehaviour
         _meshRenderer = GetComponent<MeshRenderer>();
         _rigidbody = GetComponent<Rigidbody>();
         _boxCollider = GetComponent<BoxCollider>();
-        
+
         CreatePlayerUis();
 
         PointsUI.ChangeVisualColoration(Color);
@@ -44,25 +44,25 @@ public class PlayerController : MonoBehaviour
     }
 
     #region Related to in-game actions
-    
+
     public void OnMove(InputAction.CallbackContext context) => _movementInput = context.ReadValue<Vector2>();
 
     public void OnBoost(InputAction.CallbackContext context) => ProfileUI.UseBoost();
-    
+
     public void OnAttack(InputAction.CallbackContext context) => ProfileUI.UseWeapon();
-    
+
     public void OnNewBoost(InputAction.CallbackContext context) => ProfileUI.TookBoost();
-    
+
     public void OnNewWeapon(InputAction.CallbackContext context) => ProfileUI.TookWeapon();
-    
+
     #endregion
 
     #region Related to state in-game
-    
+
     private void OnTriggerEnter(Collider other)
     {
-        if (other.GetComponent<DestructorComponent>())
-            GameManager.Instance.TriggerPlayerDestructionEvent(this);
+        /*if (other.GetComponent<DestructorComponent>())
+            //GameManager.Instance.TriggerPlayerDestructionEvent(this);*/   
     }
 
     public void DiedEvent()
@@ -80,7 +80,7 @@ public class PlayerController : MonoBehaviour
         _boxCollider.enabled = true;
         _rigidbody.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationY |
                                  RigidbodyConstraints.FreezeRotationZ;
-        
+
         PlayerState = PlayerState.ALIVE;
     }
 
@@ -89,14 +89,14 @@ public class PlayerController : MonoBehaviour
         Score += points;
         PointsUI.ChangePointsCount(Score);
     }
-    
+
     #endregion
 
     #region Related to UI
 
     private void CreatePlayerUis()
     {
-        GameManager.Instance.TriggerUiCreationForPlayerEvent(this);
+        //GameManager.Instance.TriggerUiCreationForPlayerEvent(this);
     }
 
     #endregion

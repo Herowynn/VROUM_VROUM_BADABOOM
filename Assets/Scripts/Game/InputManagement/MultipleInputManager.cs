@@ -22,24 +22,23 @@ public class MultipleInputManager : MonoBehaviour
     private int _controllerNeeded;
     private InputMenuUI _inputMenuUI;
 
-    
-    private void Start()
+    public void InstantiateMultipleInputManager()
     {
         /*NumberOfPlayer = MenuManager.Instance.NbLocal;
         NeedKeyboard = MenuManager.Instance.NeedKeyboard;
-        NbAi = MenuManager.Instance.NbAi;
+        NbAi = (MenuManager.Instance.NbAi + MenuManager.Instance.NbLocal > 4) ? 0 : MenuManager.Instance.NbAi;
         AiDifficulty = MenuManager.Instance.AiDifficulty;
         MapName = MenuManager.Instance.MapName;
         ScoreToWin = MenuManager.Instance.ScoreToWin;*/
-        
+
         _controllerNeeded = NeedKeyboard ? NumberOfPlayer - 1 : NumberOfPlayer;
         CountControllers();
         _inputMenuUI = GameManager.Instance.UIManager.InputMenuUI;
         _inputMenuUI.CreatePlayersInput(_controllerNeeded, _controllersConnected, NeedKeyboard);
-        
+
         GameManager.Instance.MapManager.LoadMap(MapName);
         GameManager.Instance.RoundManager.InitiateRoundNodesForCurrentMap();
-        
+
         // Subscribe to Event
         InputSystem.onDeviceChange += ListenerOnDeviceChange;
     }

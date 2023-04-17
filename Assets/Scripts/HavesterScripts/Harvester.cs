@@ -12,7 +12,10 @@ public class Harvester : MonoBehaviour
 
     void Update()
     {
-        transform.position += _direction.normalized * speed * Time.deltaTime;
-        transform.forward = _direction;
+        if (GameManager.Instance.GameState == GameState.RACING)
+        {
+            transform.position += _direction.normalized * speed * Time.deltaTime;
+            transform.forward = _direction;
+        }
     }
 }

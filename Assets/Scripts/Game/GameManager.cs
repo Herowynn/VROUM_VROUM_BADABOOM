@@ -5,17 +5,7 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    //Singleton
-
-    public static GameManager Instance;
-
-    private void Awake()
-    {
-        if (Instance == null)
-            Instance = this;
-        
-        
-    }
+    #region Public Fields
 
     [Header("Instance")]
     public MultipleInputManager MultipleInputManager;
@@ -25,15 +15,68 @@ public class GameManager : MonoBehaviour
     public RoundManager RoundManager;
     public MapManager MapManager;
     public PlayersManager PlayersManager;
+    public BonusManager BonusManager;
 
     [Header("Info")]
     public GameState GameState;
+
+    [Header("Breakable Objects Layers")]
+    public int CarLayerNumber;
+    public int BonusLayerNumber;
+
+    #endregion
+
+    #region Private Fields
+
+    private GameObject _checkPointsParentObject;
+    private GameObject _harvester;
+    private List<Transform> _checkPointsList = new List<Transform>();
+    private int _nextCheckPointIndex;
+    private Vector3 _direction;
+    private Vector3 _realPointToReach;
+
+    #endregion
+
+    public int NextCheckpointIndex { get { return _nextCheckPointIndex; } set { _nextCheckPointIndex = value; } }
+
+    public static GameManager Instance;
+
+    private void Awake()
+    {
+        if (Instance == null)
+            Instance = this;
+    }
 
     private void Start()
     {
         //LoadPreGame();
         //test
         StartGame();
+
+        for (int i = 0; i < MapManager.CurrentMap.transform.childCount; i++)
+        {
+            if (MapManager.CurrentMap.transform.GetChild(i).gameObject.name == "Checkpoints")
+                _checkPointsParentObject = MapManager.CurrentMap.transform.GetChild(i).gameObject;
+            if (MapManager.CurrentMap.transform.GetChild(i).gameObject.name == "Harvester")
+                _harvester = MapManager.CurrentMap.transform.GetChild(i).gameObject;
+        }
+
+        for (int i = 0; i < _checkPointsParentObject.transform.childCount; i++)
+        {
+            _checkPointsList.Add(_checkPointsParentObject.transform.GetChild(i));
+        }
+
+        _nextCheckPointIndex = 0;
+    }
+
+    void Update()
+    {
+        if (_nextCheckPointIndex >= _checkPointsParentObject.transform.childCount)
+            _nextCheckPointIndex = 0;
+
+        _realPointToReach = new Vector3(_checkPointsList[_nextCheckPointIndex].position.x, _harvester.transform.position.y, _checkPointsList[_nextCheckPointIndex].position.z);
+        _direction = (_realPointToReach - _harvester.transform.position).normalized;
+        _harvester.GetComponent<Harvester>().direction = _direction;
     }
 
     #region Game State
@@ -54,7 +97,9 @@ public class GameManager : MonoBehaviour
     {
         UIManager.TriggerStartGameUi();
 
-        InstantiatePlayers(MultipleInputManager.NeedKeyboard, MultipleInputManager.NumberOfPlayer);
+        MultipleInputManager.InstantiateMultipleInputManager();
+
+        InstantiatePlayers(MultipleInputManager.NeedKeyboard, MultipleInputManager.NumberOfPlayer + MultipleInputManager.NbAi);
 
         Camera.AddTargets();
         
@@ -115,7 +160,7 @@ public class GameManager : MonoBehaviour
         PlayersManager.DestroyPlayers();
     }
 
-    public void TriggerPlayerDestructionEvent(PlayerController player)
+    public void TriggerPlayerDestructionEvent(CarController player)
     {
         RoundManager.PlayerDiedEvent(player);
     }
@@ -134,12 +179,17 @@ public class GameManager : MonoBehaviour
     {
         LoadEndGame();
     }
+
+    public void DestroyBonusEvent()
+    {
+        BonusManager.ClearBonus();
+    }
     
     #endregion
 
     #region UI
 
-    public void TriggerUiCreationForPlayerEvent(PlayerController playerInstance)
+    public void TriggerUiCreationForPlayerEvent(CarController playerInstance)
     {
         UIManager.GameUI.CreateUisForPlayer(playerInstance);
     }

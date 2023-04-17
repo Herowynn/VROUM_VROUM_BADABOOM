@@ -26,4 +26,10 @@ public class ProfileUI : MonoBehaviour
     {
         WeaponGo.SetActive(false);
     }
+
+    public void ResetProfile()
+    {
+        UseBoost();
+        UseWeapon();
+    }
 }

@@ -55,8 +55,9 @@ public class MissileLauncherProjectile : MonoBehaviour
     {
         if (_clock < _stageOne)
         {
-            _projectileRB.AddForce(_direction * 500f);
-            _actualSpeed = _launchingSpeed;
+            
+            _projectileRB.AddForce(_direction*5, ForceMode.Acceleration);
+            _projectileRB.velocity = Vector3.ClampMagnitude(_projectileRB.velocity, _launchingSpeed);
         }
 
         if ( _clock > _stageOne && _clock < _stageTwo)

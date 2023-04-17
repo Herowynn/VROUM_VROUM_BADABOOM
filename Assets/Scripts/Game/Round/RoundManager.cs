@@ -14,13 +14,13 @@ public class RoundManager : MonoBehaviour
     public float TimeToRestartRound;
     
     //intern var
-    private List<PlayerController> _playersToPlaceForNextRound;
+    private List<CarController> _playersToPlaceForNextRound;
     private RoundNode[] _roundNodesForCurrentMap;
 
     private void Start()
     {
         RoundNumber = 0;
-        _playersToPlaceForNextRound = new List<PlayerController>();
+        _playersToPlaceForNextRound = new List<CarController>();
     }
 
     public IEnumerator StartRound()
@@ -37,7 +37,7 @@ public class RoundManager : MonoBehaviour
         _roundNodesForCurrentMap = GameManager.Instance.MapManager.CurrentMap.RoundNodes;
     }
     
-    public void PlayerDiedEvent(PlayerController player)
+    public void PlayerDiedEvent(CarController player)
     {
         _playersToPlaceForNextRound.Add(player);
 
@@ -73,6 +73,7 @@ public class RoundManager : MonoBehaviour
     private void PrepareNextRound()
     {
         GetRoundWinner();
+        ClearEveryBonus();
         PlacePlayersForNextRound();
         StartCoroutine(StartRound());
     }
@@ -81,9 +82,9 @@ public class RoundManager : MonoBehaviour
     {
         foreach (var player in GameManager.Instance.PlayersManager.Players)
         {
-            if (player.GetComponent<PlayerController>().PlayerState == PlayerState.ALIVE)
+            if (player.GetComponent<CarController>().PlayerState == PlayerState.ALIVE)
             {
-                _playersToPlaceForNextRound.Add(player.GetComponent<PlayerController>());
+                _playersToPlaceForNextRound.Add(player.GetComponent<CarController>());
                 return;
             }
         }
@@ -98,13 +99,17 @@ public class RoundManager : MonoBehaviour
         for (int i = _playersToPlaceForNextRound.Count - 1; i >= 0; i--)
         {
             //See if necessary
-            //_playersToPlaceForNextRound[i].transform.rotation = closestNode.Nodes[j].transform.rotation;
-            _playersToPlaceForNextRound[i].RebornEvent();
-            _playersToPlaceForNextRound[i].gameObject.transform.position = closestNode.Nodes[cpt].transform.position;
+            _playersToPlaceForNextRound[i].RebornEvent(closestNode.Nodes[cpt].transform);
+            //_playersToPlaceForNextRound[i].gameObject.transform.position = closestNode.Nodes[cpt].transform.position;
             cpt++;
         }
         
         _playersToPlaceForNextRound.Clear();
+    }
+
+    private void ClearEveryBonus()
+    {
+        GameManager.Instance.DestroyBonusEvent();
     }
 
     private RoundNode FindClosestNodeFromWinner(Vector3 winnerPosition)
