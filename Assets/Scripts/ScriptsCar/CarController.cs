@@ -158,23 +158,6 @@ public class CarController : MonoBehaviour
             Arrow.SetActive(false);
 
         transform.position = SphereRB.transform.position + _carAltitudeOffset;
-
-        // Keyboard attack boost button : left CTRL
-        if (AttackObject.transform.childCount != 0 && Input.GetButtonDown("Fire1"))
-        {
-            if (AttackObject.transform.GetComponentInChildren<Offensive>())
-            {
-                AttackObject.transform.GetChild(0).GetComponent<Offensive>().Shoot();
-            }
-        }
-        // Keyboard speed boost button : left SHIFT
-        if (BoostObject.transform.childCount != 0 && Input.GetButtonDown("Fire3"))
-        {
-            if (BoostObject.transform.GetComponentInChildren<Booster>()) 
-            {
-                BoostObject.transform.GetChild(0).GetComponent<Booster>().Boost(SphereRB, gameObject);
-            }
-        }
     }
 
     private void FixedUpdate()
@@ -267,22 +250,16 @@ public class CarController : MonoBehaviour
                 case BonusType.Attack:
                     if (AttackObject.transform.childCount != 0) 
                         return;
-                    else
-                    {
-                        Destroy(collision.gameObject);
-                        Instantiate(AttackList[collision.gameObject.GetComponent<Bonus>().RndLvl], AttackObject);
-                    }
+                    Destroy(collision.gameObject);
+                    Instantiate(AttackList[collision.gameObject.GetComponent<Bonus>().RndLvl], AttackObject);
+                    ProfileUI.TookWeapon();
                     break;
                 case BonusType.Boost:
                     if (BoostObject.transform.childCount != 0) 
                         return;
-                    else
-                    {
-                        Destroy(collision.gameObject);
-                        Instantiate(BoostList[collision.gameObject.GetComponent<Bonus>().RndLvl], BoostObject);
-                    }
-                    break;
-                default:
+                    Destroy(collision.gameObject);
+                    Instantiate(BoostList[collision.gameObject.GetComponent<Bonus>().RndLvl], BoostObject);
+                    ProfileUI.TookBoost();
                     break;
             }
         }
@@ -304,9 +281,31 @@ public class CarController : MonoBehaviour
         _movementInput = context.ReadValue<Vector2>();
     }
 
-    public void OnBoost(InputAction.CallbackContext context) => ProfileUI.UseBoost();
+    public void OnBoost(InputAction.CallbackContext context)
+    {
+        if (BoostObject.transform.childCount == 0)
+            return;
+        
+        if (BoostObject.transform.GetComponentInChildren<Booster>()) 
+        {
+            BoostObject.transform.GetChild(0).GetComponent<Booster>().Boost(SphereRB, gameObject);
+        }
+        
+        ProfileUI.UseBoost();
+    }
 
-    public void OnAttack(InputAction.CallbackContext context) => ProfileUI.UseWeapon();
+    public void OnAttack(InputAction.CallbackContext context)
+    {
+        if (AttackObject.transform.childCount == 0)
+            return;
+        
+        if (AttackObject.transform.GetComponentInChildren<Offensive>())
+        {
+            AttackObject.transform.GetChild(0).GetComponent<Offensive>().Shoot();
+        }
+        
+        ProfileUI.UseWeapon();
+    }
 
     public void OnNewBoost(InputAction.CallbackContext context) => ProfileUI.TookBoost();
 
