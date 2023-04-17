@@ -10,7 +10,7 @@ public class BonusManager : MonoBehaviour
     public GameObject BoostParent;
     public GameObject AttackPrefab;
     public GameObject AttackParent;
-    public GameObject CarPrefab;
+    public List<GameObject> Players;
     private float _spawnTimer;
     private float _timeIncrementation;
     [SerializeField] private int _maxTimeBetweenBonusSpawn;
@@ -38,11 +38,13 @@ public class BonusManager : MonoBehaviour
         int randomX = Random.Range(-5, 5);
         int randomY = Random.Range(3, 10);
         int randomZ = Random.Range(-5, 5);
-        int rndBonusType = 0; //Random.Range(0, 2);
+        int rndBonusType = Random.Range(0, 2);
+        int rndPlayer = Random.Range(0, GameManager.Instance.PlayersManager.Players.Count);
+
         
         Vector3 SpawnPosition = new(randomX, randomY, randomZ);
-        SpawnPosition += CarPrefab.transform.forward * 3;
-        SpawnPosition += CarPrefab.transform.position;
+        SpawnPosition += GameManager.Instance.PlayersManager.Players[rndPlayer].transform.forward * 3;
+        SpawnPosition += GameManager.Instance.PlayersManager.Players[rndPlayer].transform.position;
         GameObject go = null;
 
         switch (rndBonusType)

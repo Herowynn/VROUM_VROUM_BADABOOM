@@ -18,7 +18,7 @@ public class Bonus : MonoBehaviour
     {
         if (Type == BonusType.Attack) 
         {
-            RndLvl = 0;//Random.Range(0, Materials.Count);
+            RndLvl = Random.Range(0, Materials.Count);
             BonusMeshRenderer.material = Materials[RndLvl];
         }
         if (Type == BonusType.Boost)
