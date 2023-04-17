@@ -291,28 +291,34 @@ public class CarController : MonoBehaviour
 
     public void OnBoost(InputAction.CallbackContext context)
     {
-        if (BoostsContainer.transform.childCount == 0)
-            return;
-        
-        if (BoostsContainer.transform.GetComponentInChildren<Booster>()) 
+        if (context.performed)
         {
-            BoostsContainer.transform.GetChild(0).GetComponent<Booster>().Boost(SphereRB, gameObject);
-        }
+            if (BoostsContainer.transform.childCount == 0)
+                return;
         
-        ProfileUI.UseBoost();
+            if (BoostsContainer.transform.GetComponentInChildren<Booster>()) 
+            {
+                BoostsContainer.transform.GetChild(0).GetComponent<Booster>().Boost(SphereRB, gameObject);
+            }
+        
+            ProfileUI.UseBoost();
+        }
     }
 
     public void OnAttack(InputAction.CallbackContext context)
     {
-        if (AttacksContainer.transform.childCount == 0)
-            return;
-        
-        if (AttacksContainer.transform.GetComponentInChildren<Offensive>())
+        if (context.performed)
         {
-            AttacksContainer.transform.GetChild(0).GetComponent<Offensive>().Shoot();
-        }
+            if (AttacksContainer.transform.childCount == 0)
+                return;
         
-        ProfileUI.UseWeapon();
+            if (AttacksContainer.transform.GetComponentInChildren<Offensive>())
+            {
+                AttacksContainer.transform.GetChild(0).GetComponent<Offensive>().Shoot();
+            }
+        
+            ProfileUI.UseWeapon();
+        }
     }
 
     public void OnNewBoost(InputAction.CallbackContext context) => ProfileUI.TookBoost();
