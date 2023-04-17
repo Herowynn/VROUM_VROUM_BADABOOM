@@ -38,6 +38,7 @@ public class MultipleInputManager : MonoBehaviour
 
         GameManager.Instance.MapManager.LoadMap(MapName);
         GameManager.Instance.RoundManager.InitiateRoundNodesForCurrentMap();
+        GameManager.Instance.RoundManager.InitiateHarvesterForCurrentMap();
 
         // Subscribe to Event
         InputSystem.onDeviceChange += ListenerOnDeviceChange;

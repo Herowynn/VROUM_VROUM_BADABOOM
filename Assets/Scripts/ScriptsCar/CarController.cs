@@ -335,7 +335,10 @@ public class CarController : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         if (other.GetComponent<DestructorComponent>())
+        {
             GameManager.Instance.TriggerPlayerDestructionEvent(this);
+            Debug.Log(other.name);
+        }
     }
 
     public void DiedEvent()

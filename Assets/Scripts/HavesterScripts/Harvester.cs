@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class Harvester : MonoBehaviour
 {
-    public float speed;
+    [Header("GD")]
+    public float Speed;
 
     private Vector3 _direction;
 
@@ -14,8 +15,15 @@ public class Harvester : MonoBehaviour
     {
         if (GameManager.Instance.GameState == GameState.RACING)
         {
-            transform.position += _direction.normalized * speed * Time.deltaTime;
+            transform.position += _direction.normalized * Speed * Time.deltaTime;
             transform.forward = _direction;
+            Debug.Log(transform.position);
         }
+    }
+
+    public void ResetToTransform(Transform resetTransform)
+    {
+        transform.position = resetTransform.position;
+        transform.rotation = resetTransform.rotation;
     }
 }

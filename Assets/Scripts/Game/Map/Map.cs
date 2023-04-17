@@ -8,6 +8,7 @@ public class Map : MonoBehaviour
     public string Name;
     public Transform[] StartPositions;
     public RoundNode[] RoundNodes;
+    public Harvester Harvester;
 
     public void Load()
     {
