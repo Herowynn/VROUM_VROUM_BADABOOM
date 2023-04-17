@@ -123,90 +123,6 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
-<<<<<<< HEAD
-=======
---- !u!1001 &395936497
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 880108793263339205, guid: a0baaf7e74df8204aa46113b79aece87, type: 3}
-      propertyPath: m_Mesh
-      value: 
-      objectReference: {fileID: 1335269156}
-    - target: {fileID: 880108793263339207, guid: a0baaf7e74df8204aa46113b79aece87, type: 3}
-      propertyPath: m_Mesh
-      value: 
-      objectReference: {fileID: 1335269156}
-    - target: {fileID: 880108793263339209, guid: a0baaf7e74df8204aa46113b79aece87, type: 3}
-      propertyPath: m_Mesh
-      value: 
-      objectReference: {fileID: 1335269156}
-    - target: {fileID: 880108793263779319, guid: a0baaf7e74df8204aa46113b79aece87, type: 3}
-      propertyPath: m_Mesh
-      value: 
-      objectReference: {fileID: 609922501}
-    - target: {fileID: 880108793263779321, guid: a0baaf7e74df8204aa46113b79aece87, type: 3}
-      propertyPath: m_Mesh
-      value: 
-      objectReference: {fileID: 609922501}
-    - target: {fileID: 880108793263779323, guid: a0baaf7e74df8204aa46113b79aece87, type: 3}
-      propertyPath: m_Mesh
-      value: 
-      objectReference: {fileID: 609922501}
-    - target: {fileID: 880108793907242294, guid: a0baaf7e74df8204aa46113b79aece87, type: 3}
-      propertyPath: m_Name
-      value: TrackPrototype
-      objectReference: {fileID: 0}
-    - target: {fileID: 880108793907242295, guid: a0baaf7e74df8204aa46113b79aece87, type: 3}
-      propertyPath: m_RootOrder
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 880108793907242295, guid: a0baaf7e74df8204aa46113b79aece87, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 39.997864
-      objectReference: {fileID: 0}
-    - target: {fileID: 880108793907242295, guid: a0baaf7e74df8204aa46113b79aece87, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -60.692932
-      objectReference: {fileID: 0}
-    - target: {fileID: 880108793907242295, guid: a0baaf7e74df8204aa46113b79aece87, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -112.42293
-      objectReference: {fileID: 0}
-    - target: {fileID: 880108793907242295, guid: a0baaf7e74df8204aa46113b79aece87, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 880108793907242295, guid: a0baaf7e74df8204aa46113b79aece87, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 880108793907242295, guid: a0baaf7e74df8204aa46113b79aece87, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 880108793907242295, guid: a0baaf7e74df8204aa46113b79aece87, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 880108793907242295, guid: a0baaf7e74df8204aa46113b79aece87, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 880108793907242295, guid: a0baaf7e74df8204aa46113b79aece87, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 880108793907242295, guid: a0baaf7e74df8204aa46113b79aece87, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: a0baaf7e74df8204aa46113b79aece87, type: 3}
->>>>>>> TracksProbuilder
 --- !u!1 &475508045
 GameObject:
   m_ObjectHideFlags: 0
@@ -297,11 +213,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-<<<<<<< HEAD
   m_Name: pb_Mesh-1412
-=======
-  m_Name: pb_Mesh-20694
->>>>>>> TracksProbuilder
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -559,11 +471,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-<<<<<<< HEAD
   m_Name: pb_Mesh-1398
-=======
-  m_Name: pb_Mesh-20680
->>>>>>> TracksProbuilder
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -721,7 +629,6 @@ Mesh:
     offset: 0
     size: 0
     path: 
-<<<<<<< HEAD
 --- !u!1001 &6420575148985691888
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -811,5 +718,3 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bfdd693cebcd61a49965fe99ac39b9d0, type: 3}
-=======
->>>>>>> TracksProbuilder
