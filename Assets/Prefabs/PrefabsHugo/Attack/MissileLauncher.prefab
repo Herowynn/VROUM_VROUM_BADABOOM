@@ -50,7 +50,6 @@ MonoBehaviour:
   ProjectilePrefab: {fileID: 5199820407507040153, guid: 244aa098d5897814ea19a92c4762edb1, type: 3}
   _bulletSpawnPoint: {fileID: 3653271020282181873}
   HatchOpenSound: {fileID: 8300000, guid: 5825a93c54ea3ba4b800e62d719e7382, type: 3}
-  HatchCloseSound: {fileID: 8300000, guid: 25cad5f9fe1a9764d8e2c1a64def2527, type: 3}
 --- !u!65 &1635400357876893140
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -60,7 +59,7 @@ BoxCollider:
   m_GameObject: {fileID: 553776296881146100}
   m_Material: {fileID: 0}
   m_IsTrigger: 1
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Size: {x: 57.92016, y: 39.385468, z: 45.13335}
   m_Center: {x: 28.460556, y: -19.193617, z: -2.915903}

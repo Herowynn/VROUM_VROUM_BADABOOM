@@ -63,6 +63,6 @@ public class ShotgunProjectile : MonoBehaviour
     {
         yield return new WaitForSeconds(.2f);
         GetComponent<SphereCollider>().enabled = true;
-        Debug.Log(GetComponent<SphereCollider>().enabled);
+        
     }
 }
