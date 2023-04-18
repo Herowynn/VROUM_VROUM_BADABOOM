@@ -74,6 +74,8 @@ public class Harvester : MonoBehaviour
         float moveStep = Speed * Time.deltaTime;
         float distance = Vector3.Distance(target, transform.position);
 
+        //transform.rotation = path[_targetNode].transform.rotation;
+
         while (moveStep > distance)
         {
             _targetNode++;

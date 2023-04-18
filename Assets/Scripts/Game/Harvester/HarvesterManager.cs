@@ -17,6 +17,7 @@ public class HarvesterManager : MonoBehaviour
         //Scale fix
         HarvesterGoRef.transform.localScale =
             GameManager.Instance.MapManager.CurrentMap.gameObject.transform.localScale;
+        HarvesterGoRef.transform.rotation = GameManager.Instance.MapManager.CurrentMap.HarvesterStartPosition.rotation;
         
         HarvesterRef = HarvesterGoRef.GetComponent<Harvester>();
         HarvesterRef.InitiateNodesToFollow(GameManager.Instance.MapManager.CurrentMap.HarvesterNodes);
