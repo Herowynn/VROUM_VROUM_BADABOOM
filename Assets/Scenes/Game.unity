@@ -291,8 +291,8 @@ Transform:
   - {fileID: 1551155570}
   - {fileID: 901735599}
   - {fileID: 1504117034}
-  - {fileID: 1164072817}
   - {fileID: 59079939}
+  - {fileID: 1164072817}
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -307,7 +307,7 @@ GameObject:
   - component: {fileID: 59079939}
   - component: {fileID: 59079940}
   m_Layer: 0
-  m_Name: MapManager
+  m_Name: Map Manager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -328,7 +328,7 @@ Transform:
   - {fileID: 530011127}
   - {fileID: 840376602}
   m_Father: {fileID: 25331605}
-  m_RootOrder: 7
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &59079940
 MonoBehaviour:
@@ -2909,7 +2909,7 @@ GameObject:
   - component: {fileID: 1164072817}
   - component: {fileID: 1164072818}
   m_Layer: 0
-  m_Name: UI
+  m_Name: UI Manager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2929,7 +2929,7 @@ Transform:
   m_Children:
   - {fileID: 906222441}
   m_Father: {fileID: 25331605}
-  m_RootOrder: 6
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1164072818
 MonoBehaviour:
@@ -4199,8 +4199,6 @@ MonoBehaviour:
   BonusManager: {fileID: 1504117035}
   HarvesterManager: {fileID: 901735600}
   GameState: 1
-  CarLayerNumber: 7
-  BonusLayerNumber: 9
 --- !u!1 &1999519600
 GameObject:
   m_ObjectHideFlags: 0
