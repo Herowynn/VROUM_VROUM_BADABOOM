@@ -5,7 +5,7 @@ using static Unity.VisualScripting.Member;
 public class Harvester : MonoBehaviour
 {
     [HideInInspector] public Transform[] NodesToFollow;
-    
+
     [Header("GD")]
     public float Speed;
 
@@ -15,7 +15,6 @@ public class Harvester : MonoBehaviour
     public float minTimeBetweenHorn = 20, maxTimeBetweenHorn = 30;
     private AudioSource _source;
 
-    private Vector3 _direction;
     private int _targetNode;
 
     private void Start()
@@ -49,12 +48,12 @@ public class Harvester : MonoBehaviour
     private void UpdateTargetNodeAfterReset()
     {
         int newTargetNode = 0;
-        
+
         float distance = float.MaxValue;
-        
+
         for (int i = 0; i < NodesToFollow.Length; i++)
         {
-            if (distance > Vector3.Distance(NodesToFollow[i].transform.position, transform.position))
+            if (distance > Vector3.Distance(NodesToFollow[i].transform.position, transform.position) && Mathf.Rad2Deg * Mathf.Abs(Mathf.Acos(Vector3.Dot(transform.forward.normalized, (NodesToFollow[i].transform.position - transform.position).normalized))) < 90f)
             {
                 newTargetNode = i;
                 distance = Vector3.Distance(NodesToFollow[i].transform.position, transform.position);

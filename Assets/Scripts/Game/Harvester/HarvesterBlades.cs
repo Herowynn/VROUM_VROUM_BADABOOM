@@ -3,13 +3,13 @@ using UnityEngine;
 public class HarvesterBlades : MonoBehaviour
 {
     [Header("GD")]
-    [SerializeField] private float _rotationSpeed;
+    public float RotationSpeed;
 
     private void Update()
     {
         if (GameManager.Instance.GameState == GameState.RACING)
         {
-            transform.RotateAround(Vector3.zero, -_rotationSpeed * Time.deltaTime);
+            transform.RotateAround(transform.forward, -RotationSpeed * Time.deltaTime);
         }
     }
 }

@@ -344,7 +344,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Maps:
-  - {fileID: 5457921817656845573, guid: 1d7137e383c272f4ab2c9eeac4e72126, type: 3}
+  - {fileID: 601011233}
   - {fileID: 1368613668}
   - {fileID: 840376603}
   CurrentMap: {fileID: 0}
@@ -733,14 +733,6 @@ PrefabInstance:
     - target: {fileID: 4117372919553498375, guid: 2e3a351c76469034982fb743113ff6ed, type: 3}
       propertyPath: m_Name
       value: Input Manager
-      objectReference: {fileID: 0}
-    - target: {fileID: 4117372919553498377, guid: 2e3a351c76469034982fb743113ff6ed, type: 3}
-      propertyPath: MapName
-      value: Test
-      objectReference: {fileID: 0}
-    - target: {fileID: 4117372919553498377, guid: 2e3a351c76469034982fb743113ff6ed, type: 3}
-      propertyPath: NeedKeyboard
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2e3a351c76469034982fb743113ff6ed, type: 3}
@@ -1623,6 +1615,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 7047590982138899638, guid: 1d7137e383c272f4ab2c9eeac4e72126, type: 3}
   m_PrefabInstance: {fileID: 1705077450}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &601011233 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5457921817656845573, guid: 1d7137e383c272f4ab2c9eeac4e72126, type: 3}
+  m_PrefabInstance: {fileID: 1705077450}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1b0356afd473f19478a4e5cedd59b733, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &633866251
 GameObject:
   m_ObjectHideFlags: 0
@@ -2260,7 +2263,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 392719959cfdc9e48a0ae80a23d6f56d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  HarvesterPrefab: {fileID: 5407629187411203486, guid: cfeb8e7b5a2bbc84b9bd1d6ab2c8899a, type: 3}
+  HarvesterPrefab: {fileID: 5407629187411203486, guid: 1b3cfbc722061aa43b3637cd3e7e57d4, type: 3}
   HarvesterGoRef: {fileID: 0}
   HarvesterRef: {fileID: 0}
 --- !u!1 &906222440
@@ -3644,7 +3647,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-188168
+  m_Name: pb_Mesh-5842
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -4437,7 +4440,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-187668
+  m_Name: pb_Mesh-5828
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -4914,7 +4917,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-187682
+  m_Name: pb_Mesh-5856
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2

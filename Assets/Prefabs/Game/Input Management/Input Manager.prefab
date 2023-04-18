@@ -48,5 +48,5 @@ MonoBehaviour:
   NeedKeyboard: 1
   NbAi: 0
   AiDifficulty: 
-  MapName: Test
+  MapName: FirstTrack
   ScoreToWin: 0

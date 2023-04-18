@@ -11,12 +11,10 @@ public class HarvesterManager : MonoBehaviour
 
     public void InstantiateHarvester()
     {
-        HarvesterGoRef = Instantiate(HarvesterPrefab, GameManager.Instance.MapManager.CurrentMap.HarvesterStartPosition.position,
-            Quaternion.identity, transform);
+        HarvesterGoRef = Instantiate(HarvesterPrefab, GameManager.Instance.MapManager.CurrentMap.HarvesterStartPosition.position, Quaternion.identity, transform);
 
         //Scale fix
-        HarvesterGoRef.transform.localScale =
-            GameManager.Instance.MapManager.CurrentMap.gameObject.transform.localScale;
+        HarvesterGoRef.transform.localScale = GameManager.Instance.MapManager.CurrentMap.gameObject.transform.localScale;
         HarvesterGoRef.transform.rotation = GameManager.Instance.MapManager.CurrentMap.HarvesterStartPosition.rotation;
         
         HarvesterRef = HarvesterGoRef.GetComponent<Harvester>();
