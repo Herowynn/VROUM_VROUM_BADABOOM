@@ -1,5 +1,3 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -7,21 +5,21 @@ public class MapManager : MonoBehaviour
 {
     [Header("Instance")] 
     public Map[] Maps;
-    public Map CurrentMap;
+    [HideInInspector] public Map CurrentMap;
 
-    public Dictionary<string, Map> MapsByName = new Dictionary<string, Map>();
+    private Dictionary<string, Map> _mapsByName = new Dictionary<string, Map>();
 
     private void Start()
     {
         foreach (var mapGo in Maps)
         {
-            MapsByName.Add(mapGo.Name, mapGo);
+            _mapsByName.Add(mapGo.Name, mapGo);
         }
     }
 
     public void LoadMap(string name)
     {
-        CurrentMap = MapsByName[name];
+        CurrentMap = _mapsByName[name];
         CurrentMap.Load();
     }
 }

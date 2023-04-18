@@ -16,6 +16,7 @@ public class RoundManager : MonoBehaviour
     //intern var
     private List<CarController> _playersToPlaceForNextRound;
     private RoundNode[] _roundNodesForCurrentMap;
+    private Harvester _harvesterForCurrentMap;
 
     private void Start()
     {
@@ -35,6 +36,11 @@ public class RoundManager : MonoBehaviour
     public void InitiateRoundNodesForCurrentMap()
     {
         _roundNodesForCurrentMap = GameManager.Instance.MapManager.CurrentMap.RoundNodes;
+    }
+
+    public void InitiateHarvesterForCurrentMap()
+    {
+        _harvesterForCurrentMap = GameManager.Instance.HarvesterManager.HarvesterRef;
     }
     
     public void PlayerDiedEvent(CarController player)
@@ -74,7 +80,7 @@ public class RoundManager : MonoBehaviour
     {
         GetRoundWinner();
         ClearEveryBonus();
-        PlacePlayersForNextRound();
+        PlaceGameElementsForNextRound();
         StartCoroutine(StartRound());
     }
 
@@ -90,16 +96,27 @@ public class RoundManager : MonoBehaviour
         }
     }
 
-    private void PlacePlayersForNextRound()
+    private void PlaceGameElementsForNextRound()
     {
         RoundNode closestNode =
             FindClosestNodeFromWinner(_playersToPlaceForNextRound[^1].transform.position);
-
+        
+        PlaceHarvesterForNextRound(closestNode.HarvesterNode);
+        PlacePlayersForNextRound(closestNode.Nodes);
+    }
+    
+    private void PlaceHarvesterForNextRound(Transform harvesterTransform)
+    {
+        _harvesterForCurrentMap.ResetToTransform(harvesterTransform);
+    }
+    
+    private void PlacePlayersForNextRound(Transform[] playersTransform)
+    {
         int cpt = 0;
         for (int i = _playersToPlaceForNextRound.Count - 1; i >= 0; i--)
         {
             //See if necessary
-            _playersToPlaceForNextRound[i].RebornEvent(closestNode.Nodes[cpt].transform);
+            _playersToPlaceForNextRound[i].RebornEvent(playersTransform[cpt]);
             //_playersToPlaceForNextRound[i].gameObject.transform.position = closestNode.Nodes[cpt].transform.position;
             cpt++;
         }
