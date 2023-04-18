@@ -16,29 +16,14 @@ public class GameManager : MonoBehaviour
     public MapManager MapManager;
     public PlayersManager PlayersManager;
     public BonusManager BonusManager;
+    public HarvesterManager HarvesterManager;
 
     [Header("Info")]
     public GameState GameState;
-
-    [Header("Breakable Objects Layers")]
-    public int CarLayerNumber;
-    public int BonusLayerNumber;
-
+    
     #endregion
-
-    #region Private Fields
-
-    private GameObject _checkPointsParentObject;
-    private GameObject _harvester;
-    private List<Transform> _checkPointsList = new List<Transform>();
-    private int _nextCheckPointIndex;
-    private Vector3 _direction;
-    private Vector3 _realPointToReach;
-
-    #endregion
-
-    public int NextCheckpointIndex { get { return _nextCheckPointIndex; } set { _nextCheckPointIndex = value; } }
-
+    
+    //Singleton
     public static GameManager Instance;
 
     private void Awake()
@@ -52,31 +37,6 @@ public class GameManager : MonoBehaviour
         //LoadPreGame();
         //test
         StartGame();
-
-        for (int i = 0; i < MapManager.CurrentMap.transform.childCount; i++)
-        {
-            if (MapManager.CurrentMap.transform.GetChild(i).gameObject.name == "Checkpoints")
-                _checkPointsParentObject = MapManager.CurrentMap.transform.GetChild(i).gameObject;
-            if (MapManager.CurrentMap.transform.GetChild(i).gameObject.name == "Harvester")
-                _harvester = MapManager.CurrentMap.transform.GetChild(i).gameObject;
-        }
-
-        for (int i = 0; i < _checkPointsParentObject.transform.childCount; i++)
-        {
-            _checkPointsList.Add(_checkPointsParentObject.transform.GetChild(i));
-        }
-
-        _nextCheckPointIndex = 0;
-    }
-
-    void Update()
-    {
-        if (_nextCheckPointIndex >= _checkPointsParentObject.transform.childCount)
-            _nextCheckPointIndex = 0;
-
-        _realPointToReach = new Vector3(_checkPointsList[_nextCheckPointIndex].position.x, _harvester.transform.position.y, _checkPointsList[_nextCheckPointIndex].position.z);
-        _direction = (_realPointToReach - _harvester.transform.position).normalized;
-        _harvester.GetComponent<Harvester>().direction = _direction;
     }
 
     #region Game State
@@ -154,7 +114,6 @@ public class GameManager : MonoBehaviour
         ScoreManager.InitiatePlayersForCurrentMatch();
     }
     
-
     private void DestroyPlayersInstance()
     {
         PlayersManager.DestroyPlayers();
