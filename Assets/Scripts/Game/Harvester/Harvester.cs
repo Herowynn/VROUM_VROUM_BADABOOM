@@ -1,10 +1,7 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Harvester : MonoBehaviour
 {
-    [Header("Instance")] 
     [HideInInspector] public Transform[] NodesToFollow;
     
     [Header("GD")]

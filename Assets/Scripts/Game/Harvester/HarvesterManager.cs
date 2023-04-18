@@ -4,6 +4,7 @@ public class HarvesterManager : MonoBehaviour
 {
     [Header("Instances")] 
     public GameObject HarvesterPrefab;
+    
     [HideInInspector] public GameObject HarvesterGoRef;
     [HideInInspector] public Harvester HarvesterRef;
 

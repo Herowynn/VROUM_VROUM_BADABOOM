@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -10,7 +9,7 @@ public class PlayersManager : MonoBehaviour
     public GameObject PlayersContainer;
     
     [Header("Infos")]
-    public List<GameObject> Players;
+    [HideInInspector] public List<GameObject> Players;
     public List<Color> PlayerColors;
     
     public void CreateNewPlayer(bool playerUseKeyboard, int startPositionIndex)

@@ -20,26 +20,10 @@ public class GameManager : MonoBehaviour
 
     [Header("Info")]
     public GameState GameState;
-
-    [Header("Breakable Objects Layers")]
-    public int CarLayerNumber;
-    public int BonusLayerNumber;
-
+    
     #endregion
-
-    #region Private Fields
-
-    private GameObject _checkPointsParentObject;
-    private GameObject _harvester;
-    private List<Transform> _checkPointsList = new List<Transform>();
-    private int _nextCheckPointIndex;
-    private Vector3 _direction;
-    private Vector3 _realPointToReach;
-
-    #endregion
-
-    public int NextCheckpointIndex { get { return _nextCheckPointIndex; } set { _nextCheckPointIndex = value; } }
-
+    
+    //Singleton
     public static GameManager Instance;
 
     private void Awake()
@@ -130,7 +114,6 @@ public class GameManager : MonoBehaviour
         ScoreManager.InitiatePlayersForCurrentMatch();
     }
     
-
     private void DestroyPlayersInstance()
     {
         PlayersManager.DestroyPlayers();
