@@ -31,13 +31,13 @@ public class MultipleInputManager : MonoBehaviour
         MapName = MenuManager.Instance.MapName;
         ScoreToWin = MenuManager.Instance.ScoreToWin;*/
 
-        GameManager.Instance.MapManager.LoadMap(MapName);
-
         _controllerNeeded = NeedKeyboard ? NumberOfPlayer - 1 : NumberOfPlayer;
         CountControllers();
         _inputMenuUI = GameManager.Instance.UIManager.InputMenuUI;
         _inputMenuUI.CreatePlayersInput(_controllerNeeded, _controllersConnected, NeedKeyboard);
 
+        GameManager.Instance.MapManager.LoadMap(MapName);
+        
         GameManager.Instance.HarvesterManager.InstantiateHarvester();
         
         GameManager.Instance.RoundManager.InitiateRoundNodesForCurrentMap();
