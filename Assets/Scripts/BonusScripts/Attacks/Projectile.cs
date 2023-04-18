@@ -11,10 +11,16 @@ public class Projectile : MonoBehaviour
     [SerializeField] CarController _carControl;
 
     //public GameObject Particles;
+    [Header("Audio")]
+    public AudioClip[] MetalImpactSounds;
+   
+    private AudioSource _source;
+
 
     private void Awake()
     {
         _projectileRB = GetComponent<Rigidbody>();
+        _source= GetComponent<AudioSource>();
     }
     public void Init(Vector3 direction, CarController cc)
     {
@@ -31,6 +37,9 @@ public class Projectile : MonoBehaviour
             carControl.ProjectileDirection = dir;
             //GameObject go = Instantiate(Particles, collision.gameObject.transform);
             //Destroy(go);
+
+            _source.clip = MetalImpactSounds[Random.Range(0,MetalImpactSounds.Length)];
+            _source.Play();
             Destroy(gameObject);
         }
     }

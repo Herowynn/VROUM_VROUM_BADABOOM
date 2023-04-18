@@ -34,7 +34,7 @@ public class MissileLauncherProjectile : MonoBehaviour
     {
         _projectileRB = GetComponent<Rigidbody>();
         _clock = 0;
-       
+        StartCoroutine(WaitBeforeAutoDestroy());
         //_dist = (_targetRB.transform.position - transform.position).magnitude;
     }
 
@@ -110,5 +110,11 @@ public class MissileLauncherProjectile : MonoBehaviour
             carControl.IsExplosed = true;
             Destroy(gameObject);
         }
+    }
+
+    IEnumerator WaitBeforeAutoDestroy()
+    {
+        yield return new WaitForSeconds(5f);
+        Destroy(gameObject);
     }
 }

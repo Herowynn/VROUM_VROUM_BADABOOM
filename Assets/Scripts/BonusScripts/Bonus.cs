@@ -30,10 +30,16 @@ public class Bonus : MonoBehaviour
             //BonusMeshRenderer.material = BonusSkin[RndLvl];
             Instantiate(BonusSkin[RndLvl], transform.position, transform.rotation, transform);
         }
-        
+        StartCoroutine(WaitBeforeAutoDestroy());
     }
     private void Update()
     {
         transform.Rotate(0.33f*new Vector3(0, 1, 0));
+    }
+
+    IEnumerator WaitBeforeAutoDestroy()
+    {
+        yield return new WaitForSeconds(5f);
+        Destroy(gameObject);
     }
 }

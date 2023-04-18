@@ -7,7 +7,8 @@ public class ShotgunProjectile : MonoBehaviour
 {
     public LayerMask GroundLayerMask;
 
-    [SerializeField] private float _force;
+    [SerializeField] private float _force;
+
     [SerializeField] CarController _carControl;
     private Rigidbody ProjectileRB;
     private int _ground;
@@ -43,6 +44,8 @@ public class ShotgunProjectile : MonoBehaviour
             GetComponent<MeshRenderer>().enabled = false;
             GetComponent<SphereCollider>().enabled = false;
             StartCoroutine(WaitBeforeNormalSpeed());
+            StartCoroutine(WaitBeforeAutoDestroy());
+
         }
         else if(collision.gameObject.layer != _ground)
         {
@@ -64,5 +67,10 @@ public class ShotgunProjectile : MonoBehaviour
         yield return new WaitForSeconds(0.1f);
         GetComponent<SphereCollider>().enabled = true;
         
+    }
+    IEnumerator WaitBeforeAutoDestroy()
+    {
+        yield return new WaitForSeconds(5f);
+        Destroy(gameObject);
     }
 }

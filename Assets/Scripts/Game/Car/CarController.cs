@@ -56,6 +56,9 @@ public class CarController : MonoBehaviour
     
     [Header("Audio")]
     public AudioSource Source;
+    public AudioClip GroundHitSound;
+    public AudioClip BaseSound;
+    public AudioClip MovingSound;
     
     [Header("Info")]
     public Color Color;
@@ -81,6 +84,7 @@ public class CarController : MonoBehaviour
     private Vector2 _movementInput;
     float _speedInput;
     bool _isGrounded;
+    bool _wasGrounded;
     bool _canMove;
     Vector3 _distArrowRayPoint;
     Vector3 _wantedDirection;
@@ -159,14 +163,15 @@ public class CarController : MonoBehaviour
 
     private void FixedUpdate()
     {
+        
         _isGrounded = false;
-
         RaycastHit hit;
 
         if (Physics.Raycast(RayPoint.position, -transform.up, out hit, arrayRayLength, GroundLayerMask))
         {
             _isGrounded = true;
 
+            
             transform.rotation = Quaternion.FromToRotation(transform.up, hit.normal) * transform.rotation;
 
             if (hit.normal == new Vector3(0, 1, 0))
@@ -205,12 +210,15 @@ public class CarController : MonoBehaviour
             {
                 SphereRB.AddForce(_wantedDirection * _speedInput);
                 SphereRB.velocity = Vector3.ClampMagnitude(SphereRB.velocity, maximumSpeed * SlowFactor);
+                Source.clip = MovingSound;
+                
             }
         }
         else
         {
             SphereRB.drag = dragInTheAir;
             SphereRB.AddForce(new Vector3(0, -1, 0) * SphereRB.mass * additionalEarthGravity * 9.8f);
+            Source.clip = BaseSound;
         }
 
         if (IsBumped)
@@ -224,6 +232,7 @@ public class CarController : MonoBehaviour
             SphereRB.AddForce(ProjectileDirection * ProjectileForce, ForceMode.Impulse);
             IsTouchedByMachineGun = false;
         }
+
     }
 
     IEnumerator WaitBeforeSawEnd()
