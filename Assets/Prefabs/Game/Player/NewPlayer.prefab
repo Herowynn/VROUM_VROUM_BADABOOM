@@ -61,7 +61,7 @@ Transform:
   m_GameObject: {fileID: 8470477559293409358}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0.82323384, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1499917844239648974}
@@ -359,14 +359,6 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: 3b3194fb-19d1-4f2c-9bf0-6232e991aff2
     m_ActionName: Player/Pause[/Keyboard/escape,/XInputControllerWindows/select]
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: b5b6a400-3b9f-4bcc-9136-33c77ac59b8e
-    m_ActionName: Player/Test[/Keyboard/z]
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 917964c2-88ad-4e97-8d56-8f904c560532
-    m_ActionName: Player/Test2[/Keyboard/x]
   m_NeverAutoSwitchControlSchemes: 1
   m_DefaultControlScheme: Controller
   m_DefaultActionMap: Player

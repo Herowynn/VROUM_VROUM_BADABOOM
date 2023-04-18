@@ -25,6 +25,26 @@ public class Harvester : MonoBehaviour
     {
         transform.position = resetTransform.position;
         transform.rotation = resetTransform.rotation;
+        
+        UpdateTargetNodeAfterReset();
+    }
+
+    private void UpdateTargetNodeAfterReset()
+    {
+        int newTargetNode = 0;
+        
+        float distance = float.MaxValue;
+        
+        for (int i = 0; i < NodesToFollow.Length; i++)
+        {
+            if (distance > Vector3.Distance(NodesToFollow[i].transform.position, transform.position))
+            {
+                newTargetNode = i;
+                distance = Vector3.Distance(NodesToFollow[i].transform.position, transform.position);
+            }
+        }
+
+        _targetNode = newTargetNode;
     }
 
     public void InitiateNodesToFollow(Transform[] nodes)
