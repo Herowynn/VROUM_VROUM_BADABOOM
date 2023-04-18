@@ -1,6 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class HarvesterManager : MonoBehaviour
@@ -16,6 +13,10 @@ public class HarvesterManager : MonoBehaviour
         HarvesterGoRef = Instantiate(HarvesterPrefab, GameManager.Instance.MapManager.CurrentMap.HarvesterStartPosition.position,
             Quaternion.identity, transform);
 
+        //Scale fix
+        HarvesterGoRef.transform.localScale =
+            GameManager.Instance.MapManager.CurrentMap.gameObject.transform.localScale;
+        
         HarvesterRef = HarvesterGoRef.GetComponent<Harvester>();
         HarvesterRef.InitiateNodesToFollow(GameManager.Instance.MapManager.CurrentMap.HarvesterNodes);
     }

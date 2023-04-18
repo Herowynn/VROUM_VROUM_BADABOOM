@@ -12,9 +12,7 @@ public class Harvester : MonoBehaviour
 
     private Vector3 _direction;
     private int _targetNode;
-
-    public Vector3 direction { set { _direction = value; } }
-
+    
     void Update()
     {
         if (GameManager.Instance.GameState == GameState.RACING)
@@ -45,9 +43,9 @@ public class Harvester : MonoBehaviour
         while (moveStep > distance)
         {
             _targetNode++;
-            
+
             if (_targetNode >= path.Length)
-                return;
+                _targetNode = 0;
 
             target = path[_targetNode].transform.position;
             moveStep = Speed * Time.deltaTime;
