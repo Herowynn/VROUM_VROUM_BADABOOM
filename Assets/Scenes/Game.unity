@@ -732,6 +732,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Input Manager
       objectReference: {fileID: 0}
+    - target: {fileID: 4117372919553498377, guid: 2e3a351c76469034982fb743113ff6ed, type: 3}
+      propertyPath: NeedKeyboard
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4117372919553498377, guid: 2e3a351c76469034982fb743113ff6ed, type: 3}
+      propertyPath: NumberOfPlayer
+      value: 4
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2e3a351c76469034982fb743113ff6ed, type: 3}
 --- !u!4 &167805911 stripped
@@ -1155,7 +1163,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &393113356
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4198,7 +4206,7 @@ MonoBehaviour:
   PlayersManager: {fileID: 1551155571}
   BonusManager: {fileID: 1504117035}
   HarvesterManager: {fileID: 901735600}
-  GameState: 1
+  GameState: 2
 --- !u!1 &1999519600
 GameObject:
   m_ObjectHideFlags: 0
@@ -4357,6 +4365,10 @@ PrefabInstance:
     - target: {fileID: 2988078232599891912, guid: 15dd1df6507620544a43df51b05386ff, type: 3}
       propertyPath: m_Name
       value: Test
+      objectReference: {fileID: 0}
+    - target: {fileID: 2988078232599891912, guid: 15dd1df6507620544a43df51b05386ff, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2988078232599891913, guid: 15dd1df6507620544a43df51b05386ff, type: 3}
       propertyPath: m_RootOrder

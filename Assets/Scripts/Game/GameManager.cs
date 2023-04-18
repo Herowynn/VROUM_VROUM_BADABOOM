@@ -42,6 +42,7 @@ public class GameManager : MonoBehaviour
     {
         GameState = GameState.PRE_GAME;
         UIManager.DisplayInputMenu();
+        MultipleInputManager.InstantiateMultipleInputManager();
     }
 
     public void LoadPauseGame()
@@ -54,6 +55,7 @@ public class GameManager : MonoBehaviour
     {
         UIManager.TriggerStartGameUi();
 
+        //Test
         MultipleInputManager.InstantiateMultipleInputManager();
 
         InstantiatePlayers(MultipleInputManager.NeedKeyboard, MultipleInputManager.NumberOfPlayer + MultipleInputManager.NbAi);
