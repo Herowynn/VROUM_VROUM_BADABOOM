@@ -7,7 +7,8 @@ public class ShotgunProjectile : MonoBehaviour
 {
     public LayerMask GroundLayerMask;
 
-    [SerializeField] private float _force;
+    [SerializeField] private float _force;
+
     [SerializeField] CarController _carControl;
     private Rigidbody ProjectileRB;
     private int _ground;

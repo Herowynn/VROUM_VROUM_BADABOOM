@@ -10,9 +10,15 @@ public class Booster : MonoBehaviour
     [SerializeField] private float _time;
     private float _timeIncrementation;
 
+    [Header("Audio")]
+    public AudioClip[] Sounds;
+    private AudioSource _source;
+
     public void Boost(Rigidbody sphereRB, GameObject car)
     {
         StartCoroutine(StartBoost(sphereRB, car));
+        _source = GetComponent<AudioSource>();
+        _source.Play();
     }
 
     IEnumerator StartBoost(Rigidbody sphereRB, GameObject car)

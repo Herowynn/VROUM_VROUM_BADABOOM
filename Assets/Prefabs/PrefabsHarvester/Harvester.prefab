@@ -46,6 +46,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 323ae3ce94f4412499280ac8dc4e5929, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  LoopSound: {fileID: 8300000, guid: a0674185e6f05484fa3974e02283fcf8, type: 3}
+  HornSounds:
+  - {fileID: 8300000, guid: b612990ff9393ee40bca052d1a817568, type: 3}
+  - {fileID: 8300000, guid: 9b0862f90d296584e97ab570bf096db5, type: 3}
   speed: 3
 --- !u!1 &5407629187428371489
 GameObject:
