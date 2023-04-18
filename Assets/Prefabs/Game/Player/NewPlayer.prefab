@@ -43,8 +43,8 @@ GameObject:
   - component: {fileID: 8470477559293409346}
   - component: {fileID: 7823043666654587697}
   - component: {fileID: 8470477559293409357}
-  - component: {fileID: 6860740909563417045}
   - component: {fileID: 4181034262726389727}
+  - component: {fileID: 6860740909563417045}
   - component: {fileID: -8094181163446552072}
   m_Layer: 7
   m_Name: NewPlayer
@@ -130,12 +130,6 @@ MonoBehaviour:
   CarLayerMask:
     serializedVersion: 2
     m_Bits: 128
-  CarSphereLayerMask:
-    serializedVersion: 2
-    m_Bits: 256
-  BonusLayerMask:
-    serializedVersion: 2
-    m_Bits: 512
   groundLayerNumber: 3
   arrayRayLength: 0.7
   RayPoint: {fileID: 8470477560550397293}
@@ -143,13 +137,10 @@ MonoBehaviour:
   RightFrontWheel: {fileID: 4146829921669097665}
   LeftBackWheel: {fileID: 4713423009772291345}
   LeftFrontWheel: {fileID: 8031376243321959686}
-  MaxWheelTurn: 25
-  WheelRotation: 5
   HitBySaw: 0
   IsBumped: 0
   IsExplosed: 0
   IsTouchedByMachineGun: 0
-  IsSlowed: 0
   BumpForce: 10000
   ProjectileForce: 100
   BumpDirection: {x: 0, y: 0, z: 0}
@@ -186,6 +177,92 @@ MonoBehaviour:
   Score: 0
   PointsUI: {fileID: 0}
   ProfileUI: {fileID: 0}
+--- !u!114 &4181034262726389727
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8470477559293409358}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Actions: {fileID: -944628639613478452, guid: d44aebdf734776b4ab1cfcb26d025182, type: 3}
+  m_NotificationBehavior: 2
+  m_UIInputModule: {fileID: 0}
+  m_DeviceLostEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_DeviceRegainedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ControlsChangedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ActionEvents:
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 8470477559293409357}
+        m_TargetAssemblyTypeName: CarController, Assembly-CSharp
+        m_MethodName: OnMove
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 5e843745-7856-4d48-b955-6e73fa655778
+    m_ActionName: Player/Movement[/Keyboard/w,/Keyboard/s,/Keyboard/a,/Keyboard/d,/XInputControllerWindows/leftStick]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: ab2de6d0-9275-4ced-9bce-9979f041fd57
+    m_ActionName: Player/Join[/XInputControllerWindows/start,/Keyboard/space]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 8470477559293409357}
+        m_TargetAssemblyTypeName: CarController, Assembly-CSharp
+        m_MethodName: OnBoost
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 220c86e1-bac9-4e16-8e84-2fe6e41fac42
+    m_ActionName: Player/Boost[/Keyboard/e,/XInputControllerWindows/buttonSouth]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 8470477559293409357}
+        m_TargetAssemblyTypeName: CarController, Assembly-CSharp
+        m_MethodName: OnAttack
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 3ddea4ae-d780-44da-9332-2444e34891f6
+    m_ActionName: Player/Attack[/Keyboard/q,/XInputControllerWindows/buttonEast]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 3b3194fb-19d1-4f2c-9bf0-6232e991aff2
+    m_ActionName: Player/Pause[/Keyboard/escape,/XInputControllerWindows/select]
+  m_NeverAutoSwitchControlSchemes: 1
+  m_DefaultControlScheme: Controller
+  m_DefaultActionMap: Player
+  m_SplitScreenIndex: -1
+  m_Camera: {fileID: 0}
 --- !u!82 &6860740909563417045
 AudioSource:
   m_ObjectHideFlags: 0
@@ -282,92 +359,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &4181034262726389727
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8470477559293409358}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Actions: {fileID: -944628639613478452, guid: d44aebdf734776b4ab1cfcb26d025182, type: 3}
-  m_NotificationBehavior: 2
-  m_UIInputModule: {fileID: 0}
-  m_DeviceLostEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  m_DeviceRegainedEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  m_ControlsChangedEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  m_ActionEvents:
-  - m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 8470477559293409357}
-        m_TargetAssemblyTypeName: CarController, Assembly-CSharp
-        m_MethodName: OnMove
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_ActionId: 5e843745-7856-4d48-b955-6e73fa655778
-    m_ActionName: Player/Movement[/Keyboard/w,/Keyboard/s,/Keyboard/a,/Keyboard/d,/XInputControllerWindows/leftStick]
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: ab2de6d0-9275-4ced-9bce-9979f041fd57
-    m_ActionName: Player/Join[/XInputControllerWindows/start,/Keyboard/space]
-  - m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 8470477559293409357}
-        m_TargetAssemblyTypeName: CarController, Assembly-CSharp
-        m_MethodName: OnBoost
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_ActionId: 220c86e1-bac9-4e16-8e84-2fe6e41fac42
-    m_ActionName: Player/Boost[/Keyboard/e,/XInputControllerWindows/buttonSouth]
-  - m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 8470477559293409357}
-        m_TargetAssemblyTypeName: CarController, Assembly-CSharp
-        m_MethodName: OnAttack
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_ActionId: 3ddea4ae-d780-44da-9332-2444e34891f6
-    m_ActionName: Player/Attack[/Keyboard/q,/XInputControllerWindows/buttonEast]
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 3b3194fb-19d1-4f2c-9bf0-6232e991aff2
-    m_ActionName: Player/Pause[/Keyboard/escape,/XInputControllerWindows/select]
-  m_NeverAutoSwitchControlSchemes: 1
-  m_DefaultControlScheme: Controller
-  m_DefaultActionMap: Player
-  m_SplitScreenIndex: -1
-  m_Camera: {fileID: 0}
 --- !u!82 &-8094181163446552072
 AudioSource:
   m_ObjectHideFlags: 0
