@@ -40,7 +40,7 @@ public class RoundManager : MonoBehaviour
 
     public void InitiateHarvesterForCurrentMap()
     {
-        _harvesterForCurrentMap = GameManager.Instance.MapManager.CurrentMap.Harvester;
+        _harvesterForCurrentMap = GameManager.Instance.HarvesterManager.HarvesterRef;
     }
     
     public void PlayerDiedEvent(CarController player)

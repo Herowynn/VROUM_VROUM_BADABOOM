@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,8 +7,8 @@ public class HarvesterManager : MonoBehaviour
 {
     [Header("Instances")] 
     public GameObject HarvesterPrefab;
-    public GameObject HarvesterGoRef;
-    public Harvester HarvesterRef;
+    [HideInInspector] public GameObject HarvesterGoRef;
+    [HideInInspector] public Harvester HarvesterRef;
 
 
     public void InstantiateHarvester()

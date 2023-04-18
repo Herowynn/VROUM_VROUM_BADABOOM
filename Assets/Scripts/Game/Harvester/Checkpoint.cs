@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Checkpoint : MonoBehaviour
 {
-    private bool _harvesterAlreadyWalkedOn;
+    /*private bool _harvesterAlreadyWalkedOn;
 
     private void Start()
     {
@@ -25,5 +25,5 @@ public class Checkpoint : MonoBehaviour
     {
         yield return new WaitForSeconds(2f);
         _harvesterAlreadyWalkedOn = false;
-    }
+    }*/
 }

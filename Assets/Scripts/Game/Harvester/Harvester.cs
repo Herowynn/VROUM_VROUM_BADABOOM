@@ -5,13 +5,13 @@ using UnityEngine;
 public class Harvester : MonoBehaviour
 {
     [Header("Instance")] 
-    public Transform[] NodesToFollow;
+    [HideInInspector] public Transform[] NodesToFollow;
     
     [Header("GD")]
     public float Speed;
 
     private Vector3 _direction;
-    private int _currentNodeFollowed;
+    private int _targetNode;
 
     public Vector3 direction { set { _direction = value; } }
 
@@ -19,8 +19,7 @@ public class Harvester : MonoBehaviour
     {
         if (GameManager.Instance.GameState == GameState.RACING)
         {
-            transform.position += _direction.normalized * Speed * Time.deltaTime;
-            transform.forward = _direction;
+            UpdateMove(NodesToFollow);
         }
     }
 
@@ -33,6 +32,30 @@ public class Harvester : MonoBehaviour
     public void InitiateNodesToFollow(Transform[] nodes)
     {
         NodesToFollow = nodes;
-        _currentNodeFollowed = 0;
+        _targetNode = 0;
+    }
+
+    private void UpdateMove(Transform[] path)
+    {
+        Vector3 target = path[_targetNode].transform.position;
+        Vector3 direction = target - transform.position;
+        float moveStep = Speed * Time.deltaTime;
+        float distance = Vector3.Distance(target, transform.position);
+
+        while (moveStep > distance)
+        {
+            _targetNode++;
+            
+            if (_targetNode >= path.Length)
+                return;
+
+            target = path[_targetNode].transform.position;
+            moveStep = Speed * Time.deltaTime;
+            distance = Vector3.Distance(target, transform.position);
+            direction = target - transform.position;
+        }
+        
+        direction.Normalize();
+        transform.position += moveStep * direction;
     }
 }

@@ -11,7 +11,7 @@ public class Map : MonoBehaviour
     public Transform[] PlayerStartPositions;
     public Transform[] HarvesterNodes;
     public RoundNode[] RoundNodes;
-    public Harvester Harvester;
+    //public Harvester Harvester;
 
     public void Load()
     {
