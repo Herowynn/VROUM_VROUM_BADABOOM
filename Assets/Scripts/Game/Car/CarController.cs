@@ -7,39 +7,33 @@ public class CarController : MonoBehaviour
 {
     #region Public Fields
 
+    [Header("GD")]
     public Rigidbody SphereRB;
-    public float forwardAccel;
-    public float maximumSpeed;
-    public float turnStrength;
-    public float dragOnGround;
-    public float dragInTheAir;
-    public float wheelTurnSpeed;
-    public float additionalEarthGravity;
+    public float ForwardAccel;
+    public float MaximumSpeed;
+    public float TurnStrength;
+    public float DragOnGround;
+    public float DragInTheAir;
+    public float WheelTurnSpeed;
+    public float AdditionalEarthGravity;
     public float SlowFactor = 1f;
 
     [Header("Layers")]
     public LayerMask GroundLayerMask;
     public LayerMask CarLayerMask;
-    public LayerMask CarSphereLayerMask;
-    public LayerMask BonusLayerMask;
-
-    public int groundLayerNumber;
-    public float arrayRayLength;
+    public int GroundLayerNumber;
+    public float ArrayRayLength;
     public Transform RayPoint;
     public GameObject RightBackWheel;
     public GameObject RightFrontWheel;
     public GameObject LeftBackWheel;
     public GameObject LeftFrontWheel;
-
-    public float MaxWheelTurn = 25f;
-    public float WheelRotation = 50f;
-
+    
     [Header("Bonus Effects")]
     public bool HitBySaw = false;
     public bool IsBumped;
-    public bool IsExplosed;
+    public bool IsExploded;
     public bool IsTouchedByMachineGun;
-    public bool IsSlowed = false;
     public int BumpForce = 10000;
     public int ProjectileForce = 100;
     public Vector3 BumpDirection;
@@ -54,8 +48,8 @@ public class CarController : MonoBehaviour
     public Transform AttacksContainer;
     public Transform BoostsContainer;
     public GameObject[] AttackList;
-    public GameObject[] BoostList;
-
+    public GameObject[] BoostList;
+    
     [Header("Audio")]
     public AudioSource Source;
     public AudioClip GroundHitSound;
@@ -64,14 +58,15 @@ public class CarController : MonoBehaviour
     
     [Header("Info")]
     public Color Color;
-    public PlayerState PlayerState;
-
+    public PlayerState PlayerState;
+    
     [Header("Instance")]
     public GameObject Visual;
     public GameObject SphereReference;
     public MeshRenderer BodyColor;
     public List<Material> CarColors;
 
+    [Header("Score")]
     //Need to move to separate file (?)
     public int Score;
 
@@ -98,6 +93,8 @@ public class CarController : MonoBehaviour
 
     #endregion
 
+    #region Unity Functions
+
     private void Awake()
     {
         Source = GetComponent<AudioSource>();
@@ -110,8 +107,10 @@ public class CarController : MonoBehaviour
         _distArrowRayPoint = Arrow.transform.position - RayPoint.position;
         _yComponentWantedDirection = 0f;
 
-        _carAltitudeOffset = new Vector3(0, transform.position.y - SphereRB.transform.position.y, 0);
-
+        _carAltitudeOffset = new Vector3(0, transform.position.y - SphereRB.transform.position.y, 0);
+
+
+
         _rigidbody = GetComponent<Rigidbody>();
         _boxCollider = GetComponent<BoxCollider>();
 
@@ -140,10 +139,10 @@ public class CarController : MonoBehaviour
 
             Vector3 wheelsRotationAxis = Quaternion.AngleAxis(90, transform.up) * transform.forward;
 
-            LeftBackWheel.transform.Rotate(wheelsRotationAxis, wheelTurnSpeed * Time.deltaTime);
-            RightBackWheel.transform.Rotate(wheelsRotationAxis, wheelTurnSpeed * Time.deltaTime);
-            LeftFrontWheel.transform.Rotate(wheelsRotationAxis, wheelTurnSpeed * Time.deltaTime);
-            RightFrontWheel.transform.Rotate(wheelsRotationAxis, wheelTurnSpeed * Time.deltaTime);
+            LeftBackWheel.transform.Rotate(wheelsRotationAxis, WheelTurnSpeed * Time.deltaTime);
+            RightBackWheel.transform.Rotate(wheelsRotationAxis, WheelTurnSpeed * Time.deltaTime);
+            LeftFrontWheel.transform.Rotate(wheelsRotationAxis, WheelTurnSpeed * Time.deltaTime);
+            RightFrontWheel.transform.Rotate(wheelsRotationAxis, WheelTurnSpeed * Time.deltaTime);
 
             if (_isGrounded)
             {
@@ -153,7 +152,7 @@ public class CarController : MonoBehaviour
 
                 if (Mathf.Abs(Mathf.Acos(Vector3.Dot(transform.forward.normalized, _wantedDirection.normalized))) > Mathf.Deg2Rad * 10f)
                 {
-                    transform.rotation = Quaternion.Euler(transform.rotation.eulerAngles + new Vector3(0f, carSignRotation * turnStrength * Time.deltaTime, 0f));
+                    transform.rotation = Quaternion.Euler(transform.rotation.eulerAngles + new Vector3(0f, carSignRotation * TurnStrength * Time.deltaTime, 0f));
                     _canMove = false;
                 }
                 else
@@ -188,7 +187,7 @@ public class CarController : MonoBehaviour
         _isGrounded = false;
         RaycastHit hit;
 
-        if (Physics.Raycast(RayPoint.position, -transform.up, out hit, arrayRayLength, GroundLayerMask))
+        if (Physics.Raycast(RayPoint.position, -transform.up, out hit, ArrayRayLength, GroundLayerMask))
         {
             _isGrounded = true;
 
@@ -212,33 +211,35 @@ public class CarController : MonoBehaviour
             transform.Rotate(30 * new Vector3(0, 1, 0));
         }
 
-        if (IsExplosed && _isGrounded)
+        if (IsExploded && _isGrounded)
+
         {
             SphereRB.AddForce((ExplosionDirection + new Vector3(0, 100, 0)) * 200, ForceMode.Impulse);
             StartCoroutine(WaitBeforeMissileEnd());
         }
 
-        if (IsExplosed && !_isGrounded)
+        if (IsExploded && !_isGrounded)
         {
             transform.Rotate(30 * new Vector3(1, 0, 0));
         }
 
         if (_isGrounded)
         {
-            SphereRB.drag = dragOnGround;
+            SphereRB.drag = DragOnGround;
 
-            if (_canMove && _movementInput != Vector2.zero)
+            if (_canMove && _movementInput != Vector2.zero)
+
             {
-                SphereRB.AddForce(_wantedDirection * forwardAccel);
-                SphereRB.velocity = Vector3.ClampMagnitude(SphereRB.velocity, maximumSpeed * SlowFactor);
+                SphereRB.AddForce(_wantedDirection * ForwardAccel);
+                SphereRB.velocity = Vector3.ClampMagnitude(SphereRB.velocity, MaximumSpeed * SlowFactor);
                 Source.clip = MovingSound;
                 
             }
         }
         else
         {
-            SphereRB.drag = dragInTheAir;
-            SphereRB.AddForce(new Vector3(0, -1, 0) * SphereRB.mass * additionalEarthGravity * 9.8f);
+            SphereRB.drag = DragInTheAir;
+            SphereRB.AddForce(new Vector3(0, -1, 0) * SphereRB.mass * AdditionalEarthGravity * 9.8f);
             Source.clip = BaseSound;
         }
 
@@ -255,19 +256,7 @@ public class CarController : MonoBehaviour
         }
 
     }
-
-    IEnumerator WaitBeforeSawEnd()
-    {
-        yield return new WaitForSeconds(1.2f);
-        HitBySaw = false;
-    }
-
-    IEnumerator WaitBeforeMissileEnd()
-    {
-        yield return new WaitForSeconds(1.2f);
-        IsExplosed = false;
-    }
-
+    
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.GetComponent<Bonus>() != null)
@@ -275,46 +264,42 @@ public class CarController : MonoBehaviour
             switch (collision.gameObject.GetComponent<Bonus>().Type)
             {
                 case BonusType.Attack:
-                    if (AttacksContainer.transform.childCount != 0)
+                    if (AttacksContainer.transform.childCount != 0)
+
                         return;
                     Instantiate(AttackList[collision.gameObject.GetComponent<Bonus>().RndLvl], AttacksContainer);
                     ProfileUI.TookWeapon();
                     break;
                 case BonusType.Boost:
-                    if (BoostsContainer.transform.childCount != 0)
+                    if (BoostsContainer.transform.childCount != 0)
+
                         return;
                     Instantiate(BoostList[collision.gameObject.GetComponent<Bonus>().RndLvl], BoostsContainer);
                     ProfileUI.TookBoost();
                     break;
-            }
-
+            }
+
+
+
             Destroy(collision.gameObject);
         }
 
-        if (collision.gameObject.GetComponent<DestructorComponent>())
-            GameManager.Instance.TriggerPlayerDestructionEvent(this);
-
-        if (collision.gameObject.layer == groundLayerNumber && !_isGrounded)
+        if (collision.gameObject.layer == GroundLayerNumber && !_isGrounded)
             StartCoroutine(GetBackOnWheels());
     }
-
-    public IEnumerator GetBackOnWheels()
+    
+    private void OnTriggerEnter(Collider other)
     {
-        yield return new WaitForSeconds(2f);
-        transform.forward = new Vector3(transform.forward.x, 0, transform.forward.z);
+        if (other.GetComponent<DestructorComponent>())
+        {
+            GameManager.Instance.TriggerPlayerDestructionEvent(this);
+        }
     }
+    
+    #endregion
 
-    private void ClearMyBonus()
-    {
-        if (BoostsContainer.transform.childCount != 0)
-            Destroy(BoostsContainer.transform.GetChild(0).gameObject);
-
-        if (AttacksContainer.transform.childCount != 0)
-            Destroy(AttacksContainer.transform.GetChild(0).gameObject);
-    }
-
     #region Related to in-game actions
-
+
     public void OnMove(InputAction.CallbackContext context)
     {
         _movementInput = context.ReadValue<Vector2>();
@@ -325,13 +310,18 @@ public class CarController : MonoBehaviour
         if (context.performed)
         {
             if (BoostsContainer.transform.childCount == 0)
-                return;
-
-            if (BoostsContainer.transform.GetComponentInChildren<Booster>())
+                return;
+
+
+
+            if (BoostsContainer.transform.GetComponentInChildren<Booster>())
+
             {
                 BoostsContainer.transform.GetChild(0).GetComponent<Booster>().Boost(SphereRB, gameObject);
-            }
-
+            }
+
+
+
             ProfileUI.UseBoost();
         }
     }
@@ -341,13 +331,17 @@ public class CarController : MonoBehaviour
         if (context.performed)
         {
             if (AttacksContainer.transform.childCount == 0)
-                return;
-
+                return;
+
+
+
             if (AttacksContainer.transform.GetComponentInChildren<Offensive>())
             {
                 AttacksContainer.transform.GetChild(0).GetComponent<Offensive>().Shoot();
-            }
-
+            }
+
+
+
             ProfileUI.UseWeapon();
         }
     }
@@ -359,14 +353,6 @@ public class CarController : MonoBehaviour
     #endregion
 
     #region Related to state in-game
-
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.GetComponent<DestructorComponent>())
-        {
-            GameManager.Instance.TriggerPlayerDestructionEvent(this);
-        }
-    }
 
     public void DiedEvent()
     {
@@ -381,8 +367,8 @@ public class CarController : MonoBehaviour
     {
         ClearMyBonus();
 
-        ProfileUI.ResetProfile();
-
+        ProfileUI.ResetProfile();
+
         SphereReference.SetActive(true);
         Visual.SetActive(true);
         _rigidbody.constraints = RigidbodyConstraints.None;
@@ -401,6 +387,33 @@ public class CarController : MonoBehaviour
     {
         Score += points;
         PointsUI.ChangePointsCount(Score);
+    }
+    
+    private IEnumerator WaitBeforeSawEnd()
+    {
+        yield return new WaitForSeconds(1.2f);
+        HitBySaw = false;
+    }
+
+    private IEnumerator WaitBeforeMissileEnd()
+    {
+        yield return new WaitForSeconds(1.2f);
+        IsExploded = false;
+    }
+
+    private IEnumerator GetBackOnWheels()
+    {
+        yield return new WaitForSeconds(2f);
+        transform.forward = new Vector3(transform.forward.x, 0, transform.forward.z);
+    }
+
+    private void ClearMyBonus()
+    {
+        if (BoostsContainer.transform.childCount != 0)
+            Destroy(BoostsContainer.transform.GetChild(0).gameObject);
+
+        if (AttacksContainer.transform.childCount != 0)
+            Destroy(AttacksContainer.transform.GetChild(0).gameObject);
     }
 
     #endregion
