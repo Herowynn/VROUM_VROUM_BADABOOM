@@ -22,10 +22,13 @@ public class Harvester : MonoBehaviour
     {
         _source = GetComponent<AudioSource>();
         StartCoroutine(Horn(minTimeBetweenHorn, maxTimeBetweenHorn));
-        AudioClip horn = HornSounds[Random.Range(0, 2)];
-        _source.loop = false;
-        _source.clip = horn;
-        _source.Play();
+        AudioClip horn = HornSounds[Random.Range(0, HornSounds.Length)];
+        if (horn != null)
+        {
+            _source.loop = false;
+            _source.clip = horn;
+            _source.Play();
+        }
     }
     void Update()
     {
