@@ -44,15 +44,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75fbb5820517fc54bb081ddc1b6594fe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PlayerControllerPrefab: {fileID: 6749302607035847204, guid: bf2580db33cfc2b4bba4da523cfe179e, type: 3}
-  PlayerKeyboardPrefab: {fileID: 8009130959157824594, guid: caa5c5c6eeb696e4ca848a48bc832d33, type: 3}
-  PlayerContainer: {fileID: 4117372919553498375}
-  InputMenuUI: {fileID: 0}
-  NumberOfPlayer: 2
-  NeedKeyboard: 0
-  Players: []
-  StartPositions:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  NumberOfPlayer: 4
+  NeedKeyboard: 1
+  NbAi: 0
+  AiDifficulty: 
+  MapName: Test
+  ScoreToWin: 0
