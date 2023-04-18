@@ -51,6 +51,9 @@ public class Harvester : MonoBehaviour
             moveStep = Speed * Time.deltaTime;
             distance = Vector3.Distance(target, transform.position);
             direction = target - transform.position;
+            
+            //orientation
+            transform.rotation = path[_targetNode].transform.rotation;
         }
         
         direction.Normalize();

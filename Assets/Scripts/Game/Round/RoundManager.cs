@@ -101,8 +101,6 @@ public class RoundManager : MonoBehaviour
         RoundNode closestNode =
             FindClosestNodeFromWinner(_playersToPlaceForNextRound[^1].transform.position);
         
-        Debug.Log(closestNode.HarvesterNode.transform.position);
-        
         PlaceHarvesterForNextRound(closestNode.HarvesterNode);
         PlacePlayersForNextRound(closestNode.Nodes);
     }
