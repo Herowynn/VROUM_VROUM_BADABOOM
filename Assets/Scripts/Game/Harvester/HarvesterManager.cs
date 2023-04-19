@@ -1,5 +1,8 @@
 using UnityEngine;
 
+/// <summary>
+/// This class manages the instantiation of the harvester.
+/// </summary>
 public class HarvesterManager : MonoBehaviour
 {
     [Header("Instances")] 
@@ -8,7 +11,10 @@ public class HarvesterManager : MonoBehaviour
     [HideInInspector] public GameObject HarvesterGoRef;
     [HideInInspector] public Harvester HarvesterRef;
 
-
+    /// <summary>
+    /// This method instantiates the harvester prefab, sets its scale, its rotation and calls the InitiateNodesToFollow 
+    /// method that initialize harvester path.
+    /// </summary>
     public void InstantiateHarvester()
     {
         HarvesterGoRef = Instantiate(HarvesterPrefab, GameManager.Instance.MapManager.CurrentMap.HarvesterStartPosition.position, Quaternion.identity, transform);
