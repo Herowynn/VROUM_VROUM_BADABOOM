@@ -75,13 +75,13 @@ public class AIController : GlobalController
 
     IEnumerator UseAttackBonus()
     {
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(Random.Range(1f, 6f));
 
-        if (AttacksContainer.transform.GetComponentInChildren<Offensive>())
-        {
-            AttacksContainer.transform.GetChild(0).GetComponent<Offensive>().Shoot();
-            ProfileUI.UseWeapon();
-        }
+        //if (AttacksContainer.transform.GetComponentInChildren<Offensive>())
+        //{
+        AttacksContainer.transform.GetChild(0).GetComponent<Offensive>().Shoot();
+        ProfileUI.UseWeapon();
+        //}
     }
 
     private void UpdateMove(Transform[] path)
