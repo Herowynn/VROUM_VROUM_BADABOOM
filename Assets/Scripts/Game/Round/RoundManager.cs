@@ -1,7 +1,13 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+
+/// <summary>
+/// RoundManager is a manager used to deal with the respawn of each player when there is only 1 left.
+/// His role is to reset their position and status and the position and status of the harvester.
+/// The respawn point is found by calculating which point is closer to the round winner, like in Blaze Rush,
+/// and is using the script RoundNode to do so.
+/// </summary>
 
 public class RoundManager : MonoBehaviour
 {
