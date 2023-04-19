@@ -115,7 +115,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SphereRB: {fileID: 8470477560212682836}
-  ForwardAccel: 150000
+  ForwardAccel: 50000
   MaximumSpeed: 50
   TurnStrength: 300
   DragOnGround: 1.3

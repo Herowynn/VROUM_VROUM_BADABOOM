@@ -101,7 +101,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _durationAfterActivation: 5
-  _speedAdded: 1
+  _speedAdded: 0.5
   _time: 0.01
   Sounds: []
 --- !u!82 &2298016997296456361
@@ -116,7 +116,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: a01dd6ce993553c499f1711e8e353015, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 0.007
+  m_Volume: 0.15
   m_Pitch: 1
   Loop: 0
   Mute: 0
