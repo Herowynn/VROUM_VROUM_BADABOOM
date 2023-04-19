@@ -49,7 +49,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   NodesToFollow: []
-  Speed: 3
+  Speed: 30
   LoopSound: {fileID: 0}
   HornSounds:
   - {fileID: 8300000, guid: b612990ff9393ee40bca052d1a817568, type: 3}
@@ -77,7 +77,7 @@ BoxCollider:
   m_GameObject: {fileID: 5407629187411203486}
   m_Material: {fileID: 0}
   m_IsTrigger: 1
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Size: {x: 7.0141206, y: 11.940642, z: 3.4440322}
   m_Center: {x: -0.06814408, y: 4.339602, z: -0.068701446}
