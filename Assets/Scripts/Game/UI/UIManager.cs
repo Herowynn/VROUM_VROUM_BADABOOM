@@ -1,6 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+
+/// <summary>
+/// UIManager is the global UI manager. His role is to display the right UI at the right time.
+/// </summary>
 
 public class UIManager : MonoBehaviour
 {

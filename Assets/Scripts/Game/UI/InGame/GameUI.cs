@@ -1,5 +1,10 @@
 using UnityEngine;
 
+/// <summary>
+/// GameUI acts as a little UIManager but only for the In-Game UI that displays the points
+/// and the bonus the car has. This script is also responsible for the creation of each players UIs.
+/// </summary>
+
 public class GameUI : MonoBehaviour
 {
     [Header("Instances")] 
