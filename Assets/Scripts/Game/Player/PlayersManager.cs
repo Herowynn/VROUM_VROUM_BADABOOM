@@ -16,7 +16,7 @@ public class PlayersManager : MonoBehaviour
     public GameObject PlayersContainer;
     
     [Header("Infos")]
-    [HideInInspector] public List<GameObject> Players;
+    public List<GameObject> Players;
     public List<Color> PlayerColors;
     
     public void CreateNewPlayer(bool playerUseKeyboard, int startPositionIndex, bool isAi)
@@ -28,7 +28,7 @@ public class PlayersManager : MonoBehaviour
 
         if (playerUseKeyboard)
             car.GetComponent<PlayerInput>().defaultControlScheme = "Keyboard";
-        else
+        else if (!isAi)
             car.GetComponent<PlayerInput>().defaultControlScheme = "Controller";
 
         Players.Add(car);
