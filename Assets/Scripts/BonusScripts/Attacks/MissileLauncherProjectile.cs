@@ -27,6 +27,7 @@ public class MissileLauncherProjectile : MonoBehaviour
     private void Awake()
     {
         _source = gameObject.AddComponent<AudioSource>();
+        _source.volume = 0.12f;
     }
 
     private void Start()
