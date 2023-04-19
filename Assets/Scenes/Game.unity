@@ -2553,7 +2553,7 @@ MonoBehaviour:
   Position: {x: 0, y: 30, z: -30}
   Rotation: {x: 45, y: 0, z: 0}
   MinZoom: 50
-  MaxZoom: 25
+  MaxZoom: 35
   ZoomLimiter: 50
   SmoothTime: 0.1
 --- !u!1 &906222440
@@ -4280,8 +4280,8 @@ MonoBehaviour:
   BoostParent: {fileID: 1697732511}
   AttackPrefab: {fileID: 4811915868397805675, guid: 755a480108f6ada47a3a66a7c58d5504, type: 3}
   AttackParent: {fileID: 655431331}
-  _maxTimeBetweenBonusSpawn: 7
-  _minTimeBetweenBonusSpawn: 3
+  _maxTimeBetweenBonusSpawn: 4
+  _minTimeBetweenBonusSpawn: 2
   _firstBonusSpawnTime: 4
 --- !u!4 &1533868909 stripped
 Transform:
