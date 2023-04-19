@@ -2,8 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-/// <summary>
-/// Machine gun projectile class.
+/// <summary>
+
+/// Machine gun projectile class.
+
 /// </summary>
 public class Projectile : MonoBehaviour
 {
@@ -24,22 +26,30 @@ public class Projectile : MonoBehaviour
         _source= GetComponent<AudioSource>();
     }
 
-    /// <summary>
-    /// This method stores the CarController component of the shooting car and adds a force to this rigid body.
-    /// </summary>
-    /// <param name="direction"></param>
+    /// <summary>
+
+    /// This method stores the CarController component of the shooting car and adds a force to this rigid body.
+
+    /// </summary>
+
+    /// <param name="direction"></param>
+
     /// <param name="cc"></param>
-    public void Init(Vector3 direction, CarController cc)
+    public void Init(Vector3 direction, GlobalController cc)
     {
         _carControl = cc;
         _projectileRB.AddForce(direction * _speed, ForceMode.Acceleration);
         StartCoroutine(WaitBeforeAutoDestroy());
     }
 
-    /// <summary>
-    /// This method verifies that the object hit is a car and plays sound effects and sets car variables accordingly
-    /// if it is the case.
-    /// </summary>
+    /// <summary>
+
+    /// This method verifies that the object hit is a car and plays sound effects and sets car variables accordingly
+
+    /// if it is the case.
+
+    /// </summary>
+
     /// <param name="collision"></param>
     private void OnCollisionEnter(Collision collision)
     {
