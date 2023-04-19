@@ -817,7 +817,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4117372919553498377, guid: 2e3a351c76469034982fb743113ff6ed, type: 3}
       propertyPath: NumberOfPlayer
-      value: 1
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2e3a351c76469034982fb743113ff6ed, type: 3}
@@ -1006,7 +1006,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-96826
+  m_Name: pb_Mesh-24610
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -2816,7 +2816,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 392719959cfdc9e48a0ae80a23d6f56d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  HarvesterPrefab: {fileID: 5407629187411203486, guid: cfeb8e7b5a2bbc84b9bd1d6ab2c8899a, type: 3}
+  Harvesters:
+  - Key: FirstTrack_1
+    Value: {fileID: 3555975024392256511, guid: 73dfd23125e06b14a81e1d3fcede3ec6, type: 3}
+  - Key: SecondTrack
+    Value: {fileID: 3555975024392256511, guid: badd1049913d493428788412be19d217, type: 3}
+  - Key: ThirdTrack
+    Value: {fileID: 3555975024392256511, guid: 57b1a6c1f824296498dee529c4b3e89a, type: 3}
   HarvesterGoRef: {fileID: 0}
   HarvesterRef: {fileID: 0}
 --- !u!1 &1081658411
@@ -4251,7 +4257,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 620053894044497476, guid: 9119cbe6c206ce848a749e5d386aba3c, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 620053894044497477, guid: 9119cbe6c206ce848a749e5d386aba3c, type: 3}
       propertyPath: m_RootOrder
@@ -37822,7 +37828,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-96840
+  m_Name: pb_Mesh-24624
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
