@@ -88,6 +88,7 @@ public class RoundManager : MonoBehaviour
         GetRoundWinner();
         ClearEveryBonus();
         PlaceGameElementsForNextRound();
+        GameManager.Instance.Camera.AddTargets();
         StartCoroutine(StartRound());
     }
 

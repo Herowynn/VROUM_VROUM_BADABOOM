@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028328, g: 0.22571322, b: 0.30692163, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028334, g: 0.22571328, b: 0.3069217, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -800,6 +800,10 @@ PrefabInstance:
       value: Input Manager
       objectReference: {fileID: 0}
     - target: {fileID: 4117372919553498377, guid: 2e3a351c76469034982fb743113ff6ed, type: 3}
+      propertyPath: NbAi
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4117372919553498377, guid: 2e3a351c76469034982fb743113ff6ed, type: 3}
       propertyPath: MapName
       value: FirstTrack
       objectReference: {fileID: 0}
@@ -817,7 +821,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4117372919553498377, guid: 2e3a351c76469034982fb743113ff6ed, type: 3}
       propertyPath: NumberOfPlayer
-      value: 3
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2e3a351c76469034982fb743113ff6ed, type: 3}
@@ -1230,6 +1234,10 @@ PrefabInstance:
     - target: {fileID: 6786794047126437610, guid: 625eaf2424189a04f99e37ed57d88169, type: 3}
       propertyPath: m_Name
       value: ThirdTrack
+      objectReference: {fileID: 0}
+    - target: {fileID: 6786794047126437610, guid: 625eaf2424189a04f99e37ed57d88169, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 625eaf2424189a04f99e37ed57d88169, type: 3}
@@ -4331,14 +4339,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 191198d30a966b94094839e4a8ecff94, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CarPrefab: {fileID: 8470477559293409358, guid: 88bed7e26c1dc3e44839fb03cafc3de0, type: 3}
+  HumanPlayerPrefab: {fileID: 8470477559293409358, guid: 88bed7e26c1dc3e44839fb03cafc3de0, type: 3}
+  AiPlayerPrefab: {fileID: 8470477559293409358, guid: ed6b7b714921b704a9cdc15aee36f6fc, type: 3}
   PlayersContainer: {fileID: 1551155569}
   Players: []
   PlayerColors:
   - {r: 0.9607844, g: 0.6784314, b: 0, a: 1}
   - {r: 0.078431375, g: 0.21960786, b: 0.67058825, a: 1}
   - {r: 0.8862746, g: 0.007843138, b: 0.007843138, a: 1}
-  - {r: 0.44705886, g: 0, b: 0.7843138, a: 1}
+  - {r: 0, g: 0, b: 0, a: 1}
 --- !u!1 &1560930557
 GameObject:
   m_ObjectHideFlags: 0
@@ -5400,7 +5409,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-475798
+  m_Name: pb_Mesh-134786
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
