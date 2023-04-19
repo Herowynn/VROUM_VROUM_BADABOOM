@@ -23,6 +23,9 @@ public class MachineGun : Offensive
         _source = gameObject.AddComponent<AudioSource>();
     }
 
+    /// <summary>
+    /// This methods plays the machine gun shooting sound effect and start the shooting coroutine.
+    /// </summary>
     public override void Shoot()
     {
         _source.clip = MachineGunSound;
@@ -37,6 +40,11 @@ public class MachineGun : Offensive
         _direction = -transform.right;
     }
 
+    /// <summary>
+    /// This methods instantiate and shoot a machine gun projectile every "time" seconds during "_durationAfterActivation" seconds.
+    /// </summary>
+    /// <param name="time"></param>
+    /// <returns></returns>
     IEnumerator MinigunShoot(float time)
     {
         _timeIncrementation = 0;

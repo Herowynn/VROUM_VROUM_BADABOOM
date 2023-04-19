@@ -4,23 +4,33 @@ using System.Threading;
 using System.Timers;
 using UnityEngine;
 
+/// <summary>
+/// This class manages the creation of random bonuses at random positions around the cars during the race.
+/// </summary>
 public class BonusManager : MonoBehaviour
 {
+    #region Public Fields
+
     [Header("Instaces")]
     public GameObject BoostPrefab;
     public GameObject BoostParent;
     public GameObject AttackPrefab;
     public GameObject AttackParent;
-    
+
+    #endregion
+
+    #region Private Fields
+
     [Header("GD")]
     [SerializeField] private int _maxTimeBetweenBonusSpawn;
     [SerializeField] private int _minTimeBetweenBonusSpawn;
     [SerializeField] private float _firstBonusSpawnTime;
 
-    //intern var
     private float _spawnTimer;
     private float _timeIncrementation;
     private List<GameObject> _allBonus;
+
+    #endregion
 
     void Start()
     {
@@ -43,6 +53,10 @@ public class BonusManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// This method generates bonus of a random type, at a random position aroud a random player and adds the bonus
+    /// to the bonuses list.
+    /// </summary>
     private void SpawnBonus()
     {
         int randomX = Random.Range(-5, 5);
@@ -67,6 +81,9 @@ public class BonusManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// This methods destroys all the bonuses on the track.
+    /// </summary>
     public void ClearBonus()
     {
         foreach (var bonus in _allBonus)

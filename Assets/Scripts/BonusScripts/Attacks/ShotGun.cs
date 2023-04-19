@@ -14,6 +14,9 @@ public class ShotGun : Offensive
         _direction = -transform.right;
     }
 
+    /// <summary>
+    /// This method instantiates the shot gun projectile prefab and calls its initialization method.
+    /// </summary>
     public override void Shoot()
     {
         GameObject go = Instantiate(ProjectilePrefab, _bulletSpawnPoint);

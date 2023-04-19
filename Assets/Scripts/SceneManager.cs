@@ -1,6 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+
+/// <summary>
+///  SceneManager is a singleton that is used to be able to load scenes through any script
+/// </summary>
 
 public class SceneManager : MonoBehaviour
 {

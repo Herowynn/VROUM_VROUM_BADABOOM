@@ -1,5 +1,9 @@
 using UnityEngine;
 
+/// <summary>
+/// This class contains the harvester and the players start positions, the nodes of the harvester path and the 
+/// start position nodes of every round.
+/// </summary>
 public class Map : MonoBehaviour
 {
     [Header("Instance")] 

@@ -1,6 +1,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// PostGameUI is used for the PostGame and his role is to manage it.
+/// It includes some personalization elements such as the Position's name.
+/// Example : First or 1st or Ist...
+/// </summary>
+
 public class PostGameUI : MonoBehaviour
 {
     [Header("Instance")]

@@ -1,8 +1,12 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Serialization;
+
+/// <summary>
+/// ScoreManager is a manager that is used to add score to alive players.
+/// When a player dies, this manager is triggered and alive players get score.
+/// It is dynamic because you can change the amount of points gained per car crash.
+/// This script will also trigger an event when the points are equal or above the necessary points to win a match.
+/// </summary>
 
 public class ScoreManager : MonoBehaviour
 {

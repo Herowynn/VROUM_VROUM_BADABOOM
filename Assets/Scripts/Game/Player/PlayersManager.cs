@@ -2,6 +2,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+/// <summary>
+/// PlayersManager is a manager that deal with the PlayerS and not a player in particular.
+/// This script is here to deal with player's instantiation and personalization of their information.
+/// For example, you can modify player's colors in this script.
+/// </summary>
+
 public class PlayersManager : MonoBehaviour
 {
     [Header("Instances")]

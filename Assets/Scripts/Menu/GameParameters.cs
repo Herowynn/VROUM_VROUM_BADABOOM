@@ -1,9 +1,11 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+
+/// <summary>
+/// GameParameters is a script used for the menu Game Parameters.
+/// It contains every reference of the changeable elements and functions that calls the MenuManager singleton.
+/// </summary>
 
 public class GameParameters : MonoBehaviour
 {

@@ -21,6 +21,10 @@ public class MissileLauncher : Offensive
         _source.Play();
     }
 
+    /// <summary>
+    /// This methods gets the closest object present in the target zone of the launcher, instantiate the missile and calls
+    /// its initialization method before destroying this launcher object.
+    /// </summary>
     public override void Shoot()
     {
         GetComponent<BoxCollider>().enabled = true;
@@ -42,6 +46,10 @@ public class MissileLauncher : Offensive
         Destroy(gameObject);
     }
 
+    /// <summary>
+    /// This method adds all the objects present in the target zone of the launcher to the objects list.
+    /// </summary>
+    /// <param name="other"></param>
     private void OnTriggerEnter(Collider other)
     {
         if (!_colliders.Contains(other) && other.gameObject.GetComponent<CarController>() != null) 
@@ -50,6 +58,10 @@ public class MissileLauncher : Offensive
         }
     }
 
+    /// <summary>
+    /// This method removes all the objects that get out of the target zone from the objects list.
+    /// </summary>
+    /// <param name="other"></param>
     private void OnTriggerExit(Collider other)
     {
         _colliders.Remove(other);

@@ -25,6 +25,11 @@ public class ShotgunProjectile : MonoBehaviour
         _ground = (int)Mathf.Log(1f * GroundLayerMask.value, 2f);
     }
 
+    /// <summary>
+    /// This method plays the shot gun projectile sound effect and adds force to the rigid body of this object.
+    /// It also calls the WaitBeforeActivateCollider() coroutine.
+    /// </summary>
+    /// <param name="direction"></param>
     public void Init(Vector3 direction)
     {
         ProjectileRB.AddForce(direction * _force);
@@ -36,6 +41,12 @@ public class ShotgunProjectile : MonoBehaviour
         StartCoroutine(WaitBeforeActivateCollider());
     }
 
+    /// <summary>
+    /// this method verifies the type of object hit :
+    /// If it is a car, sets changes the slow factor applied to the car speed and calls the WaitBeforeNormalSpeed() coroutine.
+    /// If it is an object with the ground layer, it plays a bounce sound effect.
+    /// </summary>
+    /// <param name="collision"></param>
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.TryGetComponent(out _carControl))
@@ -45,7 +56,6 @@ public class ShotgunProjectile : MonoBehaviour
             GetComponent<SphereCollider>().enabled = false;
             StartCoroutine(WaitBeforeNormalSpeed());
             StartCoroutine(WaitBeforeAutoDestroy());
-
         }
         else if(collision.gameObject.layer != _ground)
         {
@@ -55,6 +65,10 @@ public class ShotgunProjectile : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// This coroutine sets the slow factor of the car hit to its original value after a certain amount of time.
+    /// </summary>
+    /// <returns></returns>
     IEnumerator WaitBeforeNormalSpeed()
     {
         yield return new WaitForSeconds(5f);
@@ -62,12 +76,18 @@ public class ShotgunProjectile : MonoBehaviour
         Destroy(gameObject);
     }
 
+    /// <summary>
+    /// This coroutine enable the sphere collider of this projectile after a certain amount of time to avoid
+    /// to hit the car that shot this shotgun projectile.
+    /// </summary>
+    /// <returns></returns>
     IEnumerator WaitBeforeActivateCollider()
     {
         yield return new WaitForSeconds(0.1f);
         GetComponent<SphereCollider>().enabled = true;
         
     }
+
     IEnumerator WaitBeforeAutoDestroy()
     {
         yield return new WaitForSeconds(5f);

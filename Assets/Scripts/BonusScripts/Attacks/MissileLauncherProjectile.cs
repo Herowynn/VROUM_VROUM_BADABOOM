@@ -14,7 +14,6 @@ public class MissileLauncherProjectile : MonoBehaviour
     private Vector3 _direction;
     private float _stageOne = 2f;
     private float _stageTwo = 4f;
-    private float _dist;
     private bool _isRotated = false;
     private Vector3 _explosionDir;
     private float _clock;
@@ -35,9 +34,14 @@ public class MissileLauncherProjectile : MonoBehaviour
         _projectileRB = GetComponent<Rigidbody>();
         _clock = 0;
         StartCoroutine(WaitBeforeAutoDestroy());
-        //_dist = (_targetRB.transform.position - transform.position).magnitude;
     }
 
+    /// <summary>
+    /// This method plays the missile sound effect, assigns the target rigid body if the target is not null
+    /// and set the missile direction variable.
+    /// </summary>
+    /// <param name="go"></param>
+    /// <param name="explodeDir"></param>
     public void Init(GameObject go, Vector3 explodeDir)
     {
         _source.clip = MissileFlySound;
@@ -50,6 +54,10 @@ public class MissileLauncherProjectile : MonoBehaviour
         _direction = transform.forward;
         _explosionDir = explodeDir;
     }
+
+    /// <summary>
+    /// This method manages the trajectory and the behaviour of the missile according to the missile course stage.
+    /// </summary>
     private void Update()
     {
             _clock += Time.deltaTime;
@@ -62,7 +70,7 @@ public class MissileLauncherProjectile : MonoBehaviour
            // _projectileRB.velocity = Vector3.ClampMagnitude(_projectileRB.velocity, _launchingSpeed);
         
 
-        if ( _clock > _stageOne && _clock < _stageTwo)
+        if (_clock > _stageOne && _clock < _stageTwo)
         {
             if (_targetRB != null)
             {
@@ -98,6 +106,11 @@ public class MissileLauncherProjectile : MonoBehaviour
        
     }
 
+    /// <summary>
+    /// This method verifies that the object touched is a car controller and sets sound effects and car variables
+    /// accordingly if it is the case.
+    /// </summary>
+    /// <param name="other"></param>
     private void OnTriggerEnter(Collider other)
     {
         Vector3 dir = other.transform.position - _explosionDir;

@@ -1,5 +1,11 @@
 using UnityEngine;
 
+/// <summary>
+/// GameManager is a singleton that is used for the global behavior of the game.
+/// It contains every necessary managers for the game to run.
+/// It also contains functions that trigger manager's event and that are called by other managers.
+/// </summary>
+
 public class GameManager : MonoBehaviour
 {
     #region Public Fields

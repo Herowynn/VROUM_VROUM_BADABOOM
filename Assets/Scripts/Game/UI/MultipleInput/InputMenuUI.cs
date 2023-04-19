@@ -1,7 +1,10 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem;
+
+/// <summary>
+/// InputMenuUI is used for the InputMenu and his role is to manage each PlayerInputUIs scripts.
+/// It also contains global useful variables such as the color for the GoodStatus and the BadStatus.
+/// </summary>
 
 public class InputMenuUI : MonoBehaviour
 {

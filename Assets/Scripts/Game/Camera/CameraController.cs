@@ -1,6 +1,10 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+
+/// <summary>
+/// CameraController is a script that controls the camera for the game.
+/// It uses the positions of every alive player in game. It moves and zoom in and out in a late update call.
+/// </summary>
 
 public class CameraController : MonoBehaviour
 {

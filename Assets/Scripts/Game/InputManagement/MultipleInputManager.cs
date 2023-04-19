@@ -1,10 +1,13 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.IO;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.XInput;
+
+/// <summary>
+/// MultipleInputManager is the first script called when the scene loads.
+/// Why ? Because it contains every GameParameters script information and is the one responsible for the initialization of the game.
+/// Plus, every game starts with an InputMenu in order for the players to connect their controller or keyboard.
+/// So, it also contains functions for the InputMenu.
+/// </summary>
 
 public class MultipleInputManager : MonoBehaviour
 {
@@ -42,6 +45,8 @@ public class MultipleInputManager : MonoBehaviour
         
         GameManager.Instance.RoundManager.InitiateRoundNodesForCurrentMap();
         GameManager.Instance.RoundManager.InitiateHarvesterForCurrentMap();
+
+        GameManager.Instance.ScoreManager.PointsToWin = ScoreToWin;
 
         // Subscribe to Event
         InputSystem.onDeviceChange += ListenerOnDeviceChange;
