@@ -85,6 +85,8 @@ public class GlobalController : MonoBehaviour
     protected float _yComponentWantedDirection;
     protected Vector3 _carAltitudeOffset;
     protected Vector3 _lastRebornPosition;
+    protected bool _hasAnAttackBonus;
+    protected bool _hasABoost;
 
     #endregion
 
@@ -118,14 +120,16 @@ public class GlobalController : MonoBehaviour
             if (transform.GetSiblingIndex() == i)
                 _lastRebornPosition = GameManager.Instance.MapManager.CurrentMap.PlayerStartPositions[i].position;
         }
+
+        _hasABoost = false;
+        _hasAnAttackBonus = false;
     }
 
     protected void UpdateGraphics()
     {
         _isGrounded = false;
-        RaycastHit hit;
 
-        if (Physics.Raycast(RayPoint.position, -transform.up, out hit, ArrayRayLength, GroundLayerMask))
+        if (Physics.Raycast(RayPoint.position, -transform.up, out RaycastHit hit, ArrayRayLength, GroundLayerMask))
         {
             _isGrounded = true;
 
@@ -202,17 +206,17 @@ public class GlobalController : MonoBehaviour
             {
                 case BonusType.Attack:
                     if (AttacksContainer.transform.childCount != 0)
-
                         return;
                     Instantiate(AttackList[collision.gameObject.GetComponent<Bonus>().RndLvl], AttacksContainer);
                     ProfileUI.TookWeapon();
+                    _hasAnAttackBonus = true;
                     break;
                 case BonusType.Boost:
                     if (BoostsContainer.transform.childCount != 0)
-
                         return;
                     Instantiate(BoostList[collision.gameObject.GetComponent<Bonus>().RndLvl], BoostsContainer);
                     ProfileUI.TookBoost();
+                    _hasABoost = true;
                     break;
             }
 
@@ -264,8 +268,6 @@ public class GlobalController : MonoBehaviour
         SphereRB.velocity = Vector3.zero;
         SphereReference.transform.position = positionOnReborn.position;
         _lastRebornPosition = positionOnReborn.position;
-
-        
     }
 
     public void AddPointsToScore(int points)

@@ -47,6 +47,41 @@ public class AIController : GlobalController
         {
             UpdateMove(NodesToFollow);
         }
+
+        if (_hasABoost)
+        {
+            _hasABoost = false;
+            StartCoroutine(UseBoost());
+        }
+
+        if(_hasAnAttackBonus)
+        {
+            _hasAnAttackBonus = false;
+            StartCoroutine(UseAttackBonus());
+            if(Physics.Raycast(RayPoint.position, -transform.up, ArrayRayLength, CarLayerMask))
+            {
+                AttacksContainer.transform.GetChild(0).GetComponent<Offensive>().Shoot();
+                ProfileUI.UseWeapon();
+            }
+        }
+    }
+
+    IEnumerator UseBoost()
+    {
+        yield return new WaitForSeconds(Random.Range(1f, 5f));
+        BoostsContainer.transform.GetChild(0).GetComponent<Booster>().Boost(SphereRB, gameObject);
+        ProfileUI.UseBoost();
+    }
+
+    IEnumerator UseAttackBonus()
+    {
+        yield return new WaitForSeconds(1);
+
+        if (AttacksContainer.transform.GetComponentInChildren<Offensive>())
+        {
+            AttacksContainer.transform.GetChild(0).GetComponent<Offensive>().Shoot();
+            ProfileUI.UseWeapon();
+        }
     }
 
     private void UpdateMove(Transform[] path)

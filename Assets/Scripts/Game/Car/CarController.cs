@@ -96,15 +96,11 @@ public class CarController : GlobalController
             if (BoostsContainer.transform.childCount == 0)
                 return;
 
-
-
             if (BoostsContainer.transform.GetComponentInChildren<Booster>())
 
             {
                 BoostsContainer.transform.GetChild(0).GetComponent<Booster>().Boost(SphereRB, gameObject);
             }
-
-
 
             ProfileUI.UseBoost();
         }
@@ -117,14 +113,10 @@ public class CarController : GlobalController
             if (AttacksContainer.transform.childCount == 0)
                 return;
 
-
-
             if (AttacksContainer.transform.GetComponentInChildren<Offensive>())
             {
                 AttacksContainer.transform.GetChild(0).GetComponent<Offensive>().Shoot();
             }
-
-
 
             ProfileUI.UseWeapon();
         }
