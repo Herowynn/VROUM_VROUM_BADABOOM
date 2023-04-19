@@ -233,7 +233,6 @@ public class GlobalController : MonoBehaviour
     {
         if (other.GetComponent<DestructorComponent>())
         {
-            Debug.Log("OnTriggerEnter Destructor called");
             GameManager.Instance.TriggerPlayerDestructionEvent(this);
         }
     }
