@@ -27,7 +27,6 @@ public class MissileLauncher : Offensive
     /// </summary>
     public override void Shoot()
     {
-        GetComponent<BoxCollider>().enabled = true;
         float closest = int.MaxValue;
         GameObject closestGO = null;
         for (int i = 0; i < _colliders.Count; i++)

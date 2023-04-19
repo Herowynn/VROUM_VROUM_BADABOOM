@@ -59,10 +59,11 @@ public class Projectile : MonoBehaviour
             carControl.IsTouchedByMachineGun = true;
             carControl.ProjectileDirection = dir;
 
-            _source.clip = MetalImpactSounds[Random.Range(0,MetalImpactSounds.Length)];
+            _source.clip = MetalImpactSounds[Random.Range(0, MetalImpactSounds.Length)];
             _source.Play();
             Destroy(gameObject);
         }
+        else Destroy(gameObject);
     }
 
     IEnumerator WaitBeforeAutoDestroy()
