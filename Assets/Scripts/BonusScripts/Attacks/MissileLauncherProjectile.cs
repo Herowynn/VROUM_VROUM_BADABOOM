@@ -119,7 +119,7 @@ public class MissileLauncherProjectile : MonoBehaviour
             carControl.Source.Play();
 
             carControl.ExplosionDirection = dir;
-            carControl.IsExplosed = true;
+            carControl.IsExploded = true;
             Destroy(gameObject);
         }
     }
