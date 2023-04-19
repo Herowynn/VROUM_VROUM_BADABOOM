@@ -64,7 +64,7 @@ public class GameManager : MonoBehaviour
         //Test
         MultipleInputManager.InstantiateMultipleInputManager();
 
-        InstantiatePlayers(MultipleInputManager.NeedKeyboard, MultipleInputManager.NumberOfPlayer, MultipleInputManager.NbAi);
+        InstantiatePlayers(MultipleInputManager.NeedKeyboard, MultipleInputManager.NumberOfPlayer + MultipleInputManager.NbAi);
 
         Camera.AddTargets();
         
@@ -97,7 +97,7 @@ public class GameManager : MonoBehaviour
 
     #region Game
 
-    private void InstantiatePlayers(bool needKeyboard, int nbPlayer, int nbAi)
+    private void InstantiatePlayers(bool needKeyboard, int nbPlayer)
     {
         int startIndex = 0;
         int startPositionIndex = 0;
@@ -106,19 +106,13 @@ public class GameManager : MonoBehaviour
         if (needKeyboard)
         {
             startIndex = 1;
-            PlayersManager.CreateNewPlayer(true, startPositionIndex, false);
+            PlayersManager.CreateNewPlayer(true, startPositionIndex);
             startPositionIndex++;
         }
 
         for (int i = startIndex; i < nbPlayer; i++)
         {
-            PlayersManager.CreateNewPlayer(false, startPositionIndex, false);
-            startPositionIndex++;
-        }
-
-        for (int i = 0; i < nbAi; i++)
-        {
-            PlayersManager.CreateNewPlayer(false, startPositionIndex, true);
+            PlayersManager.CreateNewPlayer(false, startPositionIndex);
             startPositionIndex++;
         }
         
@@ -133,7 +127,6 @@ public class GameManager : MonoBehaviour
     public void TriggerPlayerDestructionEvent(GlobalController player)
     {
         RoundManager.PlayerDiedEvent(player);
-        Camera.RemoveDeadTargetEvent();
     }
 
     public void TriggerScoreAddEvent()

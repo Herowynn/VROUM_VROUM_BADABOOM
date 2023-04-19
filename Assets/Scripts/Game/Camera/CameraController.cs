@@ -35,6 +35,11 @@ public class CameraController : MonoBehaviour
         rot.eulerAngles = Rotation;
         
         transform.rotation = rot;
+        
+        if (Targets.Count == 0)
+        {
+            
+        }
     }
 
     private void LateUpdate()
@@ -48,11 +53,6 @@ public class CameraController : MonoBehaviour
     public void AddTargets()
     {
         Targets = GameManager.Instance.PlayersManager.Players;
-    }
-
-    public void RemoveDeadTargetEvent()
-    {
-        Targets.RemoveAll(item => item.GetComponent<GlobalController>().PlayerState == PlayerState.DEAD);
     }
     
     private void Move()

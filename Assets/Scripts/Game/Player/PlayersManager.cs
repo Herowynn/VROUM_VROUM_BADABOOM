@@ -10,21 +10,17 @@ using UnityEngine.InputSystem;
 
 public class PlayersManager : MonoBehaviour
 {
-    [Header("Instances")] 
-    public GameObject HumanPlayerPrefab;
-    public GameObject AiPlayerPrefab;
+    [Header("Instances")]
+    public GameObject CarPrefab;
     public GameObject PlayersContainer;
     
     [Header("Infos")]
     [HideInInspector] public List<GameObject> Players;
     public List<Color> PlayerColors;
     
-    public void CreateNewPlayer(bool playerUseKeyboard, int startPositionIndex, bool isAi)
+    public void CreateNewPlayer(bool playerUseKeyboard, int startPositionIndex)
     {
-        GameObject car = Instantiate(isAi ? AiPlayerPrefab : HumanPlayerPrefab, 
-            GameManager.Instance.MapManager.CurrentMap.PlayerStartPositions[startPositionIndex].transform.position, 
-            Quaternion.identity, 
-            PlayersContainer.transform);
+        GameObject car = Instantiate(CarPrefab, GameManager.Instance.MapManager.CurrentMap.PlayerStartPositions[startPositionIndex].transform.position, Quaternion.identity, PlayersContainer.transform);
 
         if (playerUseKeyboard)
             car.GetComponent<PlayerInput>().defaultControlScheme = "Keyboard";
