@@ -25,7 +25,7 @@ public class AIController : GlobalController
         Init();
         _speed = Random.Range(MinSpeed, MaxSpeed);
         NodesToFollow = GameManager.Instance.MapManager.CurrentMap.HarvesterNodes;
-        SetTargetNode(0);
+        SetTargetNode(-1);
 
         UpdateTarget();
     }
@@ -33,6 +33,7 @@ public class AIController : GlobalController
     public void SetTargetNode(int index)
     {
         _targetNode = index + 1;
+        UpdateTarget();
     }
 
     private void FixedUpdate()
@@ -64,11 +65,16 @@ public class AIController : GlobalController
             //    ProfileUI.UseWeapon();
             //}
         }
+        
     }
 
     IEnumerator UseBoost()
     {
         yield return new WaitForSeconds(Random.Range(1f, 5f));
+        
+        if (BoostsContainer.transform.childCount <= 0)
+            yield break;
+        
         BoostsContainer.transform.GetChild(0).GetComponent<Booster>().Boost(SphereRB, gameObject);
         ProfileUI.UseBoost();
     }
@@ -79,6 +85,9 @@ public class AIController : GlobalController
 
         //if (AttacksContainer.transform.GetComponentInChildren<Offensive>())
         //{
+        if (AttacksContainer.transform.childCount <= 0)
+            yield break;
+        
         AttacksContainer.transform.GetChild(0).GetComponent<Offensive>().Shoot();
         ProfileUI.UseWeapon();
         //}
