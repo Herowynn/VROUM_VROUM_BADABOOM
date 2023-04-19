@@ -58,11 +58,11 @@ public class AIController : GlobalController
         {
             _hasAnAttackBonus = false;
             StartCoroutine(UseAttackBonus());
-            if(Physics.Raycast(RayPoint.position, -transform.up, ArrayRayLength, CarLayerMask))
-            {
-                AttacksContainer.transform.GetChild(0).GetComponent<Offensive>().Shoot();
-                ProfileUI.UseWeapon();
-            }
+            //if (Physics.Raycast(RayPoint.position, -transform.up, Mathf.Infinity, CarLayerMask))
+            //{
+            //    AttacksContainer.transform.GetChild(0).GetComponent<Offensive>().Shoot();
+            //    ProfileUI.UseWeapon();
+            //}
         }
     }
 
