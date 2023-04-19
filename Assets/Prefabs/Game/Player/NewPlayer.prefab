@@ -116,13 +116,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SphereRB: {fileID: 8470477560212682836}
-  forwardAccel: 150000
-  maximumSpeed: 50
-  turnStrength: 300
-  dragOnGround: 1.3
-  dragInTheAir: 0
-  wheelTurnSpeed: 4
-  additionalEarthGravity: 1
+  ForwardAccel: 150000
+  MaximumSpeed: 50
+  TurnStrength: 300
+  DragOnGround: 1.3
+  DragInTheAir: 0
+  WheelTurnSpeed: 4
+  AdditionalEarthGravity: 1
   SlowFactor: 1
   GroundLayerMask:
     serializedVersion: 2
@@ -130,8 +130,8 @@ MonoBehaviour:
   CarLayerMask:
     serializedVersion: 2
     m_Bits: 128
-  groundLayerNumber: 3
-  arrayRayLength: 0.7
+  GroundLayerNumber: 3
+  ArrayRayLength: 0.7
   RayPoint: {fileID: 8470477560550397293}
   RightBackWheel: {fileID: 839490407940150800}
   RightFrontWheel: {fileID: 4146829921669097665}
@@ -139,7 +139,7 @@ MonoBehaviour:
   LeftFrontWheel: {fileID: 8031376243321959686}
   HitBySaw: 0
   IsBumped: 0
-  IsExplosed: 0
+  IsExploded: 0
   IsTouchedByMachineGun: 0
   BumpForce: 10000
   ProjectileForce: 100
