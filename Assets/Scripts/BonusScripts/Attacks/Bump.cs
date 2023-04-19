@@ -27,10 +27,11 @@ public class Bump : Offensive
         _bumpEffect.SetActive(false);
     }
 
+    /// <summary>
+    /// This method pushes all the objects present in the effect zone.
+    /// </summary>
     public override void Shoot()
     {
-/*        _bumpEffect.SetActive(true);
-*/
         _source.clip = SonicShotSound;
         _source.Play();
 
@@ -60,6 +61,10 @@ public class Bump : Offensive
         Destroy(gameObject);
     }
 
+    /// <summary>
+    /// This method adds all the objects present in the effect zone to the objects list.
+    /// </summary>
+    /// <param name="other"></param>
     private void OnTriggerEnter(Collider other)
     {
         if (!_colliders.Contains(other) && other.gameObject.layer != _ground)
@@ -68,6 +73,10 @@ public class Bump : Offensive
         }
     }
 
+    /// <summary>
+    /// This method removes all the objects that get out of the zone effect from the objects list.
+    /// </summary>
+    /// <param name="other"></param>
     private void OnTriggerExit(Collider other)
     {
         _colliders.Remove(other);

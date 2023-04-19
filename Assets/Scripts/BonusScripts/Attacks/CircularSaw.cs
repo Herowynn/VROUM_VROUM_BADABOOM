@@ -21,6 +21,10 @@ public class CircularSaw : Offensive
         _source.Play();
     }
 
+    /// <summary>
+    /// This method plays the saw launching sound effect, instantiates the saw projectile object 
+    /// and calls its initialization method.
+    /// </summary>
     public override void Shoot()
     {
         _source.clip = LaunchSawSound;
