@@ -357,7 +357,8 @@ MonoBehaviour:
   PointsUI: {fileID: 0}
   ProfileUI: {fileID: 0}
   NodesToFollow: []
-  Speed: 5
+  MaxSpeed: 10
+  MinSpeed: 10
 --- !u!1 &8470477559387477689
 GameObject:
   m_ObjectHideFlags: 0

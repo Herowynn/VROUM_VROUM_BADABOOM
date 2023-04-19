@@ -8,15 +8,26 @@ public class AIController : GlobalController
     [HideInInspector] public Transform[] NodesToFollow;
 
     [Header("GD")]
-    public float Speed;
+    public float MaxSpeed;
+    public float MinSpeed;
+    float _speed;
 
     private int _targetNode;
+
+    Vector3 target;
+    Vector3 direction;
+    float moveStep;
+    float distance;
+
 
     public void Start()
     {
         Init();
+        _speed = Random.Range(MinSpeed, MaxSpeed);
         NodesToFollow = GameManager.Instance.MapManager.CurrentMap.HarvesterNodes;
         SetTargetNode(0);
+
+        UpdateTarget();
     }
 
     public void SetTargetNode(int index)
@@ -40,10 +51,9 @@ public class AIController : GlobalController
 
     private void UpdateMove(Transform[] path)
     {
-        Vector3 target = path[_targetNode].transform.position;
-        Vector3 direction = target - SphereRB.position;
-        float moveStep = Speed * Time.deltaTime;
-        float distance = Vector3.Distance(target, SphereRB.position);
+        direction = target - SphereRB.position;
+        moveStep = _speed * Time.deltaTime;
+        distance = Vector3.Distance(target, SphereRB.position);
 
         while (moveStep > distance)
         {
@@ -52,8 +62,8 @@ public class AIController : GlobalController
             if (_targetNode >= path.Length)
                 _targetNode = 0;
 
-            target = path[_targetNode].transform.position;
-            moveStep = Speed * Time.deltaTime;
+            UpdateTarget();
+            moveStep = _speed * Time.deltaTime;
             distance = Vector3.Distance(target, SphereRB.position);
             direction = target - SphereRB.position;
         }
@@ -61,5 +71,11 @@ public class AIController : GlobalController
         direction.Normalize();
         transform.LookAt(target);
         SphereRB.position += moveStep * direction;
+    }
+
+    void UpdateTarget()
+    {
+        _speed = Random.Range(MinSpeed, MaxSpeed);
+        target = NodesToFollow[_targetNode].transform.position + new Vector3(Random.Range(-5f, 5f), 0f, Random.Range(-5f, 5f));
     }
 }
