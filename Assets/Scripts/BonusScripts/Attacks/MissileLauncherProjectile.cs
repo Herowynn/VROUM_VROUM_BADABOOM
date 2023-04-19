@@ -100,7 +100,7 @@ public class MissileLauncherProjectile : MonoBehaviour
     {
         Vector3 dir = other.transform.position - _explosionDir;
 
-        if (other.gameObject.TryGetComponent<CarController>(out var carControl))
+        if (other.gameObject.TryGetComponent<GlobalController>(out var carControl))
         {
             carControl.Source.clip = MissileExplosionSounds[Random.Range(0, MissileExplosionSounds.Length)];
             carControl.Source.loop = false;

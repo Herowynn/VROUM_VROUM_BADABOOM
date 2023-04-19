@@ -734,6 +734,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Input Manager
       objectReference: {fileID: 0}
+    - target: {fileID: 4117372919553498377, guid: 2e3a351c76469034982fb743113ff6ed, type: 3}
+      propertyPath: NumberOfPlayer
+      value: 4
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2e3a351c76469034982fb743113ff6ed, type: 3}
 --- !u!4 &167805911 stripped
@@ -4055,7 +4059,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 191198d30a966b94094839e4a8ecff94, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CarPrefab: {fileID: 8470477559293409358, guid: 88bed7e26c1dc3e44839fb03cafc3de0, type: 3}
+  CarPrefab: {fileID: 8470477559293409358, guid: ed6b7b714921b704a9cdc15aee36f6fc, type: 3}
   PlayersContainer: {fileID: 1551155569}
   Players: []
   PlayerColors:

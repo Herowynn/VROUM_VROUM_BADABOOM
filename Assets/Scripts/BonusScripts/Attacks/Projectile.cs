@@ -8,7 +8,7 @@ public class Projectile : MonoBehaviour
 
     [SerializeField] float _speed;
     Rigidbody _projectileRB;
-    [SerializeField] CarController _carControl;
+    [SerializeField] GlobalController _carControl;
 
     //public GameObject Particles;
     [Header("Audio")]
@@ -22,7 +22,7 @@ public class Projectile : MonoBehaviour
         _projectileRB = GetComponent<Rigidbody>();
         _source= GetComponent<AudioSource>();
     }
-    public void Init(Vector3 direction, CarController cc)
+    public void Init(Vector3 direction, GlobalController cc)
     {
         _carControl = cc;
         _projectileRB.AddForce(direction * _speed, ForceMode.Acceleration);
@@ -30,7 +30,7 @@ public class Projectile : MonoBehaviour
     }
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.TryGetComponent<CarController>(out var carControl))
+        if (collision.gameObject.TryGetComponent<GlobalController>(out var carControl))
         {
             Vector3 dir = collision.gameObject.transform.position - _carControl.transform.position;
             carControl.IsTouchedByMachineGun = true;

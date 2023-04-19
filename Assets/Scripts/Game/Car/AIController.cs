@@ -16,12 +16,18 @@ public class AIController : GlobalController
     {
         Init();
         NodesToFollow = GameManager.Instance.MapManager.CurrentMap.HarvesterNodes;
-        SetTargetNode(1);
+        SetTargetNode(0);
     }
 
     public void SetTargetNode(int index)
     {
-        _targetNode = index;
+        _targetNode = index + 1;
+    }
+
+    private void FixedUpdate()
+    {
+        UpdateGraphics();
+        transform.position = SphereReference.transform.position + _carAltitudeOffset;
     }
 
     void Update()
@@ -52,7 +58,8 @@ public class AIController : GlobalController
             direction = target - SphereRB.position;
 
             //orientation
-            transform.rotation = path[_targetNode].transform.rotation;
+            transform.LookAt(path[_targetNode].transform);
+            //transform.rotation = path[_targetNode].transform.rotation;
         }
 
         direction.Normalize();

@@ -89,9 +89,9 @@ public class RoundManager : MonoBehaviour
     {
         foreach (var player in GameManager.Instance.PlayersManager.Players)
         {
-            if (player.GetComponent<CarController>().PlayerState == PlayerState.ALIVE)
+            if (player.GetComponent<GlobalController>().PlayerState == PlayerState.ALIVE)
             {
-                _playersToPlaceForNextRound.Add(player.GetComponent<CarController>());
+                _playersToPlaceForNextRound.Add(player.GetComponent<GlobalController>());
                 return;
             }
         }
@@ -117,9 +117,8 @@ public class RoundManager : MonoBehaviour
         for (int i = _playersToPlaceForNextRound.Count - 1; i >= 0; i--)
         {
             //See if necessary
-            if (_playersToPlaceForNextRound[i].gameObject.GetComponent<AIController>())
-                _playersToPlaceForNextRound[i].gameObject.GetComponent<AIController>()
-                    .SetTargetNode(_roundNodesForCurrentMap.IndexOf(playersTransform[0].parent.GetComponent<RoundNode>()));
+            if (_playersToPlaceForNextRound[i].gameObject.TryGetComponent<AIController>(out var aiControl))
+                aiControl.SetTargetNode(_roundNodesForCurrentMap.IndexOf(playersTransform[0].parent.GetComponent<RoundNode>()));
 
             _playersToPlaceForNextRound[i].RebornEvent(playersTransform[cpt]);
             //_playersToPlaceForNextRound[i].gameObject.transform.position = closestNode.Nodes[cpt].transform.position;

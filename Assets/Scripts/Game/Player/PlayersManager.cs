@@ -23,7 +23,7 @@ public class PlayersManager : MonoBehaviour
 
         Players.Add(car);
 
-        Players[^1].GetComponent<CarController>().Color = PlayerColors[startPositionIndex];
+        Players[^1].GetComponent<GlobalController>().Color = PlayerColors[startPositionIndex];
     }
 
     public void DestroyPlayers()
