@@ -62,6 +62,7 @@ public class Harvester : MonoBehaviour
 
         for (int i = 0; i < NodesToFollow.Length; i++)
         {
+            Debug.Log($"{i} - distance : {Vector3.Distance(NodesToFollow[i].transform.position, transform.position)} - angle : {Mathf.Rad2Deg * Mathf.Abs(Mathf.Acos(Vector3.Dot(transform.forward.normalized, (NodesToFollow[i].transform.position - transform.position).normalized)))}");
             if (distance > Vector3.Distance(NodesToFollow[i].transform.position, transform.position) && Mathf.Rad2Deg * Mathf.Abs(Mathf.Acos(Vector3.Dot(transform.forward.normalized, (NodesToFollow[i].transform.position - transform.position).normalized))) < 90f)
             {
                 newTargetNode = i;
