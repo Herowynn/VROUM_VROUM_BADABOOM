@@ -41,10 +41,11 @@ GameObject:
   m_Component:
   - component: {fileID: 8470477559293409345}
   - component: {fileID: 8470477559293409346}
+  - component: {fileID: 2758050393437220439}
   - component: {fileID: 7823043666654587697}
-  - component: {fileID: 8470477559293409357}
   - component: {fileID: 4181034262726389727}
   - component: {fileID: 6860740909563417045}
+  - component: {fileID: 8470477559293409357}
   m_Layer: 7
   m_Name: HumanPlayer
   m_TagString: Untagged
@@ -81,6 +82,19 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8470477559293409358}
   m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1.9861401, y: 1.4800947, z: 4.7263026}
+  m_Center: {x: 0.0041784644, y: -0.08970019, z: 0.0138299465}
+--- !u!65 &2758050393437220439
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8470477559293409358}
+  m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
@@ -97,85 +111,11 @@ Rigidbody:
   m_Mass: 0.0000001
   m_Drag: 0
   m_AngularDrag: 0
-  m_UseGravity: 1
+  m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
---- !u!114 &8470477559293409357
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8470477559293409358}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6075d883d30ec1944bb7247e1e22b149, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  SphereRB: {fileID: 8470477560212682836}
-  ForwardAccel: 50000
-  MaximumSpeed: 50
-  TurnStrength: 150
-  DragOnGround: 1.3
-  DragInTheAir: 0
-  WheelTurnSpeed: 4
-  AdditionalEarthGravity: 1
-  SlowFactor: 1
-  GroundLayerMask:
-    serializedVersion: 2
-    m_Bits: 8
-  CarLayerMask:
-    serializedVersion: 2
-    m_Bits: 128
-  GroundLayerNumber: 3
-  ArrayRayLength: 0.7
-  RayPoint: {fileID: 8470477560550397293}
-  RightBackWheel: {fileID: 839490407940150800}
-  RightFrontWheel: {fileID: 4146829921669097665}
-  LeftBackWheel: {fileID: 4713423009772291345}
-  LeftFrontWheel: {fileID: 8031376243321959686}
-  HitBySaw: 0
-  IsBumped: 0
-  IsExploded: 0
-  IsTouchedByMachineGun: 0
-  BumpForce: 10000
-  ProjectileForce: 1000
-  BumpDirection: {x: 0, y: 0, z: 0}
-  ExplosionDirection: {x: 0, y: 0, z: 0}
-  ProjectileDirection: {x: 0, y: 0, z: 0}
-  AttacksContainer: {fileID: 8470477559394728575}
-  BoostsContainer: {fileID: 8470477558702491913}
-  AttackList:
-  - {fileID: 6935124690244183357, guid: 04d98a072f58d2a49a9b1ee5156c541e, type: 3}
-  - {fileID: 8883033362255484860, guid: 0752b767f3fbf124e8b755281030f31b, type: 3}
-  - {fileID: 7221930875229779232, guid: 9624d334089db7c4a920c54bca3642d4, type: 3}
-  - {fileID: 7251196424414276744, guid: 4e5218639ac98e948a689736467e60c1, type: 3}
-  - {fileID: 553776296881146100, guid: 576da366e290f6145a87282fe3b27a6d, type: 3}
-  BoostList:
-  - {fileID: 8699939486669796487, guid: 79a2104eac2b2c8449250e67d8284e7e, type: 3}
-  - {fileID: 8699939486669796487, guid: 0d1de61016352fc47bf26bd3f2c00117, type: 3}
-  - {fileID: 8699939486669796487, guid: 2e2b076c4168d07498673ec290040b07, type: 3}
-  Source: {fileID: 0}
-  GroundHitSound: {fileID: 8300000, guid: 4deaca4e5f21fd0458bc6559c1880762, type: 3}
-  BaseSound: {fileID: 8300000, guid: 29c78af8e8157834da47ce37817c692a, type: 3}
-  MovingSound: {fileID: 8300000, guid: 80b558faf499b174d9983eb84aa1938e, type: 3}
-  Color: {r: 0, g: 0, b: 0, a: 0}
-  PlayerState: 0
-  Visual: {fileID: 2277440396937974388}
-  SphereReference: {fileID: 8470477560212682837}
-  BodyColor: {fileID: 3528213296557987843}
-  CarColors:
-  - {fileID: 2100000, guid: 07f44fe3e9c462146a7769b976c50ec4, type: 2}
-  - {fileID: 2100000, guid: d2344366b80fe3d4f886ec412e0174fa, type: 2}
-  - {fileID: 2100000, guid: c4c2ee3e832cffd48bb9d156c2b21376, type: 2}
-  - {fileID: 2100000, guid: 74196cf5d503c14488ae1ef1dbc6c9a4, type: 2}
-  Score: 0
-  PointsUI: {fileID: 0}
-  ProfileUI: {fileID: 0}
-  Arrow: {fileID: 8470477559953588117}
-  ArrowRotationCenter: {fileID: 8470477559387477689}
 --- !u!114 &4181034262726389727
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -358,6 +298,80 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &8470477559293409357
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8470477559293409358}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6075d883d30ec1944bb7247e1e22b149, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SphereRB: {fileID: 8470477560212682836}
+  ForwardAccel: 50000
+  MaximumSpeed: 50
+  TurnStrength: 150
+  DragOnGround: 1.3
+  DragInTheAir: 0
+  WheelTurnSpeed: 4
+  AdditionalEarthGravity: 1
+  SlowFactor: 1
+  GroundLayerMask:
+    serializedVersion: 2
+    m_Bits: 8
+  CarLayerMask:
+    serializedVersion: 2
+    m_Bits: 128
+  GroundLayerNumber: 3
+  ArrayRayLength: 0.7
+  RayPoint: {fileID: 8470477560550397293}
+  RightBackWheel: {fileID: 839490407940150800}
+  RightFrontWheel: {fileID: 4146829921669097665}
+  LeftBackWheel: {fileID: 4713423009772291345}
+  LeftFrontWheel: {fileID: 8031376243321959686}
+  HitBySaw: 0
+  IsBumped: 0
+  IsExploded: 0
+  IsTouchedByMachineGun: 0
+  BumpForce: 10000
+  ProjectileForce: 1000
+  BumpDirection: {x: 0, y: 0, z: 0}
+  ExplosionDirection: {x: 0, y: 0, z: 0}
+  ProjectileDirection: {x: 0, y: 0, z: 0}
+  AttacksContainer: {fileID: 8470477559394728575}
+  BoostsContainer: {fileID: 8470477558702491913}
+  AttackList:
+  - {fileID: 6935124690244183357, guid: 04d98a072f58d2a49a9b1ee5156c541e, type: 3}
+  - {fileID: 8883033362255484860, guid: 0752b767f3fbf124e8b755281030f31b, type: 3}
+  - {fileID: 7221930875229779232, guid: 9624d334089db7c4a920c54bca3642d4, type: 3}
+  - {fileID: 7251196424414276744, guid: 4e5218639ac98e948a689736467e60c1, type: 3}
+  - {fileID: 553776296881146100, guid: 576da366e290f6145a87282fe3b27a6d, type: 3}
+  BoostList:
+  - {fileID: 8699939486669796487, guid: 79a2104eac2b2c8449250e67d8284e7e, type: 3}
+  - {fileID: 8699939486669796487, guid: 0d1de61016352fc47bf26bd3f2c00117, type: 3}
+  - {fileID: 8699939486669796487, guid: 2e2b076c4168d07498673ec290040b07, type: 3}
+  Source: {fileID: 0}
+  GroundHitSound: {fileID: 8300000, guid: 4deaca4e5f21fd0458bc6559c1880762, type: 3}
+  BaseSound: {fileID: 8300000, guid: 29c78af8e8157834da47ce37817c692a, type: 3}
+  MovingSound: {fileID: 8300000, guid: 80b558faf499b174d9983eb84aa1938e, type: 3}
+  Color: {r: 0, g: 0, b: 0, a: 0}
+  PlayerState: 0
+  Visual: {fileID: 2277440396937974388}
+  SphereReference: {fileID: 8470477560212682837}
+  BodyColor: {fileID: 3528213296557987843}
+  CarColors:
+  - {fileID: 2100000, guid: 07f44fe3e9c462146a7769b976c50ec4, type: 2}
+  - {fileID: 2100000, guid: d2344366b80fe3d4f886ec412e0174fa, type: 2}
+  - {fileID: 2100000, guid: c4c2ee3e832cffd48bb9d156c2b21376, type: 2}
+  - {fileID: 2100000, guid: 74196cf5d503c14488ae1ef1dbc6c9a4, type: 2}
+  Score: 0
+  PointsUI: {fileID: 0}
+  ProfileUI: {fileID: 0}
+  Arrow: {fileID: 8470477559953588117}
+  ArrowRotationCenter: {fileID: 8470477559387477689}
 --- !u!1 &8470477559387477689
 GameObject:
   m_ObjectHideFlags: 0

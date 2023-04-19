@@ -125,7 +125,7 @@ public class RoundManager : MonoBehaviour
         {
             //See if necessary
             if (_playersToPlaceForNextRound[i].gameObject.TryGetComponent<AIController>(out var aiControl))
-                aiControl.SetTargetNode(_roundNodesForCurrentMap.IndexOf(playersTransform[0].parent.GetComponent<RoundNode>()));
+                aiControl.SetTargetNode(_harvesterForCurrentMap.TargetNode);
 
             _playersToPlaceForNextRound[i].RebornEvent(playersTransform[cpt]);
             //_playersToPlaceForNextRound[i].gameObject.transform.position = closestNode.Nodes[cpt].transform.position;
