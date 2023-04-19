@@ -18,8 +18,8 @@ public class Harvester : MonoBehaviour
 
     private int _targetNode;
 
-    /// <summary>
-    /// This method plays the horn sound effect and starts the Horn() coroutine.
+    /// <summary>
+    /// This method plays the horn sound effect and starts the Horn() coroutine.
     /// </summary>
     private void Start()
     {
@@ -50,9 +50,9 @@ public class Harvester : MonoBehaviour
         UpdateTargetNodeAfterReset();
     }
 
-    /// <summary>
-    /// This method gets the closest node in front of the harvester and sets the next node index to its value.
-    /// It is used after all positions have been reset when one player or less are still alive.
+    /// <summary>
+    /// This method gets the closest node in front of the harvester and sets the next node index to its value.
+    /// It is used after all positions have been reset when one player or less are still alive.
     /// </summary>
     private void UpdateTargetNodeAfterReset()
     {
@@ -78,13 +78,13 @@ public class Harvester : MonoBehaviour
         _targetNode = 0;
     }
 
-    /// <summary>
-    /// This method calculates the next node to reach "target", the direction "direction" and the current distance between
-    /// the harvester and the next node to reach "distance".
-    /// It increases the target node index if the distance towards the next node is inferior to the harvester step "moveStep".
-    /// It resets the target node index if the index is superior to the nodes list length.
-    /// Finally, it increments the harvester position with the "moveStep" distance.
-    /// </summary>
+    /// <summary>
+    /// This method calculates the next node to reach "target", the direction "direction" and the current distance between
+    /// the harvester and the next node to reach "distance".
+    /// It increases the target node index if the distance towards the next node is inferior to the harvester step "moveStep".
+    /// It resets the target node index if the index is superior to the nodes list length.
+    /// Finally, it increments the harvester position with the "moveStep" distance.
+    /// </summary>
     /// <param name="path"></param>
     private void UpdateMove(Transform[] path)
     {
@@ -113,11 +113,11 @@ public class Harvester : MonoBehaviour
         transform.position += moveStep * direction;
     }
 
-    /// <summary>
-    /// This coroutine plays a random horn sound effect every random amount of time bewteen min seconds and max seconds.
-    /// </summary>
-    /// <param name="min"></param>
-    /// <param name="max"></param>
+    /// <summary>
+    /// This coroutine plays a random horn sound effect every random amount of time bewteen min seconds and max seconds.
+    /// </summary>
+    /// <param name="min"></param>
+    /// <param name="max"></param>
     /// <returns></returns>
     public IEnumerator Horn(float min, float max)
     {

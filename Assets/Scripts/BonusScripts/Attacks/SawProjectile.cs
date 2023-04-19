@@ -44,7 +44,7 @@ public class SawProjectile : MonoBehaviour
     /// <param name="other"></param>
     private void OnTriggerEnter(Collider other)
     {
-        if(other.gameObject.TryGetComponent<CarController>(out var carController))
+        if(other.gameObject.TryGetComponent<GlobalController>(out var carController))
         {
             carController.Source.clip = SawHitCarSounds[Random.Range(0, SawHitCarSounds.Length)];
             carController.Source.loop = false;

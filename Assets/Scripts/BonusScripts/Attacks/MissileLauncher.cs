@@ -32,16 +32,16 @@ public class MissileLauncher : Offensive
         GameObject closestGO = null;
         for (int i = 0; i < _colliders.Count; i++)
         {
-            if(closest > (_colliders[i].transform.position - GetComponentInParent<CarController>().gameObject.transform.position).magnitude)
+            if(closest > (_colliders[i].transform.position - GetComponentInParent<GlobalController>().gameObject.transform.position).magnitude)
             {
-                closest = (_colliders[i].transform.position - GetComponentInParent<CarController>().gameObject.transform.position).magnitude;
+                closest = (_colliders[i].transform.position - GetComponentInParent<GlobalController>().gameObject.transform.position).magnitude;
                 closestGO = _colliders[i].gameObject;
             }
         }
        
-        GameObject go = Instantiate(ProjectilePrefab, _bulletSpawnPoint.position, GetComponentInParent<CarController>().gameObject.transform.rotation);
+        GameObject go = Instantiate(ProjectilePrefab, _bulletSpawnPoint.position, GetComponentInParent<GlobalController>().gameObject.transform.rotation);
         go.transform.parent = null;
-        go.GetComponent<MissileLauncherProjectile>().Init(closestGO, GetComponentInParent<CarController>().gameObject.transform.position);
+        go.GetComponent<MissileLauncherProjectile>().Init(closestGO, GetComponentInParent<GlobalController>().gameObject.transform.position);
 
         Destroy(gameObject);
     }
@@ -52,7 +52,7 @@ public class MissileLauncher : Offensive
     /// <param name="other"></param>
     private void OnTriggerEnter(Collider other)
     {
-        if (!_colliders.Contains(other) && other.gameObject.GetComponent<CarController>() != null) 
+        if (!_colliders.Contains(other) && other.gameObject.GetComponent<GlobalController>() != null) 
         {
             _colliders.Add(other);
         }

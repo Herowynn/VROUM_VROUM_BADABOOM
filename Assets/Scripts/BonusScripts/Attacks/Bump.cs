@@ -6,7 +6,7 @@ using UnityEngine.UIElements;
 public class Bump : Offensive
 {
     private GameObject _bumpEffect;
-    private CarController _carControl;
+    private GlobalController _carControl;
     private int _ground;
     private List<Collider> _colliders = new List<Collider>();
 
@@ -21,7 +21,7 @@ public class Bump : Offensive
 
     void Start()
     {
-        _ground = (int)Mathf.Log(1f * GetComponentInParent<CarController>().GroundLayerMask.value, 2f);
+        _ground = (int)Mathf.Log(1f * GetComponentInParent<GlobalController>().GroundLayerMask.value, 2f);
 
         _bumpEffect = transform.GetChild(0).gameObject;
         _bumpEffect.SetActive(false);
@@ -39,7 +39,7 @@ public class Bump : Offensive
         {
             if (collider)
             {
-                Vector3 dir = collider.transform.position - GetComponentInParent<CarController>().gameObject.transform.position;
+                Vector3 dir = collider.transform.position - GetComponentInParent<GlobalController>().gameObject.transform.position;
 
                 if (collider.gameObject.TryGetComponent(out _carControl))
                 {

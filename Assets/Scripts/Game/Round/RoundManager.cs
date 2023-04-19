@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 /// <summary>
@@ -20,14 +21,14 @@ public class RoundManager : MonoBehaviour
     public float TimeToRestartRound;
     
     //intern var
-    private List<CarController> _playersToPlaceForNextRound;
-    private RoundNode[] _roundNodesForCurrentMap;
+    private List<GlobalController> _playersToPlaceForNextRound;
+    private List<RoundNode> _roundNodesForCurrentMap = new List<RoundNode>();
     private Harvester _harvesterForCurrentMap;
 
     private void Start()
     {
         RoundNumber = 0;
-        _playersToPlaceForNextRound = new List<CarController>();
+        _playersToPlaceForNextRound = new List<GlobalController>();
     }
 
     public IEnumerator StartRound()
@@ -41,7 +42,7 @@ public class RoundManager : MonoBehaviour
 
     public void InitiateRoundNodesForCurrentMap()
     {
-        _roundNodesForCurrentMap = GameManager.Instance.MapManager.CurrentMap.RoundNodes;
+        _roundNodesForCurrentMap = GameManager.Instance.MapManager.CurrentMap.RoundNodes.ToList();
     }
 
     public void InitiateHarvesterForCurrentMap()
@@ -49,7 +50,7 @@ public class RoundManager : MonoBehaviour
         _harvesterForCurrentMap = GameManager.Instance.HarvesterManager.HarvesterRef;
     }
     
-    public void PlayerDiedEvent(CarController player)
+    public void PlayerDiedEvent(GlobalController player)
     {
         _playersToPlaceForNextRound.Add(player);
 
@@ -94,9 +95,9 @@ public class RoundManager : MonoBehaviour
     {
         foreach (var player in GameManager.Instance.PlayersManager.Players)
         {
-            if (player.GetComponent<CarController>().PlayerState == PlayerState.ALIVE)
+            if (player.GetComponent<GlobalController>().PlayerState == PlayerState.ALIVE)
             {
-                _playersToPlaceForNextRound.Add(player.GetComponent<CarController>());
+                _playersToPlaceForNextRound.Add(player.GetComponent<GlobalController>());
                 return;
             }
         }
@@ -122,6 +123,9 @@ public class RoundManager : MonoBehaviour
         for (int i = _playersToPlaceForNextRound.Count - 1; i >= 0; i--)
         {
             //See if necessary
+            if (_playersToPlaceForNextRound[i].gameObject.TryGetComponent<AIController>(out var aiControl))
+                aiControl.SetTargetNode(_roundNodesForCurrentMap.IndexOf(playersTransform[0].parent.GetComponent<RoundNode>()));
+
             _playersToPlaceForNextRound[i].RebornEvent(playersTransform[cpt]);
             //_playersToPlaceForNextRound[i].gameObject.transform.position = closestNode.Nodes[cpt].transform.position;
             cpt++;
@@ -141,7 +145,7 @@ public class RoundManager : MonoBehaviour
 
         float distance = float.MaxValue;
         
-        for (int i = 0; i < _roundNodesForCurrentMap.Length; i++)
+        for (int i = 0; i < _roundNodesForCurrentMap.Count; i++)
         {
             if (distance > Vector3.Distance(_roundNodesForCurrentMap[i].Nodes[0].transform.position, winnerPosition))
             {
