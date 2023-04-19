@@ -55,4 +55,9 @@ public class UIManager : MonoBehaviour
         PostGameUI.CreatePlayerPositions();
         DisplayPostGameUI();
     }
+
+    public void OnClickRestart()
+    {
+        UnityEngine.SceneManagement.SceneManager.LoadScene("Menu");  
+    }
 }

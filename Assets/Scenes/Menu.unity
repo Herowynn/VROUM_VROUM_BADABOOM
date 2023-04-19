@@ -2996,7 +2996,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aec7a3b4655ebda469dc0a9886889a3c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MenuTitle: Vroom Vroom Badaboom
+  MenuTitle: Vroum Vroum Badaboom
   MenuFooter: A replica of blaze rush, for you by us
 --- !u!1 &860694301
 GameObject:

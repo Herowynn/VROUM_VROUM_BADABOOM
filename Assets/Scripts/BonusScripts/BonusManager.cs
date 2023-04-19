@@ -60,14 +60,14 @@ public class BonusManager : MonoBehaviour
     private void SpawnBonus()
     {
         int randomX = Random.Range(-5, 5);
-        int randomY = Random.Range(3, 10);
+        int randomY = Random.Range(1, 2);
         int randomZ = Random.Range(-5, 5);
         int rndBonusType = Random.Range(0, 2);
         int rndPlayer = Random.Range(0, GameManager.Instance.PlayersManager.Players.Count);
 
         
         Vector3 spawnPosition = new(randomX, randomY, randomZ);
-        spawnPosition += GameManager.Instance.PlayersManager.Players[rndPlayer].transform.forward * 3;
+        spawnPosition += GameManager.Instance.PlayersManager.Players[rndPlayer].transform.forward * 15;
         spawnPosition += GameManager.Instance.PlayersManager.Players[rndPlayer].transform.position;
 
         switch (rndBonusType)

@@ -9,7 +9,7 @@ public class ShotgunProjectile : MonoBehaviour
 
     [SerializeField] private float _force;
 
-    [SerializeField] CarController _carControl;
+    [SerializeField] GlobalController _carControl;
     private Rigidbody ProjectileRB;
     private int _ground;
 

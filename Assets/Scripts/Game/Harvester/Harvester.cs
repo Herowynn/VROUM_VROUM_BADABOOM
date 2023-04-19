@@ -8,13 +8,14 @@ public class Harvester : MonoBehaviour
 
     [Header("GD")]
     public float Speed;
+    public float IncrementSpeed = 0.01f;
 
     [Header("Audio")]
     public AudioClip LoopSound;
     public AudioClip[] HornSounds;
     public float minTimeBetweenHorn = 20;
     public float maxTimeBetweenHorn = 30;
-    private AudioSource _source;
+    public AudioSource Source;
 
     private int _targetNode;
 
@@ -23,14 +24,14 @@ public class Harvester : MonoBehaviour
     /// </summary>
     private void Start()
     {
-        _source = GetComponent<AudioSource>();
+        Source = GetComponent<AudioSource>();
         StartCoroutine(Horn(minTimeBetweenHorn, maxTimeBetweenHorn));
         AudioClip horn = HornSounds[Random.Range(0, HornSounds.Length)];
         if (horn != null)
         {
-            _source.loop = false;
-            _source.clip = horn;
-            _source.Play();
+            Source.loop = false;
+            Source.clip = horn;
+            Source.Play();
         }
     }
 
@@ -39,6 +40,7 @@ public class Harvester : MonoBehaviour
         if (GameManager.Instance.GameState == GameState.RACING)
         {
             UpdateMove(NodesToFollow);
+            Speed += IncrementSpeed * Time.deltaTime;
         }
     }
 
@@ -46,7 +48,7 @@ public class Harvester : MonoBehaviour
     {
         transform.position = resetTransform.position;
         transform.rotation = resetTransform.rotation;
-        
+        Speed = 3;
         UpdateTargetNodeAfterReset();
     }
 
@@ -123,9 +125,9 @@ public class Harvester : MonoBehaviour
     {
         yield return new WaitForSecondsRealtime(Random.Range(min, max));
         AudioClip horn = HornSounds[Random.Range(0, 2)];
-        _source.loop = false;
-        _source.clip = horn;
-        _source.Play();
+        Source.loop = false;
+        Source.clip = horn;
+        Source.Play();
         StartCoroutine(Horn(minTimeBetweenHorn, maxTimeBetweenHorn));
     }
 }

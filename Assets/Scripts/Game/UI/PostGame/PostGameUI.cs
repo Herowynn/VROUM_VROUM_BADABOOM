@@ -23,7 +23,7 @@ public class PostGameUI : MonoBehaviour
             PlayerPosUis[i].gameObject.SetActive(false);
         }
 
-        List<CarController> playerControllersSorted = GameManager.Instance.ScoreManager.Players;
+        List<GlobalController> playerControllersSorted = GameManager.Instance.ScoreManager.Players;
 
         for (int i = 0; i < playerControllersSorted.Count; i++)
         {

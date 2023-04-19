@@ -52,7 +52,7 @@ public class MachineGun : Offensive
         {
             GameObject go = Instantiate(ProjectilePrefab, _bulletSpawnPoint);
             go.transform.parent = null;
-            go.GetComponent<Projectile>().Init(_direction, gameObject.GetComponentInParent<CarController>());
+            go.GetComponent<Projectile>().Init(_direction, gameObject.GetComponentInParent<GlobalController>());
             _timeIncrementation += time;
             yield return new WaitForSeconds(time);
         }
