@@ -8,6 +8,7 @@ public class Harvester : MonoBehaviour
 
     [Header("GD")]
     public float Speed;
+    public float IncrementSpeed = 0.01f;
 
     [Header("Audio")]
     public AudioClip LoopSound;
@@ -39,6 +40,7 @@ public class Harvester : MonoBehaviour
         if (GameManager.Instance.GameState == GameState.RACING)
         {
             UpdateMove(NodesToFollow);
+            Speed += IncrementSpeed * Time.deltaTime;
         }
     }
 
@@ -46,7 +48,7 @@ public class Harvester : MonoBehaviour
     {
         transform.position = resetTransform.position;
         transform.rotation = resetTransform.rotation;
-        
+        Speed = 3;
         UpdateTargetNodeAfterReset();
     }
 
