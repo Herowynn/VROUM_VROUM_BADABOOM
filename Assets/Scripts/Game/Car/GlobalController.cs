@@ -187,7 +187,7 @@ public class GlobalController : MonoBehaviour
 
         if (IsBumped)
         {
-            SphereRB.AddForce(BumpDirection * BumpForce, ForceMode.Impulse);
+            SphereRB.AddForce(BumpDirection * BumpForce + new Vector3(0f, BumpForce, 0f), ForceMode.Impulse);
             IsBumped = false;
         }
 
@@ -278,13 +278,13 @@ public class GlobalController : MonoBehaviour
 
     private IEnumerator WaitBeforeSawEnd()
     {
-        yield return new WaitForSeconds(1.2f);
+        yield return new WaitForSeconds(2f);
         HitBySaw = false;
     }
 
     private IEnumerator WaitBeforeMissileEnd()
     {
-        yield return new WaitForSeconds(1.2f);
+        yield return new WaitForSeconds(2f);
         IsExploded = false;
     }
 

@@ -5,19 +5,15 @@ using UnityEngine.UIElements;
 
 public class MissileLauncherProjectile : MonoBehaviour
 {
-    public float FollowSpeed;
-
-    [SerializeField] private float _launchingSpeed;
-    [SerializeField] private float _lastPhaseSpeed;
+    [SerializeField] private float _speed;
+    [SerializeField] private float _incrementalSpeed;
     private Rigidbody _targetRB;
     private Rigidbody _projectileRB;
     private Vector3 _direction;
-    private float _stageOne = 2f;
+    private float _stageOne = 1f;
     private float _stageTwo = 4f;
-    private bool _isRotated = false;
     private Vector3 _explosionDir;
     private float _clock;
-    private float _actualSpeed;
 
     [Header("Audio")]
     public AudioClip MissileFlySound;
@@ -27,6 +23,7 @@ public class MissileLauncherProjectile : MonoBehaviour
     private void Awake()
     {
         _source = gameObject.AddComponent<AudioSource>();
+        _source.volume = 0.12f;
     }
 
     private void Start()
@@ -51,7 +48,7 @@ public class MissileLauncherProjectile : MonoBehaviour
        if(go) 
             _targetRB = go.GetComponent<Rigidbody>();
 
-        _direction = transform.forward;
+        
         _explosionDir = explodeDir;
     }
 
@@ -60,47 +57,32 @@ public class MissileLauncherProjectile : MonoBehaviour
     /// </summary>
     private void Update()
     {
-            _clock += Time.deltaTime;
+        _direction = transform.forward;
+        _clock += Time.deltaTime;
+        _speed += _incrementalSpeed * Time.deltaTime;
     }
     private void FixedUpdate()
     {
+        _projectileRB.velocity = Vector3.zero;
        
-            
-            _projectileRB.AddForce(_direction*20, ForceMode.Acceleration);
+            _projectileRB.AddForce(_direction*_speed, ForceMode.Acceleration);
            // _projectileRB.velocity = Vector3.ClampMagnitude(_projectileRB.velocity, _launchingSpeed);
         
 
-        if (_clock > _stageOne && _clock < _stageTwo)
+        if (_clock > _stageOne)
         {
             if (_targetRB != null)
             {
-                _projectileRB.velocity = new Vector3(0, 0, 0);
-                transform.position = Vector3.Lerp(transform.position, _targetRB.transform.position, FollowSpeed * Time.deltaTime) ;
                 transform.LookAt(_targetRB.transform);
-            }
-            else
-            {
-                if (_isRotated == false)
-                {
-                    transform.Rotate(new Vector3(30, 0, 0));
-                    _direction = transform.forward;
-                    _isRotated = true;
-                }
-                _projectileRB.AddForce(_direction * 1000f);
-                _actualSpeed = _lastPhaseSpeed;
-            }
+                _projectileRB.AddForce(_direction * _speed, ForceMode.Acceleration);
+            }    
+            else _projectileRB.AddForce(_direction * _speed, ForceMode.Acceleration);
         }
 
-        if (_clock > _stageTwo)
-        {
-            if (_targetRB == null && _isRotated == true)
-            {
-                transform.Rotate(30, 0, 0);
-                _isRotated = false;
-            }
-            _projectileRB.AddForce(transform.forward * 1000f);
-            _actualSpeed = _lastPhaseSpeed;
-        }
+        //if (_clock > _stageTwo)
+        //{
+        //    _projectileRB.AddForce(_direction * _speed, ForceMode.Acceleration);
+        //}
 
        
        
@@ -117,14 +99,15 @@ public class MissileLauncherProjectile : MonoBehaviour
 
         if (other.gameObject.TryGetComponent<GlobalController>(out var carControl))
         {
-            carControl.Source.clip = MissileExplosionSounds[Random.Range(0, MissileExplosionSounds.Length)];
-            carControl.Source.loop = false;
-            carControl.Source.Play();
+            _source.clip = MissileExplosionSounds[Random.Range(0, MissileExplosionSounds.Length)];
+            _source.loop = false;
+            _source.Play();
 
             carControl.ExplosionDirection = dir;
             carControl.IsExploded = true;
             Destroy(gameObject);
         }
+        else Destroy(gameObject);
     }
 
     IEnumerator WaitBeforeAutoDestroy()
