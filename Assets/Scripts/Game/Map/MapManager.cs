@@ -16,7 +16,7 @@ public class MapManager : MonoBehaviour
     {
         foreach (var mapGo in Maps)
         {
-            _mapsByName.Add(mapGo.Name, mapGo); 
+            _mapsByName.Add(mapGo.Name, mapGo);
         }
     }
 
