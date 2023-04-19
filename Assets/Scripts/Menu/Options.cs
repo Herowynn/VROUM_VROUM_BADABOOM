@@ -1,10 +1,13 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Audio;
-using UnityEngine.UI;
+
+/// <summary>
+/// Option is a script that is used for the menu Options.
+/// It contains various functions that changes the global sound mixer of the game, the resolution, etc...
+/// This script allows you to personalize your in-game settings.
+/// </summary>
 
 public class Options : MonoBehaviour
 {

@@ -3,9 +3,11 @@
   <component name="ChangeListManager">
     <list default="true" id="237d6d36-ef91-4062-b62e-55ca4359086e" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.VROUM_VROUM_BADABOOM/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.VROUM_VROUM_BADABOOM/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Game/Player/NewPlayer.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Game/Player/NewPlayer.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/BonusScripts/Attacks/MissileLauncherProjectile.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/BonusScripts/Attacks/MissileLauncherProjectile.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Game/Car/CarController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Game/Car/CarController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Menu/GameParameters.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Menu/GameParameters.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Menu/Menu.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Menu/Menu.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Menu/MenuManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Menu/MenuManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Menu/Options.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Menu/Options.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/SceneManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/SceneManager.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -113,6 +115,7 @@
       <workItem from="1681732846576" duration="7060000" />
       <workItem from="1681743325981" duration="1629000" />
       <workItem from="1681801869912" duration="7291000" />
+      <workItem from="1681888432908" duration="1339000" />
     </task>
     <servers />
   </component>

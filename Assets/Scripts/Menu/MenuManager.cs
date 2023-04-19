@@ -1,8 +1,12 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+
+/// <summary>
+/// MenuManager is a singleton that is used to manage every aspect of the Menu scene.
+/// It is used as the main referencer for the Header and the Footer for example, but also contains a list of every menu accessible,
+/// the game parameters possibilities and most importantly, the variables to load the Game Scene.
+/// </summary>
 
 public class MenuManager : MonoBehaviour
 {
