@@ -23,10 +23,15 @@ public class PlayersManager : MonoBehaviour
     {
         GameObject car = Instantiate(isAi ? AiPlayerPrefab : HumanPlayerPrefab, 
             GameManager.Instance.MapManager.CurrentMap.PlayerStartPositions[startPositionIndex].transform.position,
-            GameManager.Instance.MapManager.CurrentMap.PlayerStartPositions[startPositionIndex].transform.rotation, 
+            Quaternion.identity, 
             PlayersContainer.transform);
 
-        if (playerUseKeyboard)
+        car.transform.rotation = GameManager.Instance.MapManager.CurrentMap.PlayerStartPositions[startPositionIndex]
+            .transform.rotation;
+
+        Debug.Log(car.transform.rotation.y);
+        
+        if (playerUseKeyboard && !isAi)
             car.GetComponent<PlayerInput>().defaultControlScheme = "Keyboard";
         else if (!isAi)
             car.GetComponent<PlayerInput>().defaultControlScheme = "Controller";
