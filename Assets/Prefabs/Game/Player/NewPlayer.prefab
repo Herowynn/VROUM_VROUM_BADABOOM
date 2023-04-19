@@ -45,7 +45,6 @@ GameObject:
   - component: {fileID: 8470477559293409357}
   - component: {fileID: 4181034262726389727}
   - component: {fileID: 6860740909563417045}
-  - component: {fileID: -8094181163446552072}
   m_Layer: 7
   m_Name: NewPlayer
   m_TagString: Untagged
@@ -116,13 +115,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SphereRB: {fileID: 8470477560212682836}
-  forwardAccel: 150000
-  maximumSpeed: 50
-  turnStrength: 300
-  dragOnGround: 1.3
-  dragInTheAir: 0
-  wheelTurnSpeed: 4
-  additionalEarthGravity: 1
+  ForwardAccel: 150000
+  MaximumSpeed: 50
+  TurnStrength: 300
+  DragOnGround: 1.3
+  DragInTheAir: 0
+  WheelTurnSpeed: 4
+  AdditionalEarthGravity: 1
   SlowFactor: 1
   GroundLayerMask:
     serializedVersion: 2
@@ -130,8 +129,8 @@ MonoBehaviour:
   CarLayerMask:
     serializedVersion: 2
     m_Bits: 128
-  groundLayerNumber: 3
-  arrayRayLength: 0.7
+  GroundLayerNumber: 3
+  ArrayRayLength: 0.7
   RayPoint: {fileID: 8470477560550397293}
   RightBackWheel: {fileID: 839490407940150800}
   RightFrontWheel: {fileID: 4146829921669097665}
@@ -139,15 +138,13 @@ MonoBehaviour:
   LeftFrontWheel: {fileID: 8031376243321959686}
   HitBySaw: 0
   IsBumped: 0
-  IsExplosed: 0
+  IsExploded: 0
   IsTouchedByMachineGun: 0
   BumpForce: 10000
   ProjectileForce: 100
   BumpDirection: {x: 0, y: 0, z: 0}
   ExplosionDirection: {x: 0, y: 0, z: 0}
   ProjectileDirection: {x: 0, y: 0, z: 0}
-  Arrow: {fileID: 8470477559953588117}
-  ArrowRotationCenter: {fileID: 8470477559387477689}
   AttacksContainer: {fileID: 8470477559394728575}
   BoostsContainer: {fileID: 8470477558702491913}
   AttackList:
@@ -160,7 +157,7 @@ MonoBehaviour:
   - {fileID: 8699939486669796487, guid: 79a2104eac2b2c8449250e67d8284e7e, type: 3}
   - {fileID: 8699939486669796487, guid: 0d1de61016352fc47bf26bd3f2c00117, type: 3}
   - {fileID: 8699939486669796487, guid: 2e2b076c4168d07498673ec290040b07, type: 3}
-  Source: {fileID: -8094181163446552072}
+  Source: {fileID: 0}
   GroundHitSound: {fileID: 8300000, guid: 4deaca4e5f21fd0458bc6559c1880762, type: 3}
   BaseSound: {fileID: 8300000, guid: 29c78af8e8157834da47ce37817c692a, type: 3}
   MovingSound: {fileID: 8300000, guid: 80b558faf499b174d9983eb84aa1938e, type: 3}
@@ -177,6 +174,8 @@ MonoBehaviour:
   Score: 0
   PointsUI: {fileID: 0}
   ProfileUI: {fileID: 0}
+  Arrow: {fileID: 8470477559953588117}
+  ArrowRotationCenter: {fileID: 8470477559387477689}
 --- !u!114 &4181034262726389727
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -278,102 +277,6 @@ AudioSource:
   m_Volume: 0.007
   m_Pitch: 1
   Loop: 1
-  Mute: 0
-  Spatialize: 0
-  SpatializePostEffects: 0
-  Priority: 128
-  DopplerLevel: 1
-  MinDistance: 1
-  MaxDistance: 500
-  Pan2D: 0
-  rolloffMode: 0
-  BypassEffects: 0
-  BypassListenerEffects: 0
-  BypassReverbZones: 0
-  rolloffCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 1
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  panLevelCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  spreadCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  reverbZoneMixCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
---- !u!82 &-8094181163446552072
-AudioSource:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8470477559293409358}
-  m_Enabled: 1
-  serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 0}
-  m_PlayOnAwake: 0
-  m_Volume: 0.007
-  m_Pitch: 1
-  Loop: 0
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0

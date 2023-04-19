@@ -14,14 +14,14 @@ public class RoundManager : MonoBehaviour
     public float TimeToRestartRound;
     
     //intern var
-    private List<CarController> _playersToPlaceForNextRound;
+    private List<GlobalController> _playersToPlaceForNextRound;
     private RoundNode[] _roundNodesForCurrentMap;
     private Harvester _harvesterForCurrentMap;
 
     private void Start()
     {
         RoundNumber = 0;
-        _playersToPlaceForNextRound = new List<CarController>();
+        _playersToPlaceForNextRound = new List<GlobalController>();
     }
 
     public IEnumerator StartRound()
@@ -43,7 +43,7 @@ public class RoundManager : MonoBehaviour
         _harvesterForCurrentMap = GameManager.Instance.HarvesterManager.HarvesterRef;
     }
     
-    public void PlayerDiedEvent(CarController player)
+    public void PlayerDiedEvent(GlobalController player)
     {
         _playersToPlaceForNextRound.Add(player);
 

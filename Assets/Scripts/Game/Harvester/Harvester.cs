@@ -76,8 +76,6 @@ public class Harvester : MonoBehaviour
         float moveStep = Speed * Time.deltaTime;
         float distance = Vector3.Distance(target, transform.position);
 
-        //transform.rotation = path[_targetNode].transform.rotation;
-
         while (moveStep > distance)
         {
             _targetNode++;
@@ -106,10 +104,6 @@ public class Harvester : MonoBehaviour
         _source.loop = false;
         _source.clip = horn;
         _source.Play();
-        //yield return new WaitForSecondsRealtime(1); 
-        //Source.clip = LoopSound; 
-        //Source.Play(); 
-        //Source.loop = true; 
         StartCoroutine(Horn(minTimeBetweenHorn, maxTimeBetweenHorn));
     }
 }

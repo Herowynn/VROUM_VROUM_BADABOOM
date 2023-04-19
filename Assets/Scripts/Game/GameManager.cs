@@ -118,7 +118,7 @@ public class GameManager : MonoBehaviour
         PlayersManager.DestroyPlayers();
     }
 
-    public void TriggerPlayerDestructionEvent(CarController player)
+    public void TriggerPlayerDestructionEvent(GlobalController player)
     {
         RoundManager.PlayerDiedEvent(player);
     }
@@ -147,7 +147,7 @@ public class GameManager : MonoBehaviour
 
     #region UI
 
-    public void TriggerUiCreationForPlayerEvent(CarController playerInstance)
+    public void TriggerUiCreationForPlayerEvent(GlobalController playerInstance)
     {
         UIManager.GameUI.CreateUisForPlayer(playerInstance);
     }

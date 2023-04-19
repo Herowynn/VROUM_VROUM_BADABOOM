@@ -8,7 +8,7 @@ public class GameUI : MonoBehaviour
     public GameObject PointsContainer;
     public GameObject ProfileContainer;
 
-    public void CreateUisForPlayer(CarController playerInstance)
+    public void CreateUisForPlayer(GlobalController playerInstance)
     {
         GameObject pointsGo = Instantiate(PointsUiPrefab, PointsContainer.transform);
         GameObject profileGo = Instantiate(ProfilePrefab, ProfileContainer.transform);
