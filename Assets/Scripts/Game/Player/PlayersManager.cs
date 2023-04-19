@@ -22,8 +22,8 @@ public class PlayersManager : MonoBehaviour
     public void CreateNewPlayer(bool playerUseKeyboard, int startPositionIndex, bool isAi)
     {
         GameObject car = Instantiate(isAi ? AiPlayerPrefab : HumanPlayerPrefab, 
-            GameManager.Instance.MapManager.CurrentMap.PlayerStartPositions[startPositionIndex].transform.position, 
-            Quaternion.identity, 
+            GameManager.Instance.MapManager.CurrentMap.PlayerStartPositions[startPositionIndex].transform.position,
+            GameManager.Instance.MapManager.CurrentMap.PlayerStartPositions[startPositionIndex].transform.rotation, 
             PlayersContainer.transform);
 
         if (playerUseKeyboard)
