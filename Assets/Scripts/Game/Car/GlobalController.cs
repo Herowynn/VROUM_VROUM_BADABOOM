@@ -95,6 +95,7 @@ public class GlobalController : MonoBehaviour
         Source = GetComponent<AudioSource>();
     }
 
+    // Function that should be call in the start function of children
     protected void Init()
     {
         SphereRB.transform.parent = null;
@@ -263,6 +264,8 @@ public class GlobalController : MonoBehaviour
         SphereRB.velocity = Vector3.zero;
         SphereReference.transform.position = positionOnReborn.position;
         _lastRebornPosition = positionOnReborn.position;
+
+        
     }
 
     public void AddPointsToScore(int points)

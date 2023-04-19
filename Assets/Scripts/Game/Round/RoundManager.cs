@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class RoundManager : MonoBehaviour
@@ -15,7 +16,7 @@ public class RoundManager : MonoBehaviour
     
     //intern var
     private List<GlobalController> _playersToPlaceForNextRound;
-    private RoundNode[] _roundNodesForCurrentMap;
+    private List<RoundNode> _roundNodesForCurrentMap = new List<RoundNode>();
     private Harvester _harvesterForCurrentMap;
 
     private void Start()
@@ -35,7 +36,7 @@ public class RoundManager : MonoBehaviour
 
     public void InitiateRoundNodesForCurrentMap()
     {
-        _roundNodesForCurrentMap = GameManager.Instance.MapManager.CurrentMap.RoundNodes;
+        _roundNodesForCurrentMap = GameManager.Instance.MapManager.CurrentMap.RoundNodes.ToList();
     }
 
     public void InitiateHarvesterForCurrentMap()
@@ -116,6 +117,10 @@ public class RoundManager : MonoBehaviour
         for (int i = _playersToPlaceForNextRound.Count - 1; i >= 0; i--)
         {
             //See if necessary
+            if (_playersToPlaceForNextRound[i].gameObject.GetComponent<AIController>())
+                _playersToPlaceForNextRound[i].gameObject.GetComponent<AIController>()
+                    .SetTargetNode(_roundNodesForCurrentMap.IndexOf(playersTransform[0].parent.GetComponent<RoundNode>()));
+
             _playersToPlaceForNextRound[i].RebornEvent(playersTransform[cpt]);
             //_playersToPlaceForNextRound[i].gameObject.transform.position = closestNode.Nodes[cpt].transform.position;
             cpt++;
@@ -135,7 +140,7 @@ public class RoundManager : MonoBehaviour
 
         float distance = float.MaxValue;
         
-        for (int i = 0; i < _roundNodesForCurrentMap.Length; i++)
+        for (int i = 0; i < _roundNodesForCurrentMap.Count; i++)
         {
             if (distance > Vector3.Distance(_roundNodesForCurrentMap[i].Nodes[0].transform.position, winnerPosition))
             {

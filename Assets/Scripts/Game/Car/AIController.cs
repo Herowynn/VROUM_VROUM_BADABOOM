@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class AIController : GlobalController
@@ -11,6 +12,18 @@ public class AIController : GlobalController
 
     private int _targetNode;
 
+    public void Start()
+    {
+        Init();
+        NodesToFollow = GameManager.Instance.MapManager.CurrentMap.HarvesterNodes;
+        SetTargetNode(1);
+    }
+
+    public void SetTargetNode(int index)
+    {
+        _targetNode = index;
+    }
+
     void Update()
     {
         if (GameManager.Instance.GameState == GameState.RACING && PlayerState == PlayerState.ALIVE)
@@ -19,44 +32,12 @@ public class AIController : GlobalController
         }
     }
 
-    public void ResetToTransform(Transform resetTransform)
-    {
-        transform.position = resetTransform.position;
-        transform.rotation = resetTransform.rotation;
-
-        UpdateTargetNodeAfterReset();
-    }
-
-    private void UpdateTargetNodeAfterReset()
-    {
-        int newTargetNode = 0;
-
-        float distance = float.MaxValue;
-
-        for (int i = 0; i < NodesToFollow.Length; i++)
-        {
-            if (distance > Vector3.Distance(NodesToFollow[i].transform.position, transform.position) && Mathf.Rad2Deg * Mathf.Abs(Mathf.Acos(Vector3.Dot(transform.forward.normalized, (NodesToFollow[i].transform.position - transform.position).normalized))) < 90f)
-            {
-                newTargetNode = i;
-                distance = Vector3.Distance(NodesToFollow[i].transform.position, transform.position);
-            }
-        }
-
-        _targetNode = newTargetNode;
-    }
-
-    public void InitiateNodesToFollow(Transform[] nodes)
-    {
-        NodesToFollow = nodes;
-        _targetNode = 0;
-    }
-
     private void UpdateMove(Transform[] path)
     {
         Vector3 target = path[_targetNode].transform.position;
-        Vector3 direction = target - transform.position;
+        Vector3 direction = target - SphereRB.position;
         float moveStep = Speed * Time.deltaTime;
-        float distance = Vector3.Distance(target, transform.position);
+        float distance = Vector3.Distance(target, SphereRB.position);
 
         while (moveStep > distance)
         {
@@ -67,8 +48,8 @@ public class AIController : GlobalController
 
             target = path[_targetNode].transform.position;
             moveStep = Speed * Time.deltaTime;
-            distance = Vector3.Distance(target, transform.position);
-            direction = target - transform.position;
+            distance = Vector3.Distance(target, SphereRB.position);
+            direction = target - SphereRB.position;
 
             //orientation
             transform.rotation = path[_targetNode].transform.rotation;
