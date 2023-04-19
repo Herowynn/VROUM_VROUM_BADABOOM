@@ -28,8 +28,6 @@ public class PlayersManager : MonoBehaviour
 
         car.transform.rotation = GameManager.Instance.MapManager.CurrentMap.PlayerStartPositions[startPositionIndex]
             .transform.rotation;
-
-        Debug.Log(car.transform.rotation.y);
         
         if (playerUseKeyboard && !isAi)
             car.GetComponent<PlayerInput>().defaultControlScheme = "Keyboard";
