@@ -56,13 +56,10 @@ public class AIController : GlobalController
             moveStep = Speed * Time.deltaTime;
             distance = Vector3.Distance(target, SphereRB.position);
             direction = target - SphereRB.position;
-
-            //orientation
-            transform.LookAt(path[_targetNode].transform);
-            //transform.rotation = path[_targetNode].transform.rotation;
         }
 
         direction.Normalize();
+        transform.LookAt(target);
         SphereRB.position += moveStep * direction;
     }
 }
