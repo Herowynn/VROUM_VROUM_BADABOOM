@@ -40,7 +40,7 @@ public class ShotgunProjectile : MonoBehaviour
     {
         if (collision.gameObject.TryGetComponent(out _carControl))
         {
-            _carControl.SlowFactor = .5f;
+            _carControl.SlowFactor = .2f;
             GetComponent<MeshRenderer>().enabled = false;
             GetComponent<SphereCollider>().enabled = false;
             StartCoroutine(WaitBeforeNormalSpeed());

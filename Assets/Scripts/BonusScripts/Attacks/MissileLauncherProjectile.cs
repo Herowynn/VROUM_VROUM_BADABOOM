@@ -12,8 +12,8 @@ public class MissileLauncherProjectile : MonoBehaviour
     private Rigidbody _targetRB;
     private Rigidbody _projectileRB;
     private Vector3 _direction;
-    private float _stageOne = 1f;
-    private float _stageTwo = 2f;
+    private float _stageOne = 2f;
+    private float _stageTwo = 4f;
     private float _dist;
     private bool _isRotated = false;
     private Vector3 _explosionDir;
@@ -50,15 +50,17 @@ public class MissileLauncherProjectile : MonoBehaviour
         _direction = transform.forward;
         _explosionDir = explodeDir;
     }
-
+    private void Update()
+    {
+            _clock += Time.deltaTime;
+    }
     private void FixedUpdate()
     {
-        if (_clock < _stageOne)
-        {
+       
             
-            _projectileRB.AddForce(_direction*5, ForceMode.Acceleration);
-            _projectileRB.velocity = Vector3.ClampMagnitude(_projectileRB.velocity, _launchingSpeed);
-        }
+            _projectileRB.AddForce(_direction*20, ForceMode.Acceleration);
+           // _projectileRB.velocity = Vector3.ClampMagnitude(_projectileRB.velocity, _launchingSpeed);
+        
 
         if ( _clock > _stageOne && _clock < _stageTwo)
         {
@@ -92,8 +94,8 @@ public class MissileLauncherProjectile : MonoBehaviour
             _actualSpeed = _lastPhaseSpeed;
         }
 
-        _clock += Time.deltaTime;
-        _projectileRB.velocity = Vector3.ClampMagnitude(_projectileRB.velocity, _actualSpeed);
+       
+       
     }
 
     private void OnTriggerEnter(Collider other)

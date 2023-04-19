@@ -129,6 +129,7 @@ public class CarController : MonoBehaviour
 
     private void Update()
     {
+        Debug.Log(SlowFactor);
         _distArrowRayPoint = Arrow.transform.position - RayPoint.position;
 
         if (GameManager.Instance.GameState == GameState.RACING && PlayerState == PlayerState.ALIVE && _movementInput != Vector2.zero)
