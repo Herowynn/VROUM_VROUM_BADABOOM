@@ -141,7 +141,7 @@ MonoBehaviour:
   IsExploded: 0
   IsTouchedByMachineGun: 0
   BumpForce: 10000
-  ProjectileForce: 100
+  ProjectileForce: 1000
   BumpDirection: {x: 0, y: 0, z: 0}
   ExplosionDirection: {x: 0, y: 0, z: 0}
   ProjectileDirection: {x: 0, y: 0, z: 0}

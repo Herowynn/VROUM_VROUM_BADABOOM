@@ -35,6 +35,10 @@ public class SawProjectile : MonoBehaviour
         _source.Play();
 
         _projectileRB.AddForce(direction * _speed, ForceMode.Acceleration);
+        StartCoroutine(WaitBeforeAutoDestroy());
+        GetComponent<BoxCollider>().enabled = false;
+        StartCoroutine(WaitBeforeActivateCollider());
+
     }
 
     /// <summary>
@@ -53,6 +57,18 @@ public class SawProjectile : MonoBehaviour
             carController.HitBySaw = true;
             Destroy(gameObject);
         }
+    }
+    IEnumerator WaitBeforeAutoDestroy()
+    {
+        yield return new WaitForSeconds(5f);
+        Destroy(gameObject);
+    }
+
+    IEnumerator WaitBeforeActivateCollider()
+    {
+        yield return new WaitForSeconds(0.2f);
+        GetComponent<BoxCollider>().enabled = true;
+
     }
 }
 
