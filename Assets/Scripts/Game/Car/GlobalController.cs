@@ -229,7 +229,6 @@ public class GlobalController : MonoBehaviour
             StartCoroutine(GetBackOnWheels());
         
         if (collision.gameObject.GetComponent<DestructorComponent>())
-        {
             GameManager.Instance.TriggerPlayerDestructionEvent(this);
     }
 
