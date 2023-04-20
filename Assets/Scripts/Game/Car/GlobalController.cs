@@ -227,11 +227,8 @@ public class GlobalController : MonoBehaviour
 
         if (collision.gameObject.layer == GroundLayerNumber && !_isGrounded)
             StartCoroutine(GetBackOnWheels());
-    }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.GetComponent<DestructorComponent>())
+        
+        if (collision.gameObject.GetComponent<DestructorComponent>())
         {
             GameManager.Instance.TriggerPlayerDestructionEvent(this);
         }
