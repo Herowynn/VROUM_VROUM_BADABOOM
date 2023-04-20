@@ -12,6 +12,7 @@ public class Booster : MonoBehaviour
     [SerializeField] private float _speedAdded;
     [SerializeField] private float _time;
     private float _timeIncrementation;
+    private bool _hasBeenUsed = false;
 
     [Header("Audio")]
     public AudioClip[] Sounds;
@@ -25,9 +26,13 @@ public class Booster : MonoBehaviour
     /// <param name="car"></param>
     public void Boost(Rigidbody sphereRB, GameObject car)
     {
+        if (_hasBeenUsed == false) 
+        { 
         StartCoroutine(StartBoost(sphereRB, car));
         _source = GetComponent<AudioSource>();
         _source.Play();
+        _hasBeenUsed= true;
+        }
     }
 
     /// <summary>
