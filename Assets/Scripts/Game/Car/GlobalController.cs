@@ -231,7 +231,6 @@ public class GlobalController : MonoBehaviour
         if (collision.gameObject.GetComponent<DestructorComponent>())
         {
             GameManager.Instance.TriggerPlayerDestructionEvent(this);
-        }
     }
 
     #endregion

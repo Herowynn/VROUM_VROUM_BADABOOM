@@ -31,17 +31,9 @@ public class CarController : GlobalController
 
             _wantedDirection = new Vector3(_movementInput.x, _yComponentWantedDirection, _movementInput.y);
 
-            Vector3 wheelsRotationAxis = Quaternion.AngleAxis(90, transform.up) * transform.forward;
-
-            LeftBackWheel.transform.Rotate(wheelsRotationAxis, WheelTurnSpeed * Time.deltaTime);
-            RightBackWheel.transform.Rotate(wheelsRotationAxis, WheelTurnSpeed * Time.deltaTime);
-            LeftFrontWheel.transform.Rotate(wheelsRotationAxis, WheelTurnSpeed * Time.deltaTime);
-            RightFrontWheel.transform.Rotate(wheelsRotationAxis, WheelTurnSpeed * Time.deltaTime);
-
             if (_isGrounded)
             {
                 Vector3 cross1 = Vector3.Cross(transform.forward, _wantedDirection);
-                Vector3 cross2 = Vector3.Cross(_distArrowRayPoint, _wantedDirection);
                 float carSignRotation = Mathf.Sign(cross1.y);
 
                 if (Mathf.Abs(Mathf.Acos(Vector3.Dot(transform.forward.normalized, _wantedDirection.normalized))) > Mathf.Deg2Rad * 10f)
