@@ -16,19 +16,22 @@ public class PlayersManager : MonoBehaviour
     public GameObject PlayersContainer;
     
     [Header("Infos")]
-    [HideInInspector] public List<GameObject> Players;
+    public List<GameObject> Players;
     public List<Color> PlayerColors;
     
     public void CreateNewPlayer(bool playerUseKeyboard, int startPositionIndex, bool isAi)
     {
         GameObject car = Instantiate(isAi ? AiPlayerPrefab : HumanPlayerPrefab, 
             GameManager.Instance.MapManager.CurrentMap.PlayerStartPositions[startPositionIndex].transform.position,
-            GameManager.Instance.MapManager.CurrentMap.PlayerStartPositions[startPositionIndex].transform.rotation, 
+            Quaternion.identity, 
             PlayersContainer.transform);
 
-        if (playerUseKeyboard)
+        car.transform.rotation = GameManager.Instance.MapManager.CurrentMap.PlayerStartPositions[startPositionIndex]
+            .transform.rotation;
+        
+        if (playerUseKeyboard && !isAi)
             car.GetComponent<PlayerInput>().defaultControlScheme = "Keyboard";
-        else
+        else if (!isAi)
             car.GetComponent<PlayerInput>().defaultControlScheme = "Controller";
 
         Players.Add(car);

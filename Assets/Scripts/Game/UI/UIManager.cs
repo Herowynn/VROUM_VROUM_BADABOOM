@@ -58,6 +58,6 @@ public class UIManager : MonoBehaviour
 
     public void OnClickRestart()
     {
-        UnityEngine.SceneManagement.SceneManager.LoadScene("Menu");  
+        SceneManager.Instance.LoadMenu();  
     }
 }

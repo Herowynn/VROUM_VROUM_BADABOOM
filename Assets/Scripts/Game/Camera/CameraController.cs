@@ -23,6 +23,7 @@ public class CameraController : MonoBehaviour
     public float SmoothTime = .5f;
 
     private Vector3 _velocity;
+    private List<GameObject> _targetsToFollow = new List<GameObject>();
 
     private void Start()
     {
@@ -47,7 +48,12 @@ public class CameraController : MonoBehaviour
 
     public void AddTargets()
     {
-        Targets = GameManager.Instance.PlayersManager.Players;
+        Targets = new List<GameObject>();
+
+        foreach (var player in GameManager.Instance.PlayersManager.Players)
+        {
+            Targets.Add(player);
+        }
     }
 
     public void RemoveDeadTargetEvent()

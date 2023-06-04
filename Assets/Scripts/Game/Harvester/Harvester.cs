@@ -5,6 +5,7 @@ using static Unity.VisualScripting.Member;
 public class Harvester : MonoBehaviour
 {
     [HideInInspector] public Transform[] NodesToFollow;
+    [HideInInspector] public int TargetNode;
 
     [Header("GD")]
     public float Speed;
@@ -17,7 +18,6 @@ public class Harvester : MonoBehaviour
     public float maxTimeBetweenHorn = 30;
     public AudioSource Source;
 
-    private int _targetNode;
 
     /// <summary>
     /// This method plays the horn sound effect and starts the Horn() coroutine.
@@ -71,13 +71,13 @@ public class Harvester : MonoBehaviour
             }
         }
 
-        _targetNode = newTargetNode;
+        TargetNode = newTargetNode;
     }
 
     public void InitiateNodesToFollow(Transform[] nodes)
     {
         NodesToFollow = nodes;
-        _targetNode = 0;
+        TargetNode = 0;
     }
 
     /// <summary>
@@ -90,25 +90,25 @@ public class Harvester : MonoBehaviour
     /// <param name="path"></param>
     private void UpdateMove(Transform[] path)
     {
-        Vector3 target = path[_targetNode].transform.position;
+        Vector3 target = path[TargetNode].transform.position;
         Vector3 direction = target - transform.position;
         float moveStep = Speed * Time.deltaTime;
         float distance = Vector3.Distance(target, transform.position);
 
         while (moveStep > distance)
         {
-            _targetNode++;
+            TargetNode++;
 
-            if (_targetNode >= path.Length)
-                _targetNode = 0;
+            if (TargetNode >= path.Length)
+                TargetNode = 0;
 
-            target = path[_targetNode].transform.position;
+            target = path[TargetNode].transform.position;
             moveStep = Speed * Time.deltaTime;
             distance = Vector3.Distance(target, transform.position);
             direction = target - transform.position;
             
             //orientation
-            transform.rotation = path[_targetNode].transform.rotation;
+            transform.rotation = path[TargetNode].transform.rotation;
         }
         
         direction.Normalize();

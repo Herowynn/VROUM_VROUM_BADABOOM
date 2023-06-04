@@ -5871,8 +5871,8 @@ MonoBehaviour:
   NeedKeyboard: 0
   NbAi: 0
   AiDifficulty: Easy
-  MapName: Azur
-  ScoreToWin: 0
+  MapName: FirstTrack
+  ScoreToWin: 10
   PossibleLocalPlayers: 0000000001000000020000000300000004000000
   PossibleAiPlayers: 0000000001000000020000000300000004000000
   PossibleAiDifficulties:
@@ -5880,9 +5880,9 @@ MonoBehaviour:
   - Normal
   - Difficult
   PossibleMaps:
-  - Azur
-  - Corridor
-  - Death Machine
+  - FirstTrack
+  - SecondTrack
+  - ThirdTrack
   PossibleScores: 0a0000000f00000014000000190000001e000000
 --- !u!82 &1818437090
 AudioSource:

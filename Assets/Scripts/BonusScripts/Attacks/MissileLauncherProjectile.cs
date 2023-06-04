@@ -73,7 +73,7 @@ public class MissileLauncherProjectile : MonoBehaviour
         {
             if (_targetRB != null)
             {
-                transform.LookAt(_targetRB.transform);
+                if((_targetRB.transform.position-transform.position).magnitude > 2)transform.LookAt(_targetRB.transform);
                 _projectileRB.AddForce(_direction * _speed, ForceMode.Acceleration);
             }    
             else _projectileRB.AddForce(_direction * _speed, ForceMode.Acceleration);
