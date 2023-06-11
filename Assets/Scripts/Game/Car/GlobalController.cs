@@ -115,7 +115,7 @@ public class GlobalController : MonoBehaviour
         PointsUI.ChangePointsCount(Score);
         BodyColor.material = CarColors[GameManager.Instance.PlayersManager.PlayerColors.IndexOf(Color)];
 
-        for (int i = 0; i < GameManager.Instance.MapManager.CurrentMap.PlayerStartPositions.Length; i++)
+        for (int i = 0; i < GameManager.Instance.MapManager.CurrentMap.PlayerStartPositions.Count; i++)
         {
             if (transform.GetSiblingIndex() == i)
                 _lastRebornPosition = GameManager.Instance.MapManager.CurrentMap.PlayerStartPositions[i].position;
@@ -132,7 +132,6 @@ public class GlobalController : MonoBehaviour
         if (Physics.Raycast(RayPoint.position, -transform.up, out RaycastHit hit, ArrayRayLength, GroundLayerMask))
         {
             _isGrounded = true;
-
 
             transform.rotation = Quaternion.FromToRotation(transform.up, hit.normal) * transform.rotation;
 

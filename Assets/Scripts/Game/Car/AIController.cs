@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class AIController : GlobalController
 {
-    [HideInInspector] public Transform[] NodesToFollow;
+    [HideInInspector] public List<Transform> NodesToFollow;
 
     [Header("GD")]
     public float MaxSpeed;
@@ -93,7 +93,7 @@ public class AIController : GlobalController
         //}
     }
 
-    private void UpdateMove(Transform[] path)
+    private void UpdateMove(List<Transform> path)
     {
         direction = target - SphereRB.position;
         moveStep = _speed * Time.deltaTime;
@@ -103,7 +103,7 @@ public class AIController : GlobalController
         {
             _targetNode++;
 
-            if (_targetNode >= path.Length)
+            if (_targetNode >= path.Count)
                 _targetNode = 0;
 
             UpdateTarget();

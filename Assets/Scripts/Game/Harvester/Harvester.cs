@@ -1,10 +1,11 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using static Unity.VisualScripting.Member;
 
 public class Harvester : MonoBehaviour
 {
-    [HideInInspector] public Transform[] NodesToFollow;
+    [HideInInspector] public List<Transform> NodesToFollow;
     [HideInInspector] public int TargetNode;
 
     [Header("GD")]
@@ -62,7 +63,7 @@ public class Harvester : MonoBehaviour
 
         float distance = float.MaxValue;
 
-        for (int i = 0; i < NodesToFollow.Length; i++)
+        for (int i = 0; i < NodesToFollow.Count; i++)
         {
             if (distance > Vector3.Distance(NodesToFollow[i].transform.position, transform.position) && Mathf.Rad2Deg * Mathf.Abs(Mathf.Acos(Vector3.Dot(transform.forward.normalized, (NodesToFollow[i].transform.position - transform.position).normalized))) < 90f)
             {
@@ -74,7 +75,7 @@ public class Harvester : MonoBehaviour
         TargetNode = newTargetNode;
     }
 
-    public void InitiateNodesToFollow(Transform[] nodes)
+    public void InitiateNodesToFollow(List<Transform> nodes)
     {
         NodesToFollow = nodes;
         TargetNode = 0;
@@ -88,7 +89,7 @@ public class Harvester : MonoBehaviour
     /// Finally, it increments the harvester position with the "moveStep" distance.
     /// </summary>
     /// <param name="path"></param>
-    private void UpdateMove(Transform[] path)
+    private void UpdateMove(List<Transform> path)
     {
         Vector3 target = path[TargetNode].transform.position;
         Vector3 direction = target - transform.position;
@@ -99,7 +100,7 @@ public class Harvester : MonoBehaviour
         {
             TargetNode++;
 
-            if (TargetNode >= path.Length)
+            if (TargetNode >= path.Count)
                 TargetNode = 0;
 
             target = path[TargetNode].transform.position;

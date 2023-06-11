@@ -17,6 +17,7 @@ public class MapManager : MonoBehaviour
         foreach (var mapGo in Maps)
         {
             _mapsByName.Add(mapGo.Name, mapGo);
+            mapGo.gameObject.SetActive(false);
         }
     }
 

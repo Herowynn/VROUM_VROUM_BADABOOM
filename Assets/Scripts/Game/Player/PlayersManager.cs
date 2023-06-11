@@ -21,10 +21,8 @@ public class PlayersManager : MonoBehaviour
     
     public void CreateNewPlayer(bool playerUseKeyboard, int startPositionIndex, bool isAi)
     {
-        GameObject car = Instantiate(isAi ? AiPlayerPrefab : HumanPlayerPrefab, 
-            GameManager.Instance.MapManager.CurrentMap.PlayerStartPositions[startPositionIndex].transform.position,
-            Quaternion.identity, 
-            PlayersContainer.transform);
+        Vector3 spawnPosition = GameManager.Instance.MapManager.CurrentMap.PlayerStartPositions[startPositionIndex].transform.position;
+        GameObject car = Instantiate(isAi ? AiPlayerPrefab : HumanPlayerPrefab, spawnPosition, Quaternion.identity, PlayersContainer.transform);
 
         car.transform.rotation = GameManager.Instance.MapManager.CurrentMap.PlayerStartPositions[startPositionIndex]
             .transform.rotation;

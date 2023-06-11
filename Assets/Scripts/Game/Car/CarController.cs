@@ -17,7 +17,7 @@ public class CarController : GlobalController
 
     private void Start()
     {
-        Init();
+         Init();
         _distArrowRayPoint = Arrow.transform.position - RayPoint.position;
     }
 
