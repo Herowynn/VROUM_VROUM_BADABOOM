@@ -40,9 +40,7 @@ public class PlayersManager : MonoBehaviour
     public void DestroyPlayers()
     {
         foreach (var player in Players)
-        {
             Destroy(player);
-        }
 
         Players = new List<GameObject>();
     }

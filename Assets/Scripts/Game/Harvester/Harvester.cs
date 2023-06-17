@@ -9,7 +9,7 @@ public class Harvester : MonoBehaviour
     [HideInInspector] public int TargetNode;
 
     [Header("GD")]
-    public float Speed;
+    public float InitialSpeed;
     public float IncrementSpeed = 0.01f;
 
     [Header("Audio")]
@@ -20,11 +20,15 @@ public class Harvester : MonoBehaviour
     public AudioSource Source;
 
 
+    private float _speed;
+
+
     /// <summary>
     /// This method plays the horn sound effect and starts the Horn() coroutine.
     /// </summary>
     private void Start()
     {
+        _speed = InitialSpeed;
         Source = GetComponent<AudioSource>();
         StartCoroutine(Horn(minTimeBetweenHorn, maxTimeBetweenHorn));
         AudioClip horn = HornSounds[Random.Range(0, HornSounds.Length)];
@@ -41,7 +45,7 @@ public class Harvester : MonoBehaviour
         if (GameManager.Instance.GameState == GameState.RACING)
         {
             UpdateMove(NodesToFollow);
-            Speed += IncrementSpeed * Time.deltaTime;
+            _speed += IncrementSpeed * Time.deltaTime;
         }
     }
 
@@ -49,7 +53,7 @@ public class Harvester : MonoBehaviour
     {
         transform.position = resetTransform.position;
         transform.rotation = resetTransform.rotation;
-        Speed = 3;
+        _speed = InitialSpeed;
         UpdateTargetNodeAfterReset();
     }
 
@@ -65,7 +69,8 @@ public class Harvester : MonoBehaviour
 
         for (int i = 0; i < NodesToFollow.Count; i++)
         {
-            if (distance > Vector3.Distance(NodesToFollow[i].transform.position, transform.position) && Mathf.Rad2Deg * Mathf.Abs(Mathf.Acos(Vector3.Dot(transform.forward.normalized, (NodesToFollow[i].transform.position - transform.position).normalized))) < 90f)
+            if (distance > Vector3.Distance(NodesToFollow[i].transform.position, transform.position) && Mathf.Rad2Deg *
+                Mathf.Abs(Mathf.Acos(Vector3.Dot(transform.forward.normalized, (NodesToFollow[i].transform.position - transform.position).normalized))) < 90f)
             {
                 newTargetNode = i;
                 distance = Vector3.Distance(NodesToFollow[i].transform.position, transform.position);
@@ -93,7 +98,7 @@ public class Harvester : MonoBehaviour
     {
         Vector3 target = path[TargetNode].transform.position;
         Vector3 direction = target - transform.position;
-        float moveStep = Speed * Time.deltaTime;
+        float moveStep = _speed * Time.deltaTime;
         float distance = Vector3.Distance(target, transform.position);
 
         while (moveStep > distance)
@@ -104,7 +109,7 @@ public class Harvester : MonoBehaviour
                 TargetNode = 0;
 
             target = path[TargetNode].transform.position;
-            moveStep = Speed * Time.deltaTime;
+            moveStep = _speed * Time.deltaTime;
             distance = Vector3.Distance(target, transform.position);
             direction = target - transform.position;
             

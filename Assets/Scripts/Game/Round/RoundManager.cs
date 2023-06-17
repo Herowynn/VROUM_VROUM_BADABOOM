@@ -76,9 +76,7 @@ public class RoundManager : MonoBehaviour
     private bool IsRoundFinished()
     {
         if (PlayersAlive <= 1)
-        {
             return true;
-        }
 
         return false;
     }
@@ -156,5 +154,71 @@ public class RoundManager : MonoBehaviour
         }
 
         return closestNode;
+    }
+
+    public GameObject[] RealtimeCarsRanking(List<GameObject> alivePlayers)
+    {
+        int harvesterTargetNodeIndex = _harvesterForCurrentMap.TargetNode;
+        List<Transform> nodesToFollow = _harvesterForCurrentMap.NodesToFollow;
+
+        List<int> nodesIndexesFromHarvester = new List<int>();
+        Dictionary<GameObject, NodeIndexAndDistance> nodeIndexAndDistanceDictionary = new Dictionary<GameObject, NodeIndexAndDistance>();
+        GameObject[] result = new GameObject[alivePlayers.Count];
+
+        for (int i = harvesterTargetNodeIndex; i < nodesToFollow.Count; i++)
+            nodesIndexesFromHarvester.Add(i);
+
+        for (int i = 0; i < harvesterTargetNodeIndex; i++)
+            nodesIndexesFromHarvester.Add(i);
+
+        foreach(GameObject player in alivePlayers)
+        {
+            float distance = float.MaxValue;
+            int nodeIndex = -1;
+            Vector3 carForwardVector = new Vector3(player.transform.forward.x, 0, player.transform.forward.z);
+
+            for (int i = 0; i < nodesToFollow.Count; i++)
+            {
+                Vector3 carPosition = new Vector3(player.transform.position.x, nodesToFollow[i].position.y, player.transform.position.z);
+
+                if (distance > Vector3.Distance(nodesToFollow[i].transform.position, carPosition) && Mathf.Rad2Deg *
+                    Mathf.Abs(Mathf.Acos(Vector3.Dot(carForwardVector.normalized, (nodesToFollow[i].transform.position - carPosition).normalized))) < 90f)
+                {
+                    nodeIndex = i;
+                    distance = Vector3.Distance(nodesToFollow[i].transform.position, transform.position);
+                }
+            }
+
+            NodeIndexAndDistance nodeIndexAndDistance = new NodeIndexAndDistance(nodeIndex, distance);
+            nodeIndexAndDistanceDictionary[player] = nodeIndexAndDistance;
+        }
+
+        List<KeyValuePair<GameObject, NodeIndexAndDistance>> nodeIndexAndDistanceList = nodeIndexAndDistanceDictionary.ToList();
+
+        nodeIndexAndDistanceList.Sort(delegate (KeyValuePair<GameObject, NodeIndexAndDistance> pair1, KeyValuePair<GameObject, NodeIndexAndDistance> pair2)
+        {
+            int result = nodesIndexesFromHarvester.IndexOf(pair1.Value.NodeIndex).CompareTo(nodesIndexesFromHarvester.IndexOf(pair2.Value.NodeIndex));
+            if (result == 0)
+                return pair1.Value.DistanceFromNode.CompareTo(pair2.Value.DistanceFromNode);
+            else
+                return -result;
+        });
+
+        for (int i = 0; i < nodeIndexAndDistanceList.Count; i++)
+            result[i] = nodeIndexAndDistanceList[i].Key;
+
+        return result;
+    }
+}
+
+public struct NodeIndexAndDistance
+{
+    public int NodeIndex;
+    public float DistanceFromNode;
+
+    public NodeIndexAndDistance(int nodeIndex,float distanceFromNode)
+    {
+        NodeIndex = nodeIndex;
+        DistanceFromNode = distanceFromNode;
     }
 }

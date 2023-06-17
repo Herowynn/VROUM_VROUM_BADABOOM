@@ -21,21 +21,17 @@ public class ScoreManager : MonoBehaviour
     {
         Players = new List<GlobalController>();
         foreach (var playerGo in GameManager.Instance.PlayersManager.Players)
-        {
             Players.Add(playerGo.GetComponent<GlobalController>());
-        }
     }
-    
+
     public bool IsFinished()
     {
         foreach (var player in Players)
         {
             if (player.Score >= PointsToWin)
-            {
                 return true;
-            }
         }
-        
+
         return false;
     }
 
@@ -44,11 +40,9 @@ public class ScoreManager : MonoBehaviour
         foreach (var player in Players)
         {
             if (player.PlayerState == PlayerState.ALIVE)
-            {
                 player.AddPointsToScore(PointPerCrash);
-            }
         }
-        
+
         if (IsFinished())
             GameManager.Instance.TriggerEndGameAfterRoundEvent();
     }

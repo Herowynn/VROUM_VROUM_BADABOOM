@@ -7,20 +7,17 @@ using UnityEngine;
 /// </summary>
 public class HarvesterManager : MonoBehaviour
 {
-    [Header("Instances")]
+    [Header("Instances")]
     public List<HomemadeStringGameObjectPair> Harvesters = new List<HomemadeStringGameObjectPair>();
-
     [HideInInspector] public GameObject HarvesterGoRef;
     [HideInInspector] public Harvester HarvesterRef;
 
     private Dictionary<string, GameObject> _harvesters = new Dictionary<string, GameObject>();
 
-    private void Start()
-    {
-        foreach(HomemadeStringGameObjectPair pair in Harvesters)
-        {
-            _harvesters.Add(pair.Key, pair.Value);
-        }
+    private void Start()
+    {
+        foreach (HomemadeStringGameObjectPair pair in Harvesters)
+            _harvesters.Add(pair.Key, pair.Value);
     }
 
     /// <summary>
@@ -40,14 +37,13 @@ public class HarvesterManager : MonoBehaviour
 }
 
 [Serializable]
-public class HomemadeStringGameObjectPair
-{
-    public string Key;
+public class HomemadeStringGameObjectPair
+{
+    public string Key;
     public GameObject Value;
-
-    public HomemadeStringGameObjectPair(string key, GameObject value)
-    {
-        Key = key;
-        Value = value;
-    }
+    public HomemadeStringGameObjectPair(string key, GameObject value)
+    {
+        Key = key;
+        Value = value;
+    }
 }
