@@ -8,6 +8,9 @@ using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
+    public Canvas Canvas;
+    public TMPro.TextMeshProUGUI[] Ranks;
+
     [Header("Instance")]
     public List<GameObject> Targets = new List<GameObject>();
     public Camera Camera;
@@ -29,8 +32,8 @@ public class CameraController : MonoBehaviour
     {
         if (Camera == null)
             Camera = GetComponent<Camera>();
-        
-        transform.position = PositionOffset;
+
+        transform.position = /*GameManager.Instance.MapManager.CurrentMap.PlayerStartPositions[0].position + */PositionOffset;
         
         Quaternion rot = transform.rotation;
         rot.eulerAngles = InitialRotation;
@@ -78,9 +81,7 @@ public class CameraController : MonoBehaviour
         var bounds = new Bounds(Targets[0].transform.position, Vector3.zero);
 
         for (int i = 0; i < Targets.Count; i++)
-        {
             bounds.Encapsulate(Targets[i].transform.position);
-        }
 
         return bounds.size.x;
     }
@@ -92,16 +93,30 @@ public class CameraController : MonoBehaviour
 
         GameObject[] carsRanking = GameManager.Instance.RoundManager.RealtimeCarsRanking(Targets);
 
+        //
+/*        if (carsRanking.Length < Ranks.Length)
+        {
+            for (int i = Ranks.Length - 1; i > carsRanking.Length - 1; i++)
+                Ranks[i].gameObject.SetActive(false);
+        }
+
+        for (int i = 0; i < carsRanking.Length; i++)
+        {
+            Ranks[i].gameObject.SetActive(true);
+            Ranks[i].rectTransform.position = GetComponent<Camera>().WorldToScreenPoint(carsRanking[i].transform.position) + new Vector3(0, 30f, 0);
+        }*/
+        //
+
         switch (Targets.Count)
         {
             case 4:
-                return 0.75f * carsRanking[0].transform.position + 0.12f * carsRanking[1].transform.position +
-                    0.8f * carsRanking[2].transform.position + 0.5f * carsRanking[3].transform.position;
+                return 0.9f * carsRanking[0].transform.position + 0.4f * carsRanking[1].transform.position +
+                    0.3f * carsRanking[2].transform.position + 0.3f * carsRanking[3].transform.position;
             case 3:
-                return 0.75f * carsRanking[0].transform.position + 0.15f * carsRanking[1].transform.position +
-                    0.1f * carsRanking[2].transform.position;
+                return 0.9f * carsRanking[0].transform.position + 0.6f * carsRanking[1].transform.position +
+                    0.4f * carsRanking[2].transform.position;
             case 2:
-                return 0.75f * carsRanking[0].transform.position + 0.25f * carsRanking[1].transform.position;
+                return 0.9f * carsRanking[0].transform.position + 0.1f * carsRanking[1].transform.position;
             default:
                 return Vector3.negativeInfinity;
         }

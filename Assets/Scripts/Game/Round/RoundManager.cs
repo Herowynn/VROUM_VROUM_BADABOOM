@@ -175,17 +175,16 @@ public class RoundManager : MonoBehaviour
         {
             float distance = float.MaxValue;
             int nodeIndex = -1;
-            Vector3 carForwardVector = new Vector3(player.transform.forward.x, 0, player.transform.forward.z);
 
             for (int i = 0; i < nodesToFollow.Count; i++)
             {
                 Vector3 carPosition = new Vector3(player.transform.position.x, nodesToFollow[i].position.y, player.transform.position.z);
+                float distanceToNode = Vector3.Distance(nodesToFollow[i].position, carPosition);
 
-                if (distance > Vector3.Distance(nodesToFollow[i].transform.position, carPosition) && Mathf.Rad2Deg *
-                    Mathf.Abs(Mathf.Acos(Vector3.Dot(carForwardVector.normalized, (nodesToFollow[i].transform.position - carPosition).normalized))) < 90f)
+                if (distance > distanceToNode && Vector3.Dot(nodesToFollow[i].transform.forward.normalized, (carPosition - nodesToFollow[i].transform.position).normalized) < 0f)
                 {
                     nodeIndex = i;
-                    distance = Vector3.Distance(nodesToFollow[i].transform.position, transform.position);
+                    distance = distanceToNode;
                 }
             }
 
