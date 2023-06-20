@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 9038667026987675829}
   - component: {fileID: 9038667026987675826}
   m_Layer: 0
-  m_Name: HeaderText
+  m_Name: Menu Title
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -66,7 +66,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: TITLE
+  m_text: 'VROOM VROOM BADABOOM '
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 4304aa018912b6144a4a8a5e0c1c73c8, type: 2}
   m_sharedMaterial: {fileID: 1841082019446708705, guid: 4304aa018912b6144a4a8a5e0c1c73c8, type: 2}
@@ -93,13 +93,13 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 90
-  m_fontSizeBase: 90
+  m_fontSize: 70
+  m_fontSizeBase: 110
   m_fontWeight: 400
-  m_enableAutoSizing: 0
+  m_enableAutoSizing: 1
   m_fontSizeMin: 18
-  m_fontSizeMax: 98.13
-  m_fontStyle: 1
+  m_fontSizeMax: 70
+  m_fontStyle: 17
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
   m_textAlignment: 65535

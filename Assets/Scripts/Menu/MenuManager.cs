@@ -21,10 +21,6 @@ public class MenuManager : MonoBehaviour
     }
 
     [Header("Instances")] 
-    public TextMeshProUGUI Title;
-    public TextMeshProUGUI Footer;
-    public Menu[] Menus;
-    public Menu FirstMenuLoaded;
     public GameParameters GameParameters;
 
     [Header("Game Parameters Informations")] 
@@ -45,11 +41,6 @@ public class MenuManager : MonoBehaviour
     private Menu _currentMenu;
     
     // Start is called before the first frame update
-    void Start()
-    {
-        LoadMenu(FirstMenuLoaded);
-    }
-    
     public void LoadMenu(Menu menu)
     {
         if (_currentMenu != null)
@@ -57,8 +48,6 @@ public class MenuManager : MonoBehaviour
 
         _currentMenu = menu;
         _currentMenu.Load();
-        Title.text = _currentMenu.MenuTitle;
-        Footer.text = _currentMenu.MenuFooter;
     }
 
     public void LoadGame(Menu menu)
@@ -67,6 +56,8 @@ public class MenuManager : MonoBehaviour
         SceneManager.Instance.LoadGame();
     }
     
+    #region Main Menu
+
     public void QuitGame() {
         #if UNITY_STANDALONE
             Application.Quit();
@@ -76,6 +67,8 @@ public class MenuManager : MonoBehaviour
         #endif
     }
 
+    #endregion
+    
     #region Game Parameters
 
     public void SetDynamicDropdowns()
