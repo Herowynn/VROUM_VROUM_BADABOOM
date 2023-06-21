@@ -1137,6 +1137,30 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1168096147669149438}
     m_Modifications:
+    - target: {fileID: 6707779277212370862, guid: 65c80159ae346664691de07bcbb8cc54, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -0.000015258789
+      objectReference: {fileID: 0}
+    - target: {fileID: 6707779277383993503, guid: 65c80159ae346664691de07bcbb8cc54, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6707779277383993503, guid: 65c80159ae346664691de07bcbb8cc54, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6707779277851831243, guid: 65c80159ae346664691de07bcbb8cc54, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6707779277851831243, guid: 65c80159ae346664691de07bcbb8cc54, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6707779277851831243, guid: 65c80159ae346664691de07bcbb8cc54, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6707779278447192012, guid: 65c80159ae346664691de07bcbb8cc54, type: 3}
       propertyPath: m_Name
       value: Parameter Dropdown
@@ -1226,6 +1250,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6707779278447192014, guid: 65c80159ae346664691de07bcbb8cc54, type: 3}
+      propertyPath: m_Options.m_Options.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6707779278447192014, guid: 65c80159ae346664691de07bcbb8cc54, type: 3}
       propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: SetNbLocalEvent
       objectReference: {fileID: 0}
@@ -1247,6 +1275,26 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1168096147795102747}
     m_Modifications:
+    - target: {fileID: 6707779277383993503, guid: 65c80159ae346664691de07bcbb8cc54, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6707779277383993503, guid: 65c80159ae346664691de07bcbb8cc54, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6707779277851831243, guid: 65c80159ae346664691de07bcbb8cc54, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6707779277851831243, guid: 65c80159ae346664691de07bcbb8cc54, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6707779277851831243, guid: 65c80159ae346664691de07bcbb8cc54, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6707779278447192012, guid: 65c80159ae346664691de07bcbb8cc54, type: 3}
       propertyPath: m_Name
       value: Parameter Dropdown

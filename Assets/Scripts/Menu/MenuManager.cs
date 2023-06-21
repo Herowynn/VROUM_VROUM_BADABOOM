@@ -28,6 +28,7 @@ public class MenuManager : MonoBehaviour
 
     [Header("Instances")] [SerializeField] private Menu _firstMenuToLoad;
     [SerializeField] private GameParameters _gameParameters;
+    [SerializeField] private Options _options;
     [SerializeField] private Menu[] _menus;
 
     [Header("Game Parameters Informations")] 
@@ -53,7 +54,9 @@ public class MenuManager : MonoBehaviour
     {
         // Init
         FillAllDropdowns();
+        SetQuality(0);
         
+        // Finish init
         foreach (var menu in _menus)
         {
             menu.Unload();
@@ -69,7 +72,10 @@ public class MenuManager : MonoBehaviour
     public void LoadMenu(Menu menu)
     {
         if (_currentMenu != null)
+        {
             _currentMenu.Unload();
+            AudioManager.Instance.PlaySfx("NavBtnClickedSoundEffect");
+        }
 
         _currentMenu = menu;
         _currentMenu.Load();
@@ -141,28 +147,78 @@ public class MenuManager : MonoBehaviour
     public void SetNbLocalEvent(int localIndex)
     {
         NbLocal = PossibleLocalPlayers[localIndex];
+        PlayParameterChangedSoundEffect();
     }
     public void SetNbAiEvent(int aiIndex)
     {
         NbAi = PossibleAiPlayers[aiIndex];
+        PlayParameterChangedSoundEffect();
     }
     public void SetAiDifficultyEvent(int difficultyIndex)
     {
         AiDifficulty = PossibleAiDifficulties[difficultyIndex];
+        PlayParameterChangedSoundEffect();
     }
     public void SetMapEvent(int mapIndex)
     {
         MapName = PossibleMaps[mapIndex];
+        PlayParameterChangedSoundEffect();
     }
     public void SetScoreToWinEvent(int scoreIndex)
     {
         ScoreToWin = PossibleScores[scoreIndex];
+        PlayParameterChangedSoundEffect();
     }
     public void ToggleKeyboardNeed(bool needKeyboardStatus)
     {
         NeedKeyboard = needKeyboardStatus;
+        PlayParameterChangedSoundEffect();
     }
     #endregion
 
     #endregion
+
+    #region Options
+    public void SetGlobalVolume(float volume) 
+    {
+        _options.AudioMixer.SetFloat("Main_Volume", volume);
+        PlayParameterChangedSoundEffect();
+    }
+
+    public void SetSfxVolume(float volume)
+    {
+        _options.AudioMixer.SetFloat("SFX_Volume", volume);
+        PlayParameterChangedSoundEffect();
+    }
+
+    public void SetMusicVolume(float volume)
+    {
+        _options.AudioMixer.SetFloat("MUSIC_Volume", volume);
+        PlayParameterChangedSoundEffect();
+    }
+
+    public void SetQuality(int qualityIndex)
+    {
+        QualitySettings.SetQualityLevel(qualityIndex);
+        PlayParameterChangedSoundEffect();
+    }
+
+    public void SetFullScreen(bool isFullscreen)
+    {
+        Screen.fullScreen = isFullscreen;
+        PlayParameterChangedSoundEffect();
+    }
+
+    public void SetResolution(int resolutionIndex)
+    {
+        Resolution resolution = _options.Resolutions[resolutionIndex];
+        Screen.SetResolution(resolution.width, resolution.height, Screen.fullScreen);
+        PlayParameterChangedSoundEffect();
+    }
+    #endregion
+    
+    private void PlayParameterChangedSoundEffect()
+    {
+        AudioManager.Instance.PlaySfx("ParameterChangedSoundEffect");
+    }
 }
