@@ -47,6 +47,7 @@ public class Options : MonoBehaviour
         ResolutionDropdown.RefreshShownValue();
     }
 
+    #region Listeners
     public void SetVolume(float volume) 
     {
         AudioMixer.SetFloat("MainVolume", volume);
@@ -67,4 +68,5 @@ public class Options : MonoBehaviour
         Resolution resolution = _resolutions[resolutionIndex];
         Screen.SetResolution(resolution.width, resolution.height, Screen.fullScreen);
     }
+    #endregion
 }
