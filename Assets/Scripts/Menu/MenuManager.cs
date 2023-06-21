@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -18,10 +19,16 @@ public class MenuManager : MonoBehaviour
         {
             Instance = this;
         }
+
+        foreach (var menu in _menus)
+        {
+            menu.Load();
+        }
     }
 
-    [Header("Instances")] 
-    public GameParameters GameParameters;
+    [Header("Instances")] [SerializeField] private Menu _firstMenuToLoad;
+    [SerializeField] private GameParameters _gameParameters;
+    [SerializeField] private Menu[] _menus;
 
     [Header("Game Parameters Informations")] 
     public int NbLocal;
@@ -38,9 +45,27 @@ public class MenuManager : MonoBehaviour
     public string[] PossibleMaps;
     public int[] PossibleScores;
 
+    #region private Fields
     private Menu _currentMenu;
-    
-    // Start is called before the first frame update
+    #endregion
+
+    private void Start()
+    {
+        // Init
+        FillAllDropdowns();
+        
+        foreach (var menu in _menus)
+        {
+            menu.Unload();
+        }
+        
+        LoadMenu(_firstMenuToLoad);
+    }
+
+    /// <summary>
+    /// Function used to load each menu window
+    /// </summary>
+    /// <param name="menu"></param>
     public void LoadMenu(Menu menu)
     {
         if (_currentMenu != null)
@@ -50,6 +75,7 @@ public class MenuManager : MonoBehaviour
         _currentMenu.Load();
     }
 
+    // may not be used anymore
     public void LoadGame(Menu menu)
     {
         LoadMenu(menu);
@@ -71,73 +97,72 @@ public class MenuManager : MonoBehaviour
     
     #region Game Parameters
 
-    public void SetDynamicDropdowns()
+    #region Dynamism
+    private void FillDropdownWithIntTab(int[] intTab, TMP_Dropdown dropdownToFill)
     {
         List<string> options = new List<string>();
-        for (int i = 0; i < PossibleLocalPlayers.Length; i++)
+        for (int i = 0; i < intTab.Length; i++)
         {
-            options.Add(PossibleLocalPlayers[i].ToString());
+            options.Add(intTab[i].ToString());
         }
-        GameParameters.NbLocal.AddOptions(options);
-        
-        options = new List<string>();
-        for (int i = 0; i < PossibleAiPlayers.Length; i++)
-        {
-            options.Add(PossibleAiPlayers[i].ToString());
-        }
-        GameParameters.NbAi.AddOptions(options);
-        
-        options = new List<string>();
-        for (int i = 0; i < PossibleAiDifficulties.Length; i++)
-        {
-            options.Add(PossibleAiDifficulties[i]);
-        }
-        GameParameters.AiDifficulty.AddOptions(options);
-        
-        options = new List<string>();
-        for (int i = 0; i < PossibleMaps.Length; i++)
-        {
-            options.Add(PossibleMaps[i]);
-        }
-        GameParameters.MapSelection.AddOptions(options);
-        
-        options = new List<string>();
-        for (int i = 0; i < PossibleScores.Length; i++)
-        {
-            options.Add(PossibleScores[i].ToString());
-        }
-        GameParameters.ScoreToWin.AddOptions(options);
+        dropdownToFill.AddOptions(options);
     }
 
-    public void UpdateNbLocal(int index)
+    private void FillDropdownWithStringTab(string[] strTab, TMP_Dropdown dropdownToFill)
     {
-        NbLocal = PossibleLocalPlayers[index];
+        List<string> options = new List<string>();
+        for (int i = 0; i < strTab.Length; i++)
+        {
+            options.Add(strTab[i]);
+        }
+        dropdownToFill.AddOptions(options);
     }
     
-    public void UpdateNbAi(int index)
+    private void FillAllDropdowns()
     {
-        NbAi = PossibleAiPlayers[index];
-    }
+        // Nb Local
+        FillDropdownWithIntTab(PossibleLocalPlayers, _gameParameters.NbLocal);
 
-    public void UpdateAiDifficulty(int index)
-    {
-        AiDifficulty = PossibleAiDifficulties[index];
-    }
+        // Nb AI
+        FillDropdownWithIntTab(PossibleAiPlayers, _gameParameters.NbAi);
+        
+        // Ai difficulty
+        FillDropdownWithStringTab(PossibleAiDifficulties, _gameParameters.AiDifficulty);
+        
+        // Maps
+        FillDropdownWithStringTab(PossibleMaps, _gameParameters.MapSelection);
 
-    public void UpdateMap(int index)
-    {
-        MapName = PossibleMaps[index];
+        // Score to win
+        FillDropdownWithIntTab(PossibleScores, _gameParameters.ScoreToWin);
     }
+    #endregion
 
-    public void UpdateScoreToWin(int index)
+    #region Listeners
+    public void SetNbLocalEvent(int localIndex)
     {
-        ScoreToWin = PossibleScores[index];
+        NbLocal = PossibleLocalPlayers[localIndex];
     }
-
-    public void UpdateKeyboardNeed(bool status)
+    public void SetNbAiEvent(int aiIndex)
     {
-        NeedKeyboard = status;
+        NbAi = PossibleAiPlayers[aiIndex];
     }
+    public void SetAiDifficultyEvent(int difficultyIndex)
+    {
+        AiDifficulty = PossibleAiDifficulties[difficultyIndex];
+    }
+    public void SetMapEvent(int mapIndex)
+    {
+        MapName = PossibleMaps[mapIndex];
+    }
+    public void SetScoreToWinEvent(int scoreIndex)
+    {
+        ScoreToWin = PossibleScores[scoreIndex];
+    }
+    public void ToggleKeyboardNeed(bool needKeyboardStatus)
+    {
+        NeedKeyboard = needKeyboardStatus;
+    }
+    #endregion
 
     #endregion
 }
