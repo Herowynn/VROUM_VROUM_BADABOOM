@@ -8,11 +8,11 @@ public class Menu : MonoBehaviour
 {
     public void Load()
     {
-        transform.gameObject.SetActive(true);
+        gameObject.SetActive(true);
     }
 
     public void Unload()
     {
-        transform.gameObject.SetActive(false);
+        gameObject.SetActive(false);
     }
 }

@@ -63,6 +63,8 @@ public class MenuManager : MonoBehaviour
         }
         
         LoadMenu(_firstMenuToLoad);
+        
+        AudioManager.Instance.PlayMusicAndLoop("BlazeRushMainMenuMusic");
     }
 
     /// <summary>
@@ -74,14 +76,13 @@ public class MenuManager : MonoBehaviour
         if (_currentMenu != null)
         {
             _currentMenu.Unload();
-            AudioManager.Instance.PlaySfx("NavBtnClickedSoundEffect");
         }
 
         _currentMenu = menu;
         _currentMenu.Load();
     }
-
-    // may not be used anymore
+    
+    
     public void LoadGame(Menu menu)
     {
         LoadMenu(menu);
@@ -147,32 +148,26 @@ public class MenuManager : MonoBehaviour
     public void SetNbLocalEvent(int localIndex)
     {
         NbLocal = PossibleLocalPlayers[localIndex];
-        PlayParameterChangedSoundEffect();
     }
     public void SetNbAiEvent(int aiIndex)
     {
         NbAi = PossibleAiPlayers[aiIndex];
-        PlayParameterChangedSoundEffect();
     }
     public void SetAiDifficultyEvent(int difficultyIndex)
     {
         AiDifficulty = PossibleAiDifficulties[difficultyIndex];
-        PlayParameterChangedSoundEffect();
     }
     public void SetMapEvent(int mapIndex)
     {
         MapName = PossibleMaps[mapIndex];
-        PlayParameterChangedSoundEffect();
     }
     public void SetScoreToWinEvent(int scoreIndex)
     {
         ScoreToWin = PossibleScores[scoreIndex];
-        PlayParameterChangedSoundEffect();
     }
     public void ToggleKeyboardNeed(bool needKeyboardStatus)
     {
         NeedKeyboard = needKeyboardStatus;
-        PlayParameterChangedSoundEffect();
     }
     #endregion
 
@@ -182,43 +177,56 @@ public class MenuManager : MonoBehaviour
     public void SetGlobalVolume(float volume) 
     {
         _options.AudioMixer.SetFloat("Main_Volume", volume);
-        PlayParameterChangedSoundEffect();
     }
 
     public void SetSfxVolume(float volume)
     {
         _options.AudioMixer.SetFloat("SFX_Volume", volume);
-        PlayParameterChangedSoundEffect();
     }
 
     public void SetMusicVolume(float volume)
     {
         _options.AudioMixer.SetFloat("MUSIC_Volume", volume);
-        PlayParameterChangedSoundEffect();
     }
 
     public void SetQuality(int qualityIndex)
     {
         QualitySettings.SetQualityLevel(qualityIndex);
-        PlayParameterChangedSoundEffect();
     }
 
     public void SetFullScreen(bool isFullscreen)
     {
         Screen.fullScreen = isFullscreen;
-        PlayParameterChangedSoundEffect();
     }
 
     public void SetResolution(int resolutionIndex)
     {
         Resolution resolution = _options.Resolutions[resolutionIndex];
         Screen.SetResolution(resolution.width, resolution.height, Screen.fullScreen);
-        PlayParameterChangedSoundEffect();
     }
     #endregion
     
-    private void PlayParameterChangedSoundEffect()
+    #region Sounds
+    
+    public void PlaySoundEffectForParameterChange()
     {
-        AudioManager.Instance.PlaySfx("ParameterChangedSoundEffect");
+        AudioManager.Instance.PlaySfx("ValidateParameterSoundEffect");
     }
+
+    public void PlaySoundEffectWhenNavButtonClicked()
+    {
+        AudioManager.Instance.PlaySfx("NavBtnClickedSoundEffect");
+    }
+
+    public void PlaySoundEffectForBackButtonClicked()
+    {
+        AudioManager.Instance.PlaySfx("BackSoundEffect");
+    }
+
+    public void PlaySoundEffectForConfirmButtonClicked()
+    {
+        AudioManager.Instance.PlaySfx("ConfirmSoundEffect");
+    }
+    
+    #endregion
 }

@@ -26,9 +26,18 @@ public class AudioManager : MonoBehaviour
 
     [Header("Sounds")] [SerializeField] private AudioData[] _sfxSounds;
     [SerializeField] private AudioData[] _musicSounds;
+
+    #region Intern Variables
+
+    private GameObject _currentMusic;
+
+    #endregion
     
-    public void PlayAudioClipAsMusic(AudioClip audioClip, bool loopMusic)
+    private void PlayAudioClipAsMusic(AudioClip audioClip, bool loopMusic)
     {
+        if (_currentMusic != null)
+            StopCurrentAudioClip();
+        
         if (audioClip != null)
         {
             GameObject go = new GameObject();
@@ -40,10 +49,12 @@ public class AudioManager : MonoBehaviour
             source.outputAudioMixerGroup = _musicMixer;
             source.loop = loopMusic;
             source.Play();
+
+            _currentMusic = go;
         }
     }
 
-    public void PlayAudioClipAsSfx(AudioClip audioClip)
+    private void PlayAudioClipAsSfx(AudioClip audioClip)
     {
         if (audioClip != null)
         {
@@ -68,14 +79,16 @@ public class AudioManager : MonoBehaviour
                 foreach (var sound in _sfxSounds)
                 {
                     if (sound.AudioName == audioClipName)
-                        return sound.AudioClips[Random.Range(0, sound.AudioClips.Length)];
+                    {
+                        return sound.AudioClips.Length > 1 ? sound.AudioClips[Random.Range(0, sound.AudioClips.Length)] : sound.AudioClips[0];
+                    }
                 }
                 break;
             case AudioType.MUSIC:
                 foreach (var sound in _musicSounds)
                 {
                     if (sound.AudioName == audioClipName)
-                        return sound.AudioClips[0];
+                        return sound.AudioClips.Length > 1 ? sound.AudioClips[Random.Range(0, sound.AudioClips.Length)] : sound.AudioClips[0];
                 }
                 break;
             default:
@@ -85,6 +98,11 @@ public class AudioManager : MonoBehaviour
         return null;
     }
 
+    private void StopCurrentAudioClip()
+    {
+        Destroy(_currentMusic);
+    }
+    
     #region Called Externally
     
     public void PlaySfx(string sfxName)

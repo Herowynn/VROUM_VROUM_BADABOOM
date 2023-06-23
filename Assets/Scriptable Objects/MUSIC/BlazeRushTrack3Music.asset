@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: eea5a393894f45547a0cec808bfd426b, type: 3}
-  m_Name: NavBtnClickedSoundEffect
+  m_Name: BlazeRushTrack3Music
   m_EditorClassIdentifier: 
-  AudioName: NavBtnClickedSoundEffect
-  AudioType: 0
+  AudioName: BlazeRushTrack1Music
+  AudioType: 1
   AudioClips:
-  - {fileID: 0}
+  - {fileID: 8300000, guid: 3e59c40f271367641b022439801ef72c, type: 3}

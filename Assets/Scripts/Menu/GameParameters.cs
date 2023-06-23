@@ -24,6 +24,5 @@ public class GameParameters : MonoBehaviour
         AiDifficulty.ClearOptions();
         MapSelection.ClearOptions();
         ScoreToWin.ClearOptions();
-        NeedKeyboard.isOn = false;
     }
 }
