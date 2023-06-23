@@ -32,12 +32,16 @@ public class CameraController : MonoBehaviour
     {
         if (Camera == null)
             Camera = GetComponent<Camera>();
-
-        transform.position = /*GameManager.Instance.MapManager.CurrentMap.PlayerStartPositions[0].position + */PositionOffset;
         
         Quaternion rot = transform.rotation;
         rot.eulerAngles = InitialRotation;
         transform.rotation = rot;
+    }
+
+    public void InitiatePosition()
+    {
+        transform.position = GameManager.Instance.MapManager.CurrentMap.PlayerStartPositions[1].position * 0.5f +
+            GameManager.Instance.MapManager.CurrentMap.PlayerStartPositions[2].position * 0.5f + PositionOffset;
     }
 
     private void LateUpdate()
@@ -110,11 +114,11 @@ public class CameraController : MonoBehaviour
         switch (Targets.Count)
         {
             case 4:
-                return 0.9f * carsRanking[0].transform.position + 0.4f * carsRanking[1].transform.position +
-                    0.3f * carsRanking[2].transform.position + 0.3f * carsRanking[3].transform.position;
+                return 0.9f * carsRanking[0].transform.position + 0.04f * carsRanking[1].transform.position +
+                    0.03f * carsRanking[2].transform.position + 0.03f * carsRanking[3].transform.position;
             case 3:
-                return 0.9f * carsRanking[0].transform.position + 0.6f * carsRanking[1].transform.position +
-                    0.4f * carsRanking[2].transform.position;
+                return 0.9f * carsRanking[0].transform.position + 0.06f * carsRanking[1].transform.position +
+                    0.04f * carsRanking[2].transform.position;
             case 2:
                 return 0.9f * carsRanking[0].transform.position + 0.1f * carsRanking[1].transform.position;
             default:

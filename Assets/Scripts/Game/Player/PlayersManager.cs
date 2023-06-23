@@ -18,7 +18,13 @@ public class PlayersManager : MonoBehaviour
     [Header("Infos")]
     public List<GameObject> Players;
     public List<Color> PlayerColors;
-    
+
+    private void Update()
+    {
+        if (GameManager.Instance.GameState == GameState.RACING)
+            CarsOnScreenVerification();
+    }
+
     public void CreateNewPlayer(bool playerUseKeyboard, int startPositionIndex, bool isAi)
     {
         Vector3 spawnPosition = GameManager.Instance.MapManager.CurrentMap.PlayerStartPositions[startPositionIndex].transform.position;
@@ -43,5 +49,26 @@ public class PlayersManager : MonoBehaviour
             Destroy(player);
 
         Players = new List<GameObject>();
+    }
+
+    private void CarsOnScreenVerification()
+    {
+        foreach(GameObject car in Players)
+        {
+            if (car.GetComponent<GlobalController>().PlayerState == PlayerState.ALIVE)
+            {
+                GlobalController gc = car.GetComponent<GlobalController>();
+                int visibleParts = 0;
+
+                foreach (GameObject carPart in gc.VisibleCarParts)
+                {
+                    if (carPart.GetComponent<Renderer>().isVisible)
+                        visibleParts++;
+                }
+
+                if (visibleParts == 0)
+                    GameManager.Instance.TriggerPlayerDestructionEvent(gc);
+            }
+        }
     }
 }
