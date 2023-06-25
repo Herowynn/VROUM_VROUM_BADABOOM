@@ -8,13 +8,16 @@ using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
+    public Canvas Canvas;
+    public TMPro.TextMeshProUGUI[] Ranks;
+
     [Header("Instance")]
     public List<GameObject> Targets = new List<GameObject>();
     public Camera Camera;
 
     [Header("GD")]
-    public Vector3 Position;
-    public Vector3 Rotation;
+    public Vector3 PositionOffset;
+    public Vector3 InitialRotation;
     public float MinZoom = 40f;
     public float MaxZoom = 10f;
     public float ZoomLimiter = 50f;
@@ -30,17 +33,21 @@ public class CameraController : MonoBehaviour
         if (Camera == null)
             Camera = GetComponent<Camera>();
         
-        transform.position = Position;
-        
         Quaternion rot = transform.rotation;
-        rot.eulerAngles = Rotation;
-        
+        rot.eulerAngles = InitialRotation;
         transform.rotation = rot;
+    }
+
+    public void InitiatePosition()
+    {
+        transform.position = GameManager.Instance.MapManager.CurrentMap.PlayerStartPositions[1].position * 0.5f +
+            GameManager.Instance.MapManager.CurrentMap.PlayerStartPositions[2].position * 0.5f + PositionOffset;
     }
 
     private void LateUpdate()
     {
-        if (Targets.Count == 0) return;
+        if (Targets.Count == 0) 
+            return;
 
         Move();
         Zoom();
@@ -51,9 +58,7 @@ public class CameraController : MonoBehaviour
         Targets = new List<GameObject>();
 
         foreach (var player in GameManager.Instance.PlayersManager.Players)
-        {
             Targets.Add(player);
-        }
     }
 
     public void RemoveDeadTargetEvent()
@@ -63,9 +68,9 @@ public class CameraController : MonoBehaviour
     
     private void Move()
     {
-        Vector3 centerPoint = GetCenterPoint();
+        Vector3 centerPoint = GetTargetPoint();
 
-        transform.position = Vector3.SmoothDamp(transform.position, centerPoint + Position, ref _velocity, SmoothTime);
+        transform.position = Vector3.SmoothDamp(transform.position, centerPoint + PositionOffset, ref _velocity, SmoothTime);
     }
 
     private void Zoom()
@@ -80,24 +85,44 @@ public class CameraController : MonoBehaviour
         var bounds = new Bounds(Targets[0].transform.position, Vector3.zero);
 
         for (int i = 0; i < Targets.Count; i++)
-        {
             bounds.Encapsulate(Targets[i].transform.position);
-        }
 
         return bounds.size.x;
     }
 
-    private Vector3 GetCenterPoint()
+    private Vector3 GetTargetPoint()
     {
-        if(Targets.Count == 1) return Targets[0].transform.position;
+        if(Targets.Count == 1) 
+            return Targets[0].transform.position;
 
-        var bounds = new Bounds(Targets[0].transform.position, Vector3.zero);
+        GameObject[] carsRanking = GameManager.Instance.RoundManager.RealtimeCarsRanking(Targets);
 
-        for (int i = 0; i < Targets.Count; i++)
+        //
+/*        if (carsRanking.Length < Ranks.Length)
         {
-            bounds.Encapsulate(Targets[i].transform.position);
+            for (int i = Ranks.Length - 1; i > carsRanking.Length - 1; i++)
+                Ranks[i].gameObject.SetActive(false);
         }
 
-        return bounds.center;
+        for (int i = 0; i < carsRanking.Length; i++)
+        {
+            Ranks[i].gameObject.SetActive(true);
+            Ranks[i].rectTransform.position = GetComponent<Camera>().WorldToScreenPoint(carsRanking[i].transform.position) + new Vector3(0, 30f, 0);
+        }*/
+        //
+
+        switch (Targets.Count)
+        {
+            case 4:
+                return 0.9f * carsRanking[0].transform.position + 0.04f * carsRanking[1].transform.position +
+                    0.03f * carsRanking[2].transform.position + 0.03f * carsRanking[3].transform.position;
+            case 3:
+                return 0.9f * carsRanking[0].transform.position + 0.06f * carsRanking[1].transform.position +
+                    0.04f * carsRanking[2].transform.position;
+            case 2:
+                return 0.9f * carsRanking[0].transform.position + 0.1f * carsRanking[1].transform.position;
+            default:
+                return Vector3.negativeInfinity;
+        }
     }
 }

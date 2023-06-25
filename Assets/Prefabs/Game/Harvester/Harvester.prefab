@@ -51,7 +51,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   NodesToFollow: []
   TargetNode: 0
-  Speed: 3
+  InitialSpeed: 3
   IncrementSpeed: 0.5
   LoopSound: {fileID: 0}
   HornSounds:

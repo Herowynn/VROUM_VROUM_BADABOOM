@@ -23,6 +23,8 @@ public class CarController : GlobalController
 
     private void Update()
     {
+
+
         _distArrowRayPoint = Arrow.transform.position - RayPoint.position;
 
         if (GameManager.Instance.GameState == GameState.RACING && PlayerState == PlayerState.ALIVE && _movementInput != Vector2.zero)
