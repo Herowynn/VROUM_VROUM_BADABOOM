@@ -27,6 +27,7 @@ public class MenuManager : MonoBehaviour
     }
 
     [Header("Instances")] [SerializeField] private Menu _firstMenuToLoad;
+    [SerializeField] private Menu _mainMenu;
     [SerializeField] private GameParameters _gameParameters;
     [SerializeField] private Options _options;
     [SerializeField] private Menu[] _menus;
@@ -65,6 +66,14 @@ public class MenuManager : MonoBehaviour
         LoadMenu(_firstMenuToLoad);
         
         AudioManager.Instance.PlayMusicAndLoop("BlazeRushMainMenuMusic");
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Space) && _firstMenuToLoad.gameObject.activeSelf)
+        {
+            LoadMenu(_mainMenu);
+        }
     }
 
     /// <summary>
