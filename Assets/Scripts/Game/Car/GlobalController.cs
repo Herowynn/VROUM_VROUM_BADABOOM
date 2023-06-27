@@ -185,7 +185,6 @@ public class GlobalController : MonoBehaviour
             SphereRB.drag = DragOnGround;
 
             if (_canMove && _movementInput != Vector2.zero)
-
             {
                 SphereRB.AddForce(_wantedDirection * ForwardAccel);
                 SphereRB.velocity = Vector3.ClampMagnitude(SphereRB.velocity, MaximumSpeed * SlowFactor);

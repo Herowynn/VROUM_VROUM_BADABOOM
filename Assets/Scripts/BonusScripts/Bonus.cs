@@ -39,15 +39,24 @@ public class Bonus : MonoBehaviour
     private void Update()
     {
         transform.Rotate(0.33f * new Vector3(0, 1, 0));
+
+        if (!transform.GetChild(0).GetComponent<Renderer>().isVisible)
+            Destroy(gameObject);
     }
 
     /// <summary>
-    /// This coroutine destroys this piackable booster object after a certain amount of time.
+    /// This coroutine destroys this pickable booster object after a certain amount of time.
     /// </summary>
     /// <returns></returns>
-    IEnumerator WaitBeforeAutoDestroy()
+/*    IEnumerator WaitBeforeAutoDestroy()
     {
         yield return new WaitForSeconds(5f);
         Destroy(gameObject);
+    }*/
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.collider.gameObject.GetComponent<DestructorComponent>())
+            Destroy(gameObject);
     }
 }

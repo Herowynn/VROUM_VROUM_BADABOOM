@@ -22,7 +22,7 @@ public class Harvester : MonoBehaviour
 
 
     private float _speed;
-    private float _carsAverageSpeed;
+    private float _carsWeightedSpeed;
     private bool _roundBeginning;
     private bool _canMove;
     private List<GameObject> _visibleParts = new List<GameObject>();
@@ -63,7 +63,7 @@ public class Harvester : MonoBehaviour
         {
             int visibleParts = 0;
 
-            foreach(GameObject visiblePart in _visibleParts)
+            foreach (GameObject visiblePart in _visibleParts)
             {
                 if (visiblePart.GetComponent<Renderer>().isVisible)
                     visibleParts++;
@@ -76,7 +76,7 @@ public class Harvester : MonoBehaviour
             }
         }
 
-        _carsAverageSpeed = GameManager.Instance.PlayersManager.WeightedCarsSpeed;
+        _carsWeightedSpeed = GameManager.Instance.PlayersManager.CarsWeightedSpeed;
 
         if (GameManager.Instance.GameState == GameState.RACING && _canMove)
         {
@@ -102,9 +102,10 @@ public class Harvester : MonoBehaviour
         transform.position = resetTransform.position;
         transform.rotation = resetTransform.rotation;
         _speed = InitialSpeed;
+        UpdateTargetNodeAfterReset();
         _roundBeginning = true;
         _canMove = false;
-        UpdateTargetNodeAfterReset();
+        StopCoroutine(WaitBeforeMoving());
         StartCoroutine(WaitBeforeMoving());
     }
 
@@ -143,7 +144,7 @@ public class Harvester : MonoBehaviour
     {
         Vector3 target = path[TargetNode].transform.position;
         Vector3 direction = target - transform.position;
-        float moveStep = (_speed > _carsAverageSpeed ? _speed : _carsAverageSpeed) * Time.deltaTime;
+        float moveStep = (_speed > _carsWeightedSpeed ? _speed : _carsWeightedSpeed) * Time.deltaTime;
         float distance = Vector3.Distance(target, transform.position);
 
         while (moveStep > distance)
@@ -154,7 +155,7 @@ public class Harvester : MonoBehaviour
                 TargetNode = 0;
 
             target = path[TargetNode].transform.position;
-            moveStep = (_speed > _carsAverageSpeed ? _speed : _carsAverageSpeed) * Time.deltaTime;
+            moveStep = (_speed > _carsWeightedSpeed ? _speed : _carsWeightedSpeed) * Time.deltaTime;
             distance = Vector3.Distance(target, transform.position);
             direction = target - transform.position;
             

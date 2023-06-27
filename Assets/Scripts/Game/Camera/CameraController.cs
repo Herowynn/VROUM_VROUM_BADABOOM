@@ -25,14 +25,14 @@ public class CameraController : MonoBehaviour
     [Header("GA")]
     public float SmoothTime = .5f;
 
+
     private Vector3 _velocity;
-    private List<GameObject> _targetsToFollow = new List<GameObject>();
 
     private void Start()
     {
         if (Camera == null)
             Camera = GetComponent<Camera>();
-        
+
         Quaternion rot = transform.rotation;
         rot.eulerAngles = InitialRotation;
         transform.rotation = rot;
@@ -46,7 +46,7 @@ public class CameraController : MonoBehaviour
 
     private void LateUpdate()
     {
-        if (Targets.Count == 0) 
+        if (Targets.Count == 0)
             return;
 
         Move();

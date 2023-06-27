@@ -1,4 +1,6 @@
 using System.Collections.Generic;
+using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Windows.Speech;
@@ -21,35 +23,26 @@ public class PlayersManager : MonoBehaviour
     public List<Color> PlayerColors;
 
 
-    private float _weightedCarsSpeed;
-    private Dictionary<int, float[]> weights = new Dictionary<int, float[]>();
+    private float _carsWeightedSpeed;
+    private Dictionary<int, float[]> _weights = new Dictionary<int, float[]>();
 
-    public float WeightedCarsSpeed { get { return _weightedCarsSpeed; } }
+    public float CarsWeightedSpeed { get { return _carsWeightedSpeed; } }
 
     private void Start()
     {
-        weights[2] = new float[] { 0.9f, 0.1f };
-        weights[3] = new float[] { 0.9f, 0.06f, 0.04f };
-        weights[4] = new float[] { 0.9f, 0.04f, 0.03f, 0.03f };
+        _weights[2] = new float[] { 0.9f, 0.1f };
+        _weights[3] = new float[] { 0.9f, 0.06f, 0.04f };
+        _weights[4] = new float[] { 0.9f, 0.04f, 0.03f, 0.03f };
     }
 
     private void Update()
     {
-/*        if (GameManager.Instance.GameState == GameState.RACING)
-            CarsOnScreenVerification();*/
+        GameObject[] rankedPlayers = GameManager.Instance.RoundManager.RealtimeCarsRanking(Camera.main.GetComponent<CameraController>().Targets);
 
-        float speedSum = 0;
-        int cpt = 0;
-        foreach(GameObject player in Players)
-        {
-            if (player.GetComponent<GlobalController>().PlayerState == PlayerState.ALIVE)
-            {
-                speedSum += player.GetComponent<GlobalController>().SphereRB.velocity.magnitude *
-                    weights[Camera.main.GetComponent<CameraController>().Targets.Count][cpt];
-                cpt++;
-            }
-        }
-        _weightedCarsSpeed = speedSum;
+        float weightedSpeed = 0;
+        for (int i = 0; i < rankedPlayers.Length; i++)
+            weightedSpeed += rankedPlayers[i].GetComponent<GlobalController>().SphereRB.velocity.magnitude * _weights[rankedPlayers.Length][i];
+        _carsWeightedSpeed = weightedSpeed;
     }
 
     public void CreateNewPlayer(bool playerUseKeyboard, int startPositionIndex, bool isAi)
@@ -76,26 +69,5 @@ public class PlayersManager : MonoBehaviour
             Destroy(player);
 
         Players = new List<GameObject>();
-    }
-
-    private void CarsOnScreenVerification()
-    {
-        foreach(GameObject car in Players)
-        {
-            if (car.GetComponent<GlobalController>().PlayerState == PlayerState.ALIVE)
-            {
-                GlobalController gc = car.GetComponent<GlobalController>();
-                int visibleParts = 0;
-
-                foreach (GameObject carPart in gc.VisibleCarParts)
-                {
-                    if (carPart.GetComponent<Renderer>().isVisible)
-                        visibleParts++;
-                }
-
-                if (visibleParts == 0)
-                    GameManager.Instance.TriggerPlayerDestructionEvent(gc);
-            }
-        }
     }
 }
