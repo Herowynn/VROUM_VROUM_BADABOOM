@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using DG.Tweening;
 
 /// <summary>
 /// MenuManager is a singleton that is used to manage every aspect of the Menu scene.
@@ -74,6 +75,11 @@ public class MenuManager : MonoBehaviour
         {
             LoadMenu(_mainMenu);
         }
+
+        if (Input.GetKeyDown(KeyCode.Escape) && _mainMenu.gameObject.activeSelf)
+        {
+            LoadMenu(_firstMenuToLoad);
+        }
     }
 
     /// <summary>
@@ -84,18 +90,54 @@ public class MenuManager : MonoBehaviour
     {
         if (_currentMenu != null)
         {
-            _currentMenu.Unload();
+            _currentMenu.CanvasGroup.DOKill();
+            
+            _currentMenu.CanvasGroup.alpha = 1f;
+            
+            _currentMenu.CanvasGroup.DOFade(0f, 0.5f).OnComplete(() =>
+            {
+                _currentMenu.Unload();
+                
+                _currentMenu = menu;
+                _currentMenu.CanvasGroup.alpha = 0f;
+                
+                _currentMenu.Load();
+
+                _currentMenu.CanvasGroup.DOFade(1f, 0.5f);
+            });
         }
 
-        _currentMenu = menu;
-        _currentMenu.Load();
+        else
+        {
+            _currentMenu = menu;
+            _currentMenu.CanvasGroup.alpha = 0f;
+            
+            _currentMenu.Load();
+
+            _currentMenu.CanvasGroup.DOFade(1f, 0.5f);
+        }
     }
     
     
-    public void LoadGame(Menu menu)
+    public void LoadGame()
     {
-        LoadMenu(menu);
-        SceneManager.Instance.LoadGame();
+        _currentMenu.CanvasGroup.DOKill();
+            
+        _currentMenu.CanvasGroup.alpha = 1f;
+            
+        _currentMenu.CanvasGroup.DOFade(0f, 0.5f).OnComplete(() =>
+        {
+            _currentMenu.Unload();
+                
+            _currentMenu = _firstMenuToLoad;
+            _currentMenu.CanvasGroup.alpha = 1f;
+                
+            _currentMenu.Load();
+            
+            SceneManager.Instance.LoadGame();
+        });
+        
+        
     }
     
     #region Main Menu

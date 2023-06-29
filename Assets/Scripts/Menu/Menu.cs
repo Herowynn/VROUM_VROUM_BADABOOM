@@ -1,3 +1,4 @@
+using DG.Tweening;
 using UnityEngine;
 
 /// <summary>
@@ -6,6 +7,8 @@ using UnityEngine;
 
 public class Menu : MonoBehaviour
 {
+    [Header("Instance")] public CanvasGroup CanvasGroup;
+
     public void Load()
     {
         gameObject.SetActive(true);
