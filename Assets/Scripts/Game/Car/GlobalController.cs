@@ -87,8 +87,11 @@ public class GlobalController : MonoBehaviour
     protected Vector3 _lastRebornPosition;
     protected bool _hasAnAttackBonus;
     protected bool _hasABoost;
+    protected List<GameObject> _visibleCarParts = new List<GameObject>();
 
     #endregion
+
+    public List<GameObject> VisibleCarParts { get { return _visibleCarParts; } }
 
     #region Unity Functions
 
@@ -123,6 +126,19 @@ public class GlobalController : MonoBehaviour
 
         _hasABoost = false;
         _hasAnAttackBonus = false;
+
+        GameObject model = transform.GetChild(0).gameObject;
+        for(int i = 0; i < model.transform.childCount; i++)
+        {
+            GameObject part = model.transform.GetChild(i).gameObject;
+            if (part.transform.childCount == 0)
+                _visibleCarParts.Add(part);
+            else
+            {
+                for (int j = 0; j < part.transform.childCount; j++)
+                    _visibleCarParts.Add(part.transform.GetChild(j).gameObject);
+            }
+        }
     }
 
     protected void UpdateGraphics()
@@ -169,7 +185,6 @@ public class GlobalController : MonoBehaviour
             SphereRB.drag = DragOnGround;
 
             if (_canMove && _movementInput != Vector2.zero)
-
             {
                 SphereRB.AddForce(_wantedDirection * ForwardAccel);
                 SphereRB.velocity = Vector3.ClampMagnitude(SphereRB.velocity, MaximumSpeed * SlowFactor);
@@ -241,6 +256,10 @@ public class GlobalController : MonoBehaviour
         Visual.SetActive(false);
         _rigidbody.constraints = RigidbodyConstraints.FreezeAll;
         _boxCollider.enabled = false;
+        if (AttacksContainer.transform.childCount > 0)
+            Destroy(AttacksContainer.transform.GetChild(0).gameObject);
+        if (BoostsContainer.transform.childCount > 0)
+            Destroy(BoostsContainer.transform.GetChild(0).gameObject);
         PlayerState = PlayerState.DEAD;
     }
 

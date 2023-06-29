@@ -66,6 +66,7 @@ public class GameManager : MonoBehaviour
 
         InstantiatePlayers(MultipleInputManager.NeedKeyboard, MultipleInputManager.NumberOfPlayer, MultipleInputManager.NbAi);
 
+        Camera.InitiatePosition();
         Camera.AddTargets();
         
         StartCoroutine(RoundManager.StartRound());

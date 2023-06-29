@@ -1,6 +1,9 @@
 using System.Collections.Generic;
+using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Windows.Speech;
 
 /// <summary>
 /// PlayersManager is a manager that deal with the PlayerS and not a player in particular.
@@ -18,7 +21,30 @@ public class PlayersManager : MonoBehaviour
     [Header("Infos")]
     public List<GameObject> Players;
     public List<Color> PlayerColors;
-    
+
+
+    private float _carsWeightedSpeed;
+    private Dictionary<int, float[]> _weights = new Dictionary<int, float[]>();
+
+    public float CarsWeightedSpeed { get { return _carsWeightedSpeed; } }
+
+    private void Start()
+    {
+        _weights[2] = new float[] { 0.9f, 0.1f };
+        _weights[3] = new float[] { 0.9f, 0.06f, 0.04f };
+        _weights[4] = new float[] { 0.9f, 0.04f, 0.03f, 0.03f };
+    }
+
+    private void Update()
+    {
+        GameObject[] rankedPlayers = GameManager.Instance.RoundManager.RealtimeCarsRanking(Camera.main.GetComponent<CameraController>().Targets);
+
+        float weightedSpeed = 0;
+        for (int i = 0; i < rankedPlayers.Length; i++)
+            weightedSpeed += rankedPlayers[i].GetComponent<GlobalController>().SphereRB.velocity.magnitude * _weights[rankedPlayers.Length][i];
+        _carsWeightedSpeed = weightedSpeed;
+    }
+
     public void CreateNewPlayer(bool playerUseKeyboard, int startPositionIndex, bool isAi)
     {
         Vector3 spawnPosition = GameManager.Instance.MapManager.CurrentMap.PlayerStartPositions[startPositionIndex].transform.position;
@@ -40,9 +66,7 @@ public class PlayersManager : MonoBehaviour
     public void DestroyPlayers()
     {
         foreach (var player in Players)
-        {
             Destroy(player);
-        }
 
         Players = new List<GameObject>();
     }

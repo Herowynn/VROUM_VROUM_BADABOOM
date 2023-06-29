@@ -9,8 +9,9 @@ public class Harvester : MonoBehaviour
     [HideInInspector] public int TargetNode;
 
     [Header("GD")]
-    public float Speed;
+    public float InitialSpeed;
     public float IncrementSpeed = 0.01f;
+    public float MaximumDelayBeforeMoving;
 
     [Header("Audio")]
     public AudioClip LoopSound;
@@ -20,11 +21,21 @@ public class Harvester : MonoBehaviour
     public AudioSource Source;
 
 
+    private float _speed;
+    private float _carsWeightedSpeed;
+    private bool _roundBeginning;
+    private bool _canMove;
+    private List<GameObject> _visibleParts = new List<GameObject>();
+
+    public bool CanMove { get { return _canMove; } }
+
+
     /// <summary>
     /// This method plays the horn sound effect and starts the Horn() coroutine.
     /// </summary>
     private void Start()
     {
+        _speed = InitialSpeed;
         Source = GetComponent<AudioSource>();
         StartCoroutine(Horn(minTimeBetweenHorn, maxTimeBetweenHorn));
         AudioClip horn = HornSounds[Random.Range(0, HornSounds.Length)];
@@ -34,23 +45,68 @@ public class Harvester : MonoBehaviour
             Source.clip = horn;
             Source.Play();
         }
+
+        _canMove = false;
+        _roundBeginning = true;
+
+        GameObject body = transform.GetChild(0).GetChild(0).gameObject;
+        _visibleParts.Add(body);
+        for (int i = 0; i < body.transform.childCount; i++)
+            _visibleParts.Add(body.transform.GetChild(i).gameObject);
+
+        StartCoroutine(WaitBeforeMoving());
     }
 
     void Update()
     {
-        if (GameManager.Instance.GameState == GameState.RACING)
+        if (GameManager.Instance.GameState == GameState.RACING && _roundBeginning)
+        {
+            int visibleParts = 0;
+
+            foreach (GameObject visiblePart in _visibleParts)
+            {
+                if (visiblePart.GetComponent<Renderer>().isVisible)
+                    visibleParts++;
+            }
+
+            if (visibleParts == 0)
+            {
+                _canMove = true;
+                _roundBeginning = false;
+            }
+        }
+
+        _carsWeightedSpeed = GameManager.Instance.PlayersManager.CarsWeightedSpeed;
+
+        if (GameManager.Instance.GameState == GameState.RACING && _canMove)
         {
             UpdateMove(NodesToFollow);
-            Speed += IncrementSpeed * Time.deltaTime;
+            _speed += IncrementSpeed * Time.deltaTime;
         }
+    }
+
+    private IEnumerator WaitBeforeMoving()
+    {
+        yield return new WaitForSeconds(MaximumDelayBeforeMoving + GameManager.Instance.RoundManager.TimeToRestartRound);
+        _canMove = true;
+    }
+
+    public void InitiateNodesToFollow(List<Transform> nodes)
+    {
+        NodesToFollow = nodes;
+        TargetNode = 0;
     }
 
     public void ResetToTransform(Transform resetTransform)
     {
         transform.position = resetTransform.position;
         transform.rotation = resetTransform.rotation;
-        Speed = 3;
+        _speed = InitialSpeed;
         UpdateTargetNodeAfterReset();
+        _roundBeginning = true;
+        _canMove = false;
+        StopCoroutine(WaitBeforeMoving());
+        StartCoroutine(WaitBeforeMoving());
     }
 
     /// <summary>
@@ -65,7 +121,8 @@ public class Harvester : MonoBehaviour
 
         for (int i = 0; i < NodesToFollow.Count; i++)
         {
-            if (distance > Vector3.Distance(NodesToFollow[i].transform.position, transform.position) && Mathf.Rad2Deg * Mathf.Abs(Mathf.Acos(Vector3.Dot(transform.forward.normalized, (NodesToFollow[i].transform.position - transform.position).normalized))) < 90f)
+            if (distance > Vector3.Distance(NodesToFollow[i].transform.position, transform.position) && Mathf.Rad2Deg *
+                Mathf.Abs(Mathf.Acos(Vector3.Dot(transform.forward.normalized, (NodesToFollow[i].transform.position - transform.position).normalized))) < 90f)
             {
                 newTargetNode = i;
                 distance = Vector3.Distance(NodesToFollow[i].transform.position, transform.position);
@@ -73,12 +130,6 @@ public class Harvester : MonoBehaviour
         }
 
         TargetNode = newTargetNode;
-    }
-
-    public void InitiateNodesToFollow(List<Transform> nodes)
-    {
-        NodesToFollow = nodes;
-        TargetNode = 0;
     }
 
     /// <summary>
@@ -93,7 +144,7 @@ public class Harvester : MonoBehaviour
     {
         Vector3 target = path[TargetNode].transform.position;
         Vector3 direction = target - transform.position;
-        float moveStep = Speed * Time.deltaTime;
+        float moveStep = (_speed > _carsWeightedSpeed ? _speed : _carsWeightedSpeed) * Time.deltaTime;
         float distance = Vector3.Distance(target, transform.position);
 
         while (moveStep > distance)
@@ -104,14 +155,14 @@ public class Harvester : MonoBehaviour
                 TargetNode = 0;
 
             target = path[TargetNode].transform.position;
-            moveStep = Speed * Time.deltaTime;
+            moveStep = (_speed > _carsWeightedSpeed ? _speed : _carsWeightedSpeed) * Time.deltaTime;
             distance = Vector3.Distance(target, transform.position);
             direction = target - transform.position;
             
             //orientation
             transform.rotation = path[TargetNode].transform.rotation;
         }
-        
+
         direction.Normalize();
         transform.position += moveStep * direction;
     }
