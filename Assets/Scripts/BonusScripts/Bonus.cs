@@ -23,17 +23,25 @@ public class Bonus : MonoBehaviour
     /// </summary>
     void Start()
     {
+        GameObject bonusSkin = null;
+
         if (Type == BonusType.Attack) 
         {
             RndLvl = Random.Range(0, BonusSkin.Count);
-            Instantiate(BonusSkin[RndLvl], transform.position, transform.rotation, transform);
+            bonusSkin = Instantiate(BonusSkin[RndLvl], transform.position, transform.rotation, transform);
         }
         if (Type == BonusType.Boost)
         {
             RndLvl = Random.Range(0, BonusSkin.Count);
-            Instantiate(BonusSkin[RndLvl], transform.position, transform.rotation, transform);
+            bonusSkin = Instantiate(BonusSkin[RndLvl], transform.position, transform.rotation, transform);
         }
-        
+
+        BoxCollider bonusSkinCollider = bonusSkin.GetComponent<BoxCollider>();
+        GetComponent<BoxCollider>().center = new Vector3(bonusSkinCollider.center.x * bonusSkin.transform.localScale.x,
+            bonusSkinCollider.center.y * bonusSkin.transform.localScale.y, bonusSkinCollider.center.z * bonusSkin.transform.localScale.z);
+        GetComponent<BoxCollider>().size = new Vector3(bonusSkinCollider.size.x * bonusSkin.transform.localScale.x,
+            bonusSkinCollider.size.y * bonusSkin.transform.localScale.y, bonusSkinCollider.size.z * bonusSkin.transform.localScale.z);
+        Destroy(bonusSkinCollider);
     }
     
     private void Update()

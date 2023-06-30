@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 /// <summary>
@@ -23,6 +24,10 @@ public class GameManager : MonoBehaviour
 
     [Header("Info")]
     public GameState GameState;
+
+    [Header("FX")]
+    public float OnScreenExplosionDuration;
+    public GameObject ExplosionEffectObject;
     
     #endregion
     
@@ -131,8 +136,16 @@ public class GameManager : MonoBehaviour
         PlayersManager.DestroyPlayers();
     }
 
+    private IEnumerator CarExplosion(Vector3 explosionCenter)
+    {
+        GameObject carExplosionObject = Instantiate(ExplosionEffectObject, explosionCenter, Quaternion.identity);
+        yield return new WaitForSeconds(OnScreenExplosionDuration);
+        Destroy(carExplosionObject);
+    }
+
     public void TriggerPlayerDestructionEvent(GlobalController player)
     {
+        StartCoroutine(CarExplosion(player.SphereRB.transform.position));
         RoundManager.PlayerDiedEvent(player);
         Camera.RemoveDeadTargetEvent();
     }

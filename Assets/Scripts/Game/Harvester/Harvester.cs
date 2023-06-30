@@ -5,21 +5,25 @@ using static Unity.VisualScripting.Member;
 
 public class Harvester : MonoBehaviour
 {
+    #region Public Fields
+
     [HideInInspector] public List<Transform> NodesToFollow;
     [HideInInspector] public int TargetNode;
 
     [Header("GD")]
-    public float InitialSpeed;
-    public float IncrementSpeed = 0.01f;
+    public float IncrementSpeed;
     public float MaximumDelayBeforeMoving;
 
     [Header("Audio")]
     public AudioClip LoopSound;
     public AudioClip[] HornSounds;
-    public float minTimeBetweenHorn = 20;
-    public float maxTimeBetweenHorn = 30;
+    public float minTimeBetweenHorn;
+    public float maxTimeBetweenHorn;
     public AudioSource Source;
 
+    #endregion
+
+    #region Private Fields
 
     private float _speed;
     private float _carsWeightedSpeed;
@@ -27,15 +31,16 @@ public class Harvester : MonoBehaviour
     private bool _canMove;
     private List<GameObject> _visibleParts = new List<GameObject>();
 
-    public bool CanMove { get { return _canMove; } }
+    #endregion
 
+    public bool CanMove { get { return _canMove; } }
 
     /// <summary>
     /// This method plays the horn sound effect and starts the Horn() coroutine.
     /// </summary>
     private void Start()
     {
-        _speed = InitialSpeed;
+        _speed = 0f;
         Source = GetComponent<AudioSource>();
         StartCoroutine(Horn(minTimeBetweenHorn, maxTimeBetweenHorn));
         AudioClip horn = HornSounds[Random.Range(0, HornSounds.Length)];
@@ -101,7 +106,7 @@ public class Harvester : MonoBehaviour
     {
         transform.position = resetTransform.position;
         transform.rotation = resetTransform.rotation;
-        _speed = InitialSpeed;
+        _speed = 0f;
         UpdateTargetNodeAfterReset();
         _roundBeginning = true;
         _canMove = false;

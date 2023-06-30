@@ -29,10 +29,6 @@ public class GlobalController : MonoBehaviour
     public GameObject LeftFrontWheel;
 
     [Header("Bonus Effects")]
-    public bool HitBySaw = false;
-    public bool IsBumped;
-    public bool IsExploded;
-    public bool IsTouchedByMachineGun;
     public int BumpForce = 10000;
     public int ProjectileForce = 100;
     public Vector3 BumpDirection;
@@ -89,9 +85,18 @@ public class GlobalController : MonoBehaviour
     protected bool _hasABoost;
     protected List<GameObject> _visibleCarParts = new List<GameObject>();
 
+    protected bool _hitBySaw;
+    protected bool _isBumped;
+    protected bool _isExploded;
+    protected bool _isTouchedByMachineGun;
+
     #endregion
 
     public List<GameObject> VisibleCarParts { get { return _visibleCarParts; } }
+    public bool HitBySaw { set { _hitBySaw = value; } }
+    public bool IsBumped { set { _isBumped = value; } }
+    public bool IsExploded { set { _isExploded = value; } }
+    public bool IsTouchedByMachineGun { set { _isTouchedByMachineGun = value; } }
 
     #region Unity Functions
 
@@ -157,25 +162,24 @@ public class GlobalController : MonoBehaviour
                 _yComponentWantedDirection = transform.forward.y;
         }
 
-        if (HitBySaw && _isGrounded)
+        if (_hitBySaw && _isGrounded)
         {
             SphereRB.AddForce(transform.up * 20000, ForceMode.Impulse);
             StartCoroutine(WaitBeforeSawEnd());
         }
 
-        if (HitBySaw && !_isGrounded)
+        if (_hitBySaw && !_isGrounded)
         {
             transform.Rotate(30 * new Vector3(0, 1, 0));
         }
 
-        if (IsExploded && _isGrounded)
-
+        if (_isExploded && _isGrounded)
         {
             SphereRB.AddForce((ExplosionDirection + new Vector3(0, 100, 0)) * 200, ForceMode.Impulse);
             StartCoroutine(WaitBeforeMissileEnd());
         }
 
-        if (IsExploded && !_isGrounded)
+        if (_isExploded && !_isGrounded)
         {
             transform.Rotate(30 * new Vector3(1, 0, 0));
         }
@@ -199,16 +203,16 @@ public class GlobalController : MonoBehaviour
             Source.clip = BaseSound;
         }
 
-        if (IsBumped)
+        if (_isBumped)
         {
             SphereRB.AddForce(BumpDirection * BumpForce + new Vector3(0f, BumpForce, 0f), ForceMode.Impulse);
-            IsBumped = false;
+            _isBumped = false;
         }
 
-        if (IsTouchedByMachineGun)
+        if (_isTouchedByMachineGun)
         {
             SphereRB.AddForce(ProjectileDirection * ProjectileForce, ForceMode.Impulse);
-            IsTouchedByMachineGun = false;
+            _isTouchedByMachineGun = false;
         }
     }
 
@@ -234,8 +238,6 @@ public class GlobalController : MonoBehaviour
                     break;
             }
 
-
-
             Destroy(collision.gameObject);
         }
 
@@ -256,10 +258,17 @@ public class GlobalController : MonoBehaviour
         Visual.SetActive(false);
         _rigidbody.constraints = RigidbodyConstraints.FreezeAll;
         _boxCollider.enabled = false;
+
+        _isExploded = false;
+        _hitBySaw = false;
+        _isBumped = false;
+        _isTouchedByMachineGun = false;
+
         if (AttacksContainer.transform.childCount > 0)
             Destroy(AttacksContainer.transform.GetChild(0).gameObject);
         if (BoostsContainer.transform.childCount > 0)
             Destroy(BoostsContainer.transform.GetChild(0).gameObject);
+
         PlayerState = PlayerState.DEAD;
     }
 
@@ -292,13 +301,13 @@ public class GlobalController : MonoBehaviour
     private IEnumerator WaitBeforeSawEnd()
     {
         yield return new WaitForSeconds(2f);
-        HitBySaw = false;
+        _hitBySaw = false;
     }
 
     private IEnumerator WaitBeforeMissileEnd()
     {
         yield return new WaitForSeconds(2f);
-        IsExploded = false;
+        _isExploded = false;
     }
 
     private IEnumerator GetBackOnWheels()
