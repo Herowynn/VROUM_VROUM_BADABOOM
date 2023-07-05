@@ -12,6 +12,8 @@ using UnityEngine;
 
 public class RoundManager : MonoBehaviour
 {
+    #region Public Fields
+
     [Header("Info")] 
     public int RoundNumber;
     public int PlayersAlive;
@@ -19,11 +21,16 @@ public class RoundManager : MonoBehaviour
 
     [Header("GD")] 
     public float TimeToRestartRound;
-    
-    //intern var
+
+    #endregion
+
+    #region Private Fields
+
     private List<GlobalController> _playersToPlaceForNextRound;
     private List<RoundNode> _roundNodesForCurrentMap = new List<RoundNode>();
     private Harvester _harvesterForCurrentMap;
+
+    #endregion
 
     private void Start()
     {

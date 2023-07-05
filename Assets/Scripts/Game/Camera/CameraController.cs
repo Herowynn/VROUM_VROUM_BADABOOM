@@ -18,12 +18,12 @@ public class CameraController : MonoBehaviour
     [Header("GD")]
     public Vector3 PositionOffset;
     public Vector3 InitialRotation;
-    public float MinZoom = 40f;
-    public float MaxZoom = 10f;
-    public float ZoomLimiter = 50f;
-    
+    public float MinZoom;
+    public float MaxZoom;
+    public float ZoomLimiter;
+
     [Header("GA")]
-    public float SmoothTime = .5f;
+    public float SmoothTime;
 
 
     private Vector3 _velocity;
@@ -92,37 +92,49 @@ public class CameraController : MonoBehaviour
 
     private Vector3 GetTargetPoint()
     {
-        if(Targets.Count == 1) 
-            return Targets[0].transform.position;
-
-        GameObject[] carsRanking = GameManager.Instance.RoundManager.RealtimeCarsRanking(Targets);
-
-        //
-/*        if (carsRanking.Length < Ranks.Length)
+        if (GameManager.Instance.GameState == GameState.RACING)
         {
-            for (int i = Ranks.Length - 1; i > carsRanking.Length - 1; i++)
-                Ranks[i].gameObject.SetActive(false);
+            if (Targets.Count == 1)
+                return Targets[0].transform.position;
+
+            GameObject[] carsRanking = GameManager.Instance.RoundManager.RealtimeCarsRanking(Targets);
+
+            //
+            /*        if (carsRanking.Length < Ranks.Length)
+                    {
+                        for (int i = Ranks.Length - 1; i > carsRanking.Length - 1; i++)
+                            Ranks[i].gameObject.SetActive(false);
+                    }
+
+                    for (int i = 0; i < carsRanking.Length; i++)
+                    {
+                        Ranks[i].gameObject.SetActive(true);
+                        Ranks[i].rectTransform.position = GetComponent<Camera>().WorldToScreenPoint(carsRanking[i].transform.position) + new Vector3(0, 30f, 0);
+                    }*/
+            //
+
+            switch (Targets.Count)
+            {
+                case 4:
+                    return 0.9f * carsRanking[0].transform.position + 0.04f * carsRanking[1].transform.position +
+                        0.03f * carsRanking[2].transform.position + 0.03f * carsRanking[3].transform.position;
+                case 3:
+                    return 0.9f * carsRanking[0].transform.position + 0.06f * carsRanking[1].transform.position +
+                        0.04f * carsRanking[2].transform.position;
+                case 2:
+                    return 0.9f * carsRanking[0].transform.position + 0.1f * carsRanking[1].transform.position;
+                default:
+                    return Vector3.negativeInfinity;
+            }
+        }
+        else if (GameManager.Instance.GameState == GameState.NOT_RACING)
+        {
+            Vector3 PositionVectorsSum = Vector3.zero;
+            foreach (GameObject player in Targets)
+                PositionVectorsSum += player.transform.position;
+            return (1 / (float)Targets.Count) * PositionVectorsSum;
         }
 
-        for (int i = 0; i < carsRanking.Length; i++)
-        {
-            Ranks[i].gameObject.SetActive(true);
-            Ranks[i].rectTransform.position = GetComponent<Camera>().WorldToScreenPoint(carsRanking[i].transform.position) + new Vector3(0, 30f, 0);
-        }*/
-        //
-
-        switch (Targets.Count)
-        {
-            case 4:
-                return 0.9f * carsRanking[0].transform.position + 0.04f * carsRanking[1].transform.position +
-                    0.03f * carsRanking[2].transform.position + 0.03f * carsRanking[3].transform.position;
-            case 3:
-                return 0.9f * carsRanking[0].transform.position + 0.06f * carsRanking[1].transform.position +
-                    0.04f * carsRanking[2].transform.position;
-            case 2:
-                return 0.9f * carsRanking[0].transform.position + 0.1f * carsRanking[1].transform.position;
-            default:
-                return Vector3.negativeInfinity;
-        }
+        return Vector3.negativeInfinity;
     }
 }

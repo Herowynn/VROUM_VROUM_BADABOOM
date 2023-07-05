@@ -78,6 +78,6 @@ MonoBehaviour:
   Type: 1
   RndLvl: -1
   BonusSkin:
-  - {fileID: 8699939486669796487, guid: 2b1c265ad4e321349a6c71e5f45ade99, type: 3}
-  - {fileID: 8699939486669796487, guid: 33dd7376899e24c4abf42ff212a9cf6e, type: 3}
   - {fileID: 8699939486669796487, guid: 5a45f6258fd486d4d85d3b314904abfa, type: 3}
+  - {fileID: 8699939486669796487, guid: 33dd7376899e24c4abf42ff212a9cf6e, type: 3}
+  - {fileID: 8699939486669796487, guid: 2b1c265ad4e321349a6c71e5f45ade99, type: 3}

@@ -37,11 +37,18 @@ public class PlayersManager : MonoBehaviour
 
     private void Update()
     {
+        if (GameManager.Instance.GameState == GameState.RACING)
+            CarsOnScreenVerification();
+
         GameObject[] rankedPlayers = GameManager.Instance.RoundManager.RealtimeCarsRanking(Camera.main.GetComponent<CameraController>().Targets);
+        List<float> rankedSpeed = new List<float>();
+        foreach (GameObject player in rankedPlayers)
+            rankedSpeed.Add(player.GetComponent<GlobalController>().SphereRB.velocity.magnitude);
+        rankedSpeed.Sort();
 
         float weightedSpeed = 0;
-        for (int i = 0; i < rankedPlayers.Length; i++)
-            weightedSpeed += rankedPlayers[i].GetComponent<GlobalController>().SphereRB.velocity.magnitude * _weights[rankedPlayers.Length][i];
+        for (int i = 0; i < rankedSpeed.Count; i++)
+            weightedSpeed += rankedSpeed[rankedSpeed.Count - 1 - i] * _weights[rankedPlayers.Length][i];
         _carsWeightedSpeed = weightedSpeed;
     }
 
@@ -69,5 +76,26 @@ public class PlayersManager : MonoBehaviour
             Destroy(player);
 
         Players = new List<GameObject>();
+    }
+
+    private void CarsOnScreenVerification()
+    {
+        foreach (GameObject car in Players)
+        {
+            if (car.GetComponent<GlobalController>().PlayerState == PlayerState.ALIVE)
+            {
+                GlobalController gc = car.GetComponent<GlobalController>();
+                int visibleParts = 0;
+
+                foreach (GameObject carPart in gc.VisibleCarParts)
+                {
+                    if (carPart.GetComponent<Renderer>().isVisible)
+                        visibleParts++;
+                }
+
+                if (visibleParts == 0)
+                    GameManager.Instance.TriggerPlayerDestructionEvent(gc);
+            }
+        }
     }
 }
