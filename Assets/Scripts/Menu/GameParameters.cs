@@ -17,12 +17,40 @@ public class GameParameters : MonoBehaviour
     public TMP_Dropdown ScoreToWin;
     public Toggle NeedKeyboard;
 
-    private void Awake()
+    private void Start()
     {
         NbLocal.ClearOptions();
         NbAi.ClearOptions();
         AiDifficulty.ClearOptions();
         MapSelection.ClearOptions();
         ScoreToWin.ClearOptions();
+        NeedKeyboard.isOn = false;
+        MenuManager.Instance.SetDynamicDropdowns();
+    }
+
+    public void SetNbLocalEvent(int localIndex)
+    {
+        MenuManager.Instance.UpdateNbLocal(localIndex);
+    }
+    public void SetNbAiEvent(int aiIndex)
+    {
+        MenuManager.Instance.UpdateNbAi(aiIndex);
+    }
+    public void SetAiDifficultyEvent(int difficultyIndex)
+    {
+        MenuManager.Instance.UpdateAiDifficulty(difficultyIndex);
+    }
+    public void SetMapEvent(int mapIndex)
+    {
+        MenuManager.Instance.UpdateMap(mapIndex);
+    }
+    public void SetScoreToWinEvent(int scoreIndex)
+    {
+        MenuManager.Instance.UpdateScoreToWin(scoreIndex);
+    }
+
+    public void SetKeyboardNeed(bool needKeyboard)
+    {
+        MenuManager.Instance.UpdateKeyboardNeed(needKeyboard);
     }
 }

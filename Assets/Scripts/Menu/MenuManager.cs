@@ -1,8 +1,6 @@
-using System;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using DG.Tweening;
 
 /// <summary>
 /// MenuManager is a singleton that is used to manage every aspect of the Menu scene.
@@ -20,18 +18,14 @@ public class MenuManager : MonoBehaviour
         {
             Instance = this;
         }
-
-        foreach (var menu in _menus)
-        {
-            menu.Load();
-        }
     }
 
-    [Header("Instances")] [SerializeField] private Menu _firstMenuToLoad;
-    [SerializeField] private Menu _mainMenu;
-    [SerializeField] private GameParameters _gameParameters;
-    [SerializeField] private Options _options;
-    [SerializeField] private Menu[] _menus;
+    [Header("Instances")] 
+    public TextMeshProUGUI Title;
+    public TextMeshProUGUI Footer;
+    public Menu[] Menus;
+    public Menu FirstMenuLoaded;
+    public GameParameters GameParameters;
 
     [Header("Game Parameters Informations")] 
     public int NbLocal;
@@ -48,100 +42,31 @@ public class MenuManager : MonoBehaviour
     public string[] PossibleMaps;
     public int[] PossibleScores;
 
-    #region private Fields
     private Menu _currentMenu;
-    #endregion
-
-    private void Start()
+    
+    // Start is called before the first frame update
+    void Start()
     {
-        // Init
-        FillAllDropdowns();
-        SetQuality(0);
-        
-        // Finish init
-        foreach (var menu in _menus)
-        {
-            menu.Unload();
-        }
-        
-        LoadMenu(_firstMenuToLoad);
-        
-        AudioManager.Instance.PlayMusicAndLoop("BlazeRushMainMenuMusic");
+        LoadMenu(FirstMenuLoaded);
     }
-
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Space) && _firstMenuToLoad.gameObject.activeSelf)
-        {
-            LoadMenu(_mainMenu);
-        }
-
-        if (Input.GetKeyDown(KeyCode.Escape) && _mainMenu.gameObject.activeSelf)
-        {
-            LoadMenu(_firstMenuToLoad);
-        }
-    }
-
-    /// <summary>
-    /// Function used to load each menu window
-    /// </summary>
-    /// <param name="menu"></param>
+    
     public void LoadMenu(Menu menu)
     {
         if (_currentMenu != null)
-        {
-            _currentMenu.CanvasGroup.DOKill();
-            
-            _currentMenu.CanvasGroup.alpha = 1f;
-            
-            _currentMenu.CanvasGroup.DOFade(0f, 0.5f).OnComplete(() =>
-            {
-                _currentMenu.Unload();
-                
-                _currentMenu = menu;
-                _currentMenu.CanvasGroup.alpha = 0f;
-                
-                _currentMenu.Load();
-
-                _currentMenu.CanvasGroup.DOFade(1f, 0.5f);
-            });
-        }
-
-        else
-        {
-            _currentMenu = menu;
-            _currentMenu.CanvasGroup.alpha = 0f;
-            
-            _currentMenu.Load();
-
-            _currentMenu.CanvasGroup.DOFade(1f, 0.5f);
-        }
-    }
-    
-    
-    public void LoadGame()
-    {
-        _currentMenu.CanvasGroup.DOKill();
-            
-        _currentMenu.CanvasGroup.alpha = 1f;
-            
-        _currentMenu.CanvasGroup.DOFade(0f, 0.5f).OnComplete(() =>
-        {
             _currentMenu.Unload();
-                
-            _currentMenu = _firstMenuToLoad;
-            _currentMenu.CanvasGroup.alpha = 1f;
-                
-            _currentMenu.Load();
-            
-            SceneManager.Instance.LoadGame();
-        });
-        
-        
+
+        _currentMenu = menu;
+        _currentMenu.Load();
+        Title.text = _currentMenu.MenuTitle;
+        Footer.text = _currentMenu.MenuFooter;
+    }
+
+    public void LoadGame(Menu menu)
+    {
+        LoadMenu(menu);
+        SceneManager.Instance.LoadGame();
     }
     
-    #region Main Menu
-
     public void QuitGame() {
         #if UNITY_STANDALONE
             Application.Quit();
@@ -151,133 +76,75 @@ public class MenuManager : MonoBehaviour
         #endif
     }
 
-    #endregion
-    
     #region Game Parameters
 
-    #region Dynamism
-    private void FillDropdownWithIntTab(int[] intTab, TMP_Dropdown dropdownToFill)
+    public void SetDynamicDropdowns()
     {
         List<string> options = new List<string>();
-        for (int i = 0; i < intTab.Length; i++)
+        for (int i = 0; i < PossibleLocalPlayers.Length; i++)
         {
-            options.Add(intTab[i].ToString());
+            options.Add(PossibleLocalPlayers[i].ToString());
         }
-        dropdownToFill.AddOptions(options);
-    }
-
-    private void FillDropdownWithStringTab(string[] strTab, TMP_Dropdown dropdownToFill)
-    {
-        List<string> options = new List<string>();
-        for (int i = 0; i < strTab.Length; i++)
+        GameParameters.NbLocal.AddOptions(options);
+        
+        options = new List<string>();
+        for (int i = 0; i < PossibleAiPlayers.Length; i++)
         {
-            options.Add(strTab[i]);
+            options.Add(PossibleAiPlayers[i].ToString());
         }
-        dropdownToFill.AddOptions(options);
-    }
-    
-    private void FillAllDropdowns()
-    {
-        // Nb Local
-        FillDropdownWithIntTab(PossibleLocalPlayers, _gameParameters.NbLocal);
-
-        // Nb AI
-        FillDropdownWithIntTab(PossibleAiPlayers, _gameParameters.NbAi);
+        GameParameters.NbAi.AddOptions(options);
         
-        // Ai difficulty
-        FillDropdownWithStringTab(PossibleAiDifficulties, _gameParameters.AiDifficulty);
+        options = new List<string>();
+        for (int i = 0; i < PossibleAiDifficulties.Length; i++)
+        {
+            options.Add(PossibleAiDifficulties[i]);
+        }
+        GameParameters.AiDifficulty.AddOptions(options);
         
-        // Maps
-        FillDropdownWithStringTab(PossibleMaps, _gameParameters.MapSelection);
-
-        // Score to win
-        FillDropdownWithIntTab(PossibleScores, _gameParameters.ScoreToWin);
-    }
-    #endregion
-
-    #region Listeners
-    public void SetNbLocalEvent(int localIndex)
-    {
-        NbLocal = PossibleLocalPlayers[localIndex];
-    }
-    public void SetNbAiEvent(int aiIndex)
-    {
-        NbAi = PossibleAiPlayers[aiIndex];
-    }
-    public void SetAiDifficultyEvent(int difficultyIndex)
-    {
-        AiDifficulty = PossibleAiDifficulties[difficultyIndex];
-    }
-    public void SetMapEvent(int mapIndex)
-    {
-        MapName = PossibleMaps[mapIndex];
-    }
-    public void SetScoreToWinEvent(int scoreIndex)
-    {
-        ScoreToWin = PossibleScores[scoreIndex];
-    }
-    public void ToggleKeyboardNeed(bool needKeyboardStatus)
-    {
-        NeedKeyboard = needKeyboardStatus;
-    }
-    #endregion
-
-    #endregion
-
-    #region Options
-    public void SetGlobalVolume(float volume) 
-    {
-        _options.AudioMixer.SetFloat("Main_Volume", volume);
+        options = new List<string>();
+        for (int i = 0; i < PossibleMaps.Length; i++)
+        {
+            options.Add(PossibleMaps[i]);
+        }
+        GameParameters.MapSelection.AddOptions(options);
+        
+        options = new List<string>();
+        for (int i = 0; i < PossibleScores.Length; i++)
+        {
+            options.Add(PossibleScores[i].ToString());
+        }
+        GameParameters.ScoreToWin.AddOptions(options);
     }
 
-    public void SetSfxVolume(float volume)
+    public void UpdateNbLocal(int index)
     {
-        _options.AudioMixer.SetFloat("SFX_Volume", volume);
-    }
-
-    public void SetMusicVolume(float volume)
-    {
-        _options.AudioMixer.SetFloat("MUSIC_Volume", volume);
-    }
-
-    public void SetQuality(int qualityIndex)
-    {
-        QualitySettings.SetQualityLevel(qualityIndex);
-    }
-
-    public void SetFullScreen(bool isFullscreen)
-    {
-        Screen.fullScreen = isFullscreen;
-    }
-
-    public void SetResolution(int resolutionIndex)
-    {
-        Resolution resolution = _options.Resolutions[resolutionIndex];
-        Screen.SetResolution(resolution.width, resolution.height, Screen.fullScreen);
-    }
-    #endregion
-    
-    #region Sounds
-    
-    public void PlaySoundEffectForParameterChange()
-    {
-        AudioManager.Instance.PlaySfx("ValidateParameterSoundEffect");
-    }
-
-    public void PlaySoundEffectWhenNavButtonClicked()
-    {
-        AudioManager.Instance.PlaySfx("NavBtnClickedSoundEffect");
-    }
-
-    public void PlaySoundEffectForBackButtonClicked()
-    {
-        AudioManager.Instance.PlaySfx("BackSoundEffect");
-    }
-
-    public void PlaySoundEffectForConfirmButtonClicked()
-    {
-        AudioManager.Instance.PlaySfx("ConfirmSoundEffect");
+        NbLocal = PossibleLocalPlayers[index];
     }
     
+    public void UpdateNbAi(int index)
+    {
+        NbAi = PossibleAiPlayers[index];
+    }
+
+    public void UpdateAiDifficulty(int index)
+    {
+        AiDifficulty = PossibleAiDifficulties[index];
+    }
+
+    public void UpdateMap(int index)
+    {
+        MapName = PossibleMaps[index];
+    }
+
+    public void UpdateScoreToWin(int index)
+    {
+        ScoreToWin = PossibleScores[index];
+    }
+
+    public void UpdateKeyboardNeed(bool status)
+    {
+        NeedKeyboard = status;
+    }
+
     #endregion
 }

@@ -139,7 +139,6 @@ public class GameManager : MonoBehaviour
     private IEnumerator CarExplosion(Vector3 explosionCenter)
     {
         GameObject carExplosionObject = Instantiate(ExplosionEffectObject, explosionCenter, Quaternion.identity);
-        carExplosionObject.GetComponent<AudioSource>().Play();
         yield return new WaitForSeconds(OnScreenExplosionDuration);
         Destroy(carExplosionObject);
     }

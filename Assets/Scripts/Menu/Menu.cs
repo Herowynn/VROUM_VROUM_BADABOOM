@@ -1,21 +1,23 @@
-using DG.Tweening;
 using UnityEngine;
 
 /// <summary>
 /// Menu is a script that is used on every GameObject of the Menu.
+/// It allows to personalize the Header and the Footer for every menu, since it's never the same.
 /// </summary>
 
 public class Menu : MonoBehaviour
 {
-    [Header("Instance")] public CanvasGroup CanvasGroup;
+    [Header("GA")] 
+    public string MenuTitle;
+    public string MenuFooter;
 
     public void Load()
     {
-        gameObject.SetActive(true);
+        transform.gameObject.SetActive(true);
     }
 
     public void Unload()
     {
-        gameObject.SetActive(false);
+        transform.gameObject.SetActive(false);
     }
 }
