@@ -16,14 +16,11 @@ public class Map : MonoBehaviour
 
     public void Load()
     {
-        if (gameObject.name.Contains("FourthTrack"))
-        {
-            HarvesterStartPosition = null;
-            PlayerStartPositions.Clear();
-            HarvesterNodes.Clear();
-            RoundNodes.Clear();
-            InitializeNodesArrays();
-        }
+        HarvesterStartPosition = null;
+        PlayerStartPositions.Clear();
+        HarvesterNodes.Clear();
+        RoundNodes.Clear();
+        InitializeNodesArrays();
 
         gameObject.SetActive(true);
     }

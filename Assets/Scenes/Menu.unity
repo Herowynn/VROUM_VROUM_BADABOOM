@@ -1388,9 +1388,6 @@ MonoBehaviour:
   - Difficult
   PossibleMaps:
   - FirstTrack
-  - SecondTrack
-  - ThirdTrack
-  - FourthTrack
   PossibleScores: 0a0000000f00000014000000190000001e000000
 --- !u!114 &999768931
 MonoBehaviour:
