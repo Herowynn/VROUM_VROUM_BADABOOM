@@ -111,7 +111,6 @@ public class Harvester : MonoBehaviour
         _roundBeginning = true;
         _canMove = false;
         StopCoroutine(WaitBeforeMoving());
-        StartCoroutine(WaitBeforeMoving());
     }
 
     /// <summary>
