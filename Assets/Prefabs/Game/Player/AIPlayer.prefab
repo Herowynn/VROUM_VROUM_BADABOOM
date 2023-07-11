@@ -282,6 +282,8 @@ MonoBehaviour:
   NodesToFollow: []
   MaxSpeed: 15
   MinSpeed: 20
+  MinimumTimeBeforeActivatingBonus: 1
+  MaximumTimeBeforeActivatingBonus: 5
 --- !u!1 &8470477559387477689
 GameObject:
   m_ObjectHideFlags: 0

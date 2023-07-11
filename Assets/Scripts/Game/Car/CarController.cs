@@ -89,7 +89,6 @@ public class CarController : GlobalController
                 return;
 
             if (BoostsContainer.transform.GetComponentInChildren<Booster>())
-
             {
                 BoostsContainer.transform.GetChild(0).GetComponent<Booster>().Boost(SphereRB, gameObject);
             }
