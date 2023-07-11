@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UIElements;
 
 public enum BonusType
@@ -9,38 +10,34 @@ public enum BonusType
     Boost
 }
 
-/// <summary>
-/// Generic bonuses class.
+/// <summary>
+/// Generic bonuses class.
 /// </summary>
 public class Bonus : MonoBehaviour
 {
     public BonusType Type;
     public int RndLvl = -1;
-    public List<GameObject> BonusSkin = new List<GameObject>();
+    public List<GameObject> BonusSkins = new List<GameObject>();
 
-    /// <summary>
-    /// Randomly instantiate the bonus and the bonus skin according to the type.
+    /// <summary>
+    /// Randomly instantiate the bonus and the bonus skin according to the type.
     /// </summary>
     void Start()
     {
-        GameObject bonusSkin = null;
+        RndLvl = Random.Range(0, BonusSkins.Count);
 
-        if (Type == BonusType.Attack) 
-        {
-            RndLvl = Random.Range(0, BonusSkin.Count);
-            bonusSkin = Instantiate(BonusSkin[RndLvl], transform.position, transform.rotation, transform);
-        }
-        if (Type == BonusType.Boost)
-        {
-            RndLvl = Random.Range(0, BonusSkin.Count);
-            bonusSkin = Instantiate(BonusSkin[RndLvl], transform.position, transform.rotation, transform);
-        }
+        GameObject bonusSkin = Instantiate(BonusSkins[RndLvl], transform.position, transform.rotation, transform);
 
         BoxCollider bonusSkinCollider = bonusSkin.GetComponent<BoxCollider>();
-        GetComponent<BoxCollider>().center = new Vector3(bonusSkinCollider.center.x * bonusSkin.transform.localScale.x,
+
+        BoxCollider bonusCollider = GetComponent<BoxCollider>();
+        
+        bonusCollider.center = new Vector3(bonusSkinCollider.center.x * bonusSkin.transform.localScale.x,
             bonusSkinCollider.center.y * bonusSkin.transform.localScale.y, bonusSkinCollider.center.z * bonusSkin.transform.localScale.z);
-        GetComponent<BoxCollider>().size = new Vector3(bonusSkinCollider.size.x * bonusSkin.transform.localScale.x,
+        
+        bonusCollider.size = new Vector3(bonusSkinCollider.size.x * bonusSkin.transform.localScale.x,
             bonusSkinCollider.size.y * bonusSkin.transform.localScale.y, bonusSkinCollider.size.z * bonusSkin.transform.localScale.z);
+        
         Destroy(bonusSkinCollider);
     }
     
@@ -51,17 +48,7 @@ public class Bonus : MonoBehaviour
         if (!transform.GetChild(0).GetComponent<Renderer>().isVisible)
             Destroy(gameObject);
     }
-
-    /// <summary>
-    /// This coroutine destroys this pickable booster object after a certain amount of time.
-    /// </summary>
-    /// <returns></returns>
-/*    IEnumerator WaitBeforeAutoDestroy()
-    {
-        yield return new WaitForSeconds(5f);
-        Destroy(gameObject);
-    }*/
-
+    
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.collider.gameObject.GetComponent<DestructorComponent>())

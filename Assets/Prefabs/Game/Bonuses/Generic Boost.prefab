@@ -77,7 +77,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Type: 1
   RndLvl: -1
-  BonusSkin:
+  BonusSkins:
   - {fileID: 8699939486669796487, guid: 25d3cb480d995a84588d9eb85b357bdd, type: 3}
   - {fileID: 8699939486669796487, guid: 2910064bc931da1478ec9678361073fa, type: 3}
   - {fileID: 8699939486669796487, guid: ceb5c9f1e0809384e97b45c349a9e73f, type: 3}

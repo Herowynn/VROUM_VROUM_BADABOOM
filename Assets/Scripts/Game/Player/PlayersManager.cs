@@ -21,6 +21,7 @@ public class PlayersManager : MonoBehaviour
     [Header("Infos")]
     public List<GameObject> Players;
     public List<Color> PlayerColors;
+    public GameObject[] RankedPlayers;
 
 
     private float _carsWeightedSpeed;
@@ -40,15 +41,24 @@ public class PlayersManager : MonoBehaviour
         if (GameManager.Instance.GameState == GameState.RACING)
             CarsOnScreenVerification();
 
-        GameObject[] rankedPlayers = GameManager.Instance.RoundManager.RealtimeCarsRanking(Camera.main.GetComponent<CameraController>().Targets);
+        RankedPlayers = GameManager.Instance.RoundManager.RealtimeCarsRanking(Camera.main.GetComponent<CameraController>().Targets);
+        
         List<float> rankedSpeed = new List<float>();
-        foreach (GameObject player in rankedPlayers)
+
+        foreach (GameObject player in RankedPlayers)
+        {
             rankedSpeed.Add(player.GetComponent<GlobalController>().SphereRB.velocity.magnitude);
+        }
+        
         rankedSpeed.Sort();
 
         float weightedSpeed = 0;
+
         for (int i = 0; i < rankedSpeed.Count; i++)
-            weightedSpeed += rankedSpeed[rankedSpeed.Count - 1 - i] * _weights[rankedPlayers.Length][i];
+        {
+            weightedSpeed += rankedSpeed[rankedSpeed.Count - 1 - i] * _weights[RankedPlayers.Length][i];
+        }
+        
         _carsWeightedSpeed = weightedSpeed;
     }
 

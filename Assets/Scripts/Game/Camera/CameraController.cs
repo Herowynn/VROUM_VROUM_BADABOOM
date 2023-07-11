@@ -46,7 +46,7 @@ public class CameraController : MonoBehaviour
 
     private void LateUpdate()
     {
-        if (Targets.Count == 0)
+        if (Targets.Count == 0 || GameManager.Instance.GameState == GameState.POST_GAME || GameManager.Instance.GameState == GameState.PRE_GAME)
             return;
 
         Move();
