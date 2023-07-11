@@ -193,7 +193,6 @@ public class GlobalController : MonoBehaviour
                 SphereRB.AddForce(_wantedDirection * ForwardAccel);
                 SphereRB.velocity = Vector3.ClampMagnitude(SphereRB.velocity, MaximumSpeed * SlowFactor);
                 Source.clip = MovingSound;
-
             }
         }
         else

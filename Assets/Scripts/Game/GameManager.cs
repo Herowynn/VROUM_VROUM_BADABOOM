@@ -146,9 +146,12 @@ public class GameManager : MonoBehaviour
 
     public void TriggerPlayerDestructionEvent(GlobalController player)
     {
-        StartCoroutine(CarExplosion(player.SphereRB.transform.position));
-        RoundManager.PlayerDiedEvent(player);
-        Camera.RemoveDeadTargetEvent();
+        if (player.PlayerState == PlayerState.ALIVE)
+        {
+            StartCoroutine(CarExplosion(player.SphereRB.transform.position));
+            RoundManager.PlayerDiedEvent(player);
+            Camera.RemoveDeadTargetEvent();
+        }
     }
 
     public void TriggerScoreAddEvent()
