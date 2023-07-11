@@ -332,10 +332,6 @@ MonoBehaviour:
   RightFrontWheel: {fileID: 4146829921669097665}
   LeftBackWheel: {fileID: 4713423009772291345}
   LeftFrontWheel: {fileID: 8031376243321959686}
-  HitBySaw: 0
-  IsBumped: 0
-  IsExploded: 0
-  IsTouchedByMachineGun: 0
   BumpForce: 10000
   ProjectileForce: 1000
   BumpDirection: {x: 0, y: 0, z: 0}
@@ -344,11 +340,11 @@ MonoBehaviour:
   AttacksContainer: {fileID: 8470477559394728575}
   BoostsContainer: {fileID: 8470477558702491913}
   AttackList:
-  - {fileID: 6935124690244183357, guid: 04d98a072f58d2a49a9b1ee5156c541e, type: 3}
-  - {fileID: 8883033362255484860, guid: 0752b767f3fbf124e8b755281030f31b, type: 3}
   - {fileID: 7221930875229779232, guid: 9624d334089db7c4a920c54bca3642d4, type: 3}
   - {fileID: 7251196424414276744, guid: 4e5218639ac98e948a689736467e60c1, type: 3}
+  - {fileID: 6935124690244183357, guid: 04d98a072f58d2a49a9b1ee5156c541e, type: 3}
   - {fileID: 553776296881146100, guid: 576da366e290f6145a87282fe3b27a6d, type: 3}
+  - {fileID: 8883033362255484860, guid: 0752b767f3fbf124e8b755281030f31b, type: 3}
   BoostList:
   - {fileID: 8699939486669796487, guid: 79a2104eac2b2c8449250e67d8284e7e, type: 3}
   - {fileID: 8699939486669796487, guid: 0d1de61016352fc47bf26bd3f2c00117, type: 3}

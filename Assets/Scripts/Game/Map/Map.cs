@@ -16,14 +16,11 @@ public class Map : MonoBehaviour
 
     public void Load()
     {
-        if (gameObject.name.Contains("FourthTrack"))
-        {
-            HarvesterStartPosition = null;
-            PlayerStartPositions.Clear();
-            HarvesterNodes.Clear();
-            RoundNodes.Clear();
-            InitializeNodesArrays();
-        }
+        HarvesterStartPosition = null;
+        PlayerStartPositions.Clear();
+        HarvesterNodes.Clear();
+        RoundNodes.Clear();
+        InitializeNodesArrays();
 
         gameObject.SetActive(true);
     }
@@ -39,7 +36,7 @@ public class Map : MonoBehaviour
         for (int i = 1; i < startPositions.Count; i++)
             PlayerStartPositions.Add(startPositions[i].transform);
 
-        for (int i = 0; i < gameObject.transform.childCount; i++)
+        for (int i = 0; i < transform.childCount; i++)
         {
             GameObject roadPart = gameObject.transform.GetChild(i).gameObject;
 
