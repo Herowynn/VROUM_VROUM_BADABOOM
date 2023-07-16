@@ -1,39 +1,58 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class AIController : GlobalController
 {
+    #region Public Fields
+
     [HideInInspector] public List<Transform> NodesToFollow;
+    [HideInInspector] public string Feedback;
+    public Material RedMaterial;
 
     [Header("GD")]
-    public float MaxSpeed;
-    public float MinSpeed;
-    float _speed;
+    public float Speed;
+    public float BrutalDiffSpeed;
+    public float MinimumTimeBeforeActivatingBonus;
+    public float MaximumTimeBeforeActivatingBonus;
+    public float BrutalDiffMaximumTimeBeforeActivatingBonus;
+    private float TimeBeforeUnclogging;
+    public float TargetPositionWidthRandomOffset;
+    public float TargetPositionForwardRandomOffset;
+    public float DistanceToNodeLimitForIncrementation;
+    public float MaximumDistanceToCarForTargetting;
+    public float SpeedSlowFactorDuringTurning;
 
-    private int _targetNode;
+    #endregion
 
-    Vector3 target;
-    Vector3 direction;
-    float moveStep;
-    float distance;
+    #region Private Fields
 
+    private float _speed;
+    private float _previousDistance;
+    private int _targetNodeIndex;
+    private Transform _targetNodeTransform;
+    private Vector3 _targetPosition;
+    private GameObject _targetCar;
+    private Vector3 _targetCarPosition;
+    private Vector3 _aiWantedDirection;
+    private Vector3 _previousPosition;
+
+    #endregion
+
+    public int TargetNodeIndex { set { _targetNodeIndex = value; } }
+
+    #region Unity Methods
 
     public void Start()
     {
         Init();
-        _speed = Random.Range(MinSpeed, MaxSpeed);
+        _speed = (GameManager.Instance.MultipleInputManager.AiDifficulty == AIDifficulty.Brutal) ? BrutalDiffSpeed : Speed; 
         NodesToFollow = GameManager.Instance.MapManager.CurrentMap.HarvesterNodes;
-        SetTargetNode(-1);
-
-        UpdateTarget();
-    }
-
-    public void SetTargetNode(int index)
-    {
-        _targetNode = index + 1;
-        UpdateTarget();
+        _targetNodeIndex = 1;
+        _targetCar = null;
+        _targetCarPosition = Vector3.zero;
+        _previousDistance = -float.MaxValue;
+        UpdateDirectionAndTargetNode();
     }
 
     private void FixedUpdate()
@@ -42,84 +61,209 @@ public class AIController : GlobalController
         transform.position = SphereReference.transform.position + _carAltitudeOffset;
     }
 
-    void Update()
+    private void Update()
     {
+        Feedback = $"Index of the target node : {_targetNodeIndex} - Position of the target node :" +
+            $" {_targetNodeTransform.position} - Target position : {_targetPosition}";
+
+        _previousPosition = SphereReference.transform.position;
+
+        if (GameManager.Instance.GameState == GameState.RACING && PlayerState == PlayerState.ALIVE && _isGrounded)
+        {
+            Rotate();
+            Move();
+
+            if (_hasABoost)
+            {
+                _hasABoost = false;
+                StartCoroutine(UseBoost());
+            }
+
+            // When the car targetted by this one drove too far from this one, when stop targetting it and come back to a
+            // normal behaviour.
+            if (_targetCar != null && Vector3.Distance(SphereReference.transform.position, _targetCarPosition) > MaximumDistanceToCarForTargetting)
+            {
+                _targetCarPosition = Vector3.zero;
+                _targetCar = null;
+            }
+
+            // If this car picked an attack bonus, it search for a target in front of him and not too far.
+            // If there is one, it targets it and the targetCarPosition is updated every frame.
+            // Otherwise, we use the basic behaviour (coroutine that will shoot in the random next seconds).
+            if (_hasAnAttackBonus)
+            {
+                // If the difficulty is set to normal, there is no targetting behaviour.
+                if (GameManager.Instance.MultipleInputManager.AiDifficulty == AIDifficulty.Normal)
+                {
+                    _hasAnAttackBonus = false;
+                    StartCoroutine(UseAttackBonus());
+                }
+                else
+                {
+                    if (_targetCar == null)
+                        _targetCar = GetCarTarget();
+
+                    if (_targetCar != null)
+                        _targetCarPosition = _targetCar.GetComponent<GlobalController>().SphereReference.transform.position;
+                    else
+                    {
+                        _hasAnAttackBonus = false;
+                        StartCoroutine(UseAttackBonus());
+                    }
+                }
+            }
+        }
+
+        // If the car gets stuck in the borders of the road, a coroutine is executed to unclog it after a certain amount of time.
         if (GameManager.Instance.GameState == GameState.RACING && PlayerState == PlayerState.ALIVE)
         {
-            UpdateMove(NodesToFollow);
+            if (SphereReference.transform.position == _previousPosition)
+                StartCoroutine(Unclogging());
         }
-
-        if (_hasABoost)
-        {
-            _hasABoost = false;
-            StartCoroutine(UseBoost());
-        }
-
-        if(_hasAnAttackBonus)
-        {
-            _hasAnAttackBonus = false;
-            StartCoroutine(UseAttackBonus());
-            //if (Physics.Raycast(RayPoint.position, -transform.up, Mathf.Infinity, CarLayerMask))
-            //{
-            //    AttacksContainer.transform.GetChild(0).GetComponent<Offensive>().Shoot();
-            //    ProfileUI.UseWeapon();
-            //}
-        }
-        
     }
 
-    IEnumerator UseBoost()
+    #endregion
+
+    #region Movements Calculation Methods
+
+    private void Rotate()
     {
-        yield return new WaitForSeconds(Random.Range(1f, 5f));
-        
-        if (BoostsContainer.transform.childCount <= 0)
-            yield break;
-        
+        // If there is a car target, the looking direction is the direction towards the target car.
+        // Otherwise, the looking direction is the direction towards the next node direction (with the correct altitude).
+        Vector3 lookingDirection = _targetCar == null ? _aiWantedDirection : _targetCarPosition - SphereReference.transform.position;
+
+        Vector3 cross = Vector3.Cross(transform.forward, lookingDirection);
+        float carSignRotation = Mathf.Sign(cross.y);
+
+        if (Mathf.Abs(Vector3.Angle(transform.forward, lookingDirection)) > 10f)
+            transform.Rotate(transform.up, carSignRotation * TurnStrength * Time.deltaTime);
+        else
+        {
+            transform.forward = lookingDirection;
+
+            // If there is a target and the car is aligned with it, the attack bonus is used.
+            if (_targetCar != null)
+            {
+                _hasAnAttackBonus = false;
+                AttacksContainer.transform.GetChild(0).GetComponent<Offensive>().Shoot();
+                ProfileUI.UseWeapon();
+                _targetCarPosition = Vector3.zero;
+                _targetCar = null;
+            }
+        }
+    }
+
+    private void Move()
+    {
+        float moveStep = _speed * Time.deltaTime;
+        float distance = Vector3.Distance(_targetPosition, SphereReference.transform.position);
+
+        // If the vehicule moves away from the next node when it arrives close to it (in a close area behind the node),
+        // it means that the car follows a target or has been pushed in another direction by an attack bonus.
+        // Hence, the target node index is incremented as are the corresponding values (target node position...).
+        if (_previousDistance > 0 && distance > _previousDistance)
+        {
+            if (Mathf.Abs(Vector3.Angle(_targetNodeTransform.forward, SphereReference.transform.position - _targetNodeTransform.position))
+                < 90f || Vector3.Distance(_targetPosition, SphereReference.transform.position) < DistanceToNodeLimitForIncrementation)
+            {
+                IncrementTargetNodeIndex();
+                distance = Vector3.Distance(_targetPosition, SphereReference.transform.position);
+            }
+        }
+
+        // If the car is closer to the next node than the distance it has to drive in this frame, the target node index
+        //  is incremented and all the corresponding values are updated (target node position, wanted direction...).
+        if (moveStep > distance)
+        {
+            IncrementTargetNodeIndex();
+            distance = Vector3.Distance(_targetPosition, SphereReference.transform.position);
+        }
+
+        // If the car is currently turning and not aligned enough with the wanted direction,
+        // the speed of the car is slower than the normal speed (slow factor applied to the random speed choosen).
+        if (_targetCar != null)
+            moveStep = (Mathf.Abs(Vector3.Angle(_targetCarPosition - SphereReference.transform.position, transform.forward))
+                < 10f ? moveStep : moveStep / SpeedSlowFactorDuringTurning);
+        else
+            moveStep = (Mathf.Abs(Vector3.Angle(_aiWantedDirection, transform.forward)) < 10f ? moveStep :
+                moveStep / SpeedSlowFactorDuringTurning);
+
+        SphereReference.transform.position += transform.forward.normalized * moveStep;
+        _previousDistance = distance;
+    }
+
+    private void UpdateDirectionAndTargetNode()
+    {
+        _targetNodeTransform = NodesToFollow[_targetNodeIndex];
+        Vector3 xzNodePosition = new Vector3(_targetNodeTransform.position.x, 0, _targetNodeTransform.position.z);
+        _targetPosition = xzNodePosition + _targetNodeTransform.right.normalized * Random.Range(-TargetPositionWidthRandomOffset, TargetPositionWidthRandomOffset) +
+            _targetNodeTransform.forward.normalized * Random.Range(-TargetPositionForwardRandomOffset, TargetPositionForwardRandomOffset) +
+            _targetNodeTransform.up.normalized * SphereReference.transform.position.y;
+        _aiWantedDirection = _targetPosition - SphereReference.transform.position;
+    }
+
+    private void IncrementTargetNodeIndex()
+    {
+        _targetNodeIndex++;
+
+        if (_targetNodeIndex >= NodesToFollow.Count)
+            _targetNodeIndex = 0;
+
+        UpdateDirectionAndTargetNode();
+    }
+
+    #endregion
+
+    /// <summary>
+    /// Compares the distance between every other "alive" car and this car.
+    /// If the car with the smallest distance to this one is in front of it and close enough, it becomes a target to shoot.
+    /// </summary>
+    /// <returns></returns>
+    private GameObject GetCarTarget()
+    {
+        float distance = float.MaxValue;
+        GameObject targetPlayer = null;
+
+        foreach (GameObject player in GameManager.Instance.PlayersManager.Players)
+        {
+            if (player.GetComponent<GlobalController>().PlayerState == PlayerState.ALIVE && player != gameObject)
+            {
+                GameObject otherSphereReference = player.GetComponent<GlobalController>().SphereReference;
+                float currentDistance = Vector3.Distance(SphereReference.transform.position, otherSphereReference.transform.position);
+                float forwardAngle = Mathf.Abs(Vector3.Angle(transform.forward, otherSphereReference.transform.position -
+                    SphereReference.transform.position));
+
+                if (forwardAngle < 90f && currentDistance < distance)
+                {
+                    distance = currentDistance;
+                    targetPlayer = player;
+                }
+            }
+        }
+
+        return (distance < MaximumDistanceToCarForTargetting) ? targetPlayer : null;
+    }
+
+    private IEnumerator UseBoost()
+    {
+        yield return new WaitForSeconds(Random.Range(MinimumTimeBeforeActivatingBonus, (GameManager.Instance.MultipleInputManager.AiDifficulty
+            == AIDifficulty.Brutal) ? BrutalDiffMaximumTimeBeforeActivatingBonus : MaximumTimeBeforeActivatingBonus));
         BoostsContainer.transform.GetChild(0).GetComponent<Booster>().Boost(SphereRB, gameObject);
         ProfileUI.UseBoost();
     }
 
-    IEnumerator UseAttackBonus()
+    private IEnumerator UseAttackBonus()
     {
-        yield return new WaitForSeconds(Random.Range(1f, 6f));
-
-        //if (AttacksContainer.transform.GetComponentInChildren<Offensive>())
-        //{
-        if (AttacksContainer.transform.childCount <= 0)
-            yield break;
-        
+        yield return new WaitForSeconds(Random.Range(MinimumTimeBeforeActivatingBonus, (GameManager.Instance.MultipleInputManager.AiDifficulty
+            == AIDifficulty.Brutal) ? BrutalDiffMaximumTimeBeforeActivatingBonus : MaximumTimeBeforeActivatingBonus));
         AttacksContainer.transform.GetChild(0).GetComponent<Offensive>().Shoot();
         ProfileUI.UseWeapon();
-        //}
     }
 
-    private void UpdateMove(List<Transform> path)
+    private IEnumerator Unclogging()
     {
-        direction = target - SphereRB.position;
-        moveStep = _speed * Time.deltaTime;
-        distance = Vector3.Distance(target, SphereRB.position);
-
-        while (moveStep > distance)
-        {
-            _targetNode++;
-
-            if (_targetNode >= path.Count)
-                _targetNode = 0;
-
-            UpdateTarget();
-            moveStep = _speed * Time.deltaTime;
-            distance = Vector3.Distance(target, SphereRB.position);
-            direction = target - SphereRB.position;
-        }
-
-        direction.Normalize();
-        transform.LookAt(target);
-        SphereRB.position += moveStep * direction;
-    }
-
-    void UpdateTarget()
-    {
-        _speed = Random.Range(MinSpeed, MaxSpeed);
-        target = NodesToFollow[_targetNode].transform.position + new Vector3(Random.Range(-5f, 5f), 0f, Random.Range(-5f, 5f));
+        yield return new WaitForSeconds(TimeBeforeUnclogging);
+        Vector3 lookingDirection = (_targetCar == null) ? _aiWantedDirection : _targetCarPosition - SphereReference.transform.position;
+        SphereReference.transform.position += lookingDirection.normalized;
     }
 }

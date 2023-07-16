@@ -104,6 +104,8 @@ public class RoundManager : MonoBehaviour
             if (player.GetComponent<GlobalController>().PlayerState == PlayerState.ALIVE)
             {
                 _playersToPlaceForNextRound.Add(player.GetComponent<GlobalController>());
+                if (player.GetComponent<AIController>())
+                    player.GetComponent<AIController>().StopAllCoroutines();
                 return;
             }
         }
@@ -128,12 +130,10 @@ public class RoundManager : MonoBehaviour
         int cpt = 0;
         for (int i = _playersToPlaceForNextRound.Count - 1; i >= 0; i--)
         {
-            //See if necessary
             if (_playersToPlaceForNextRound[i].gameObject.TryGetComponent<AIController>(out var aiControl))
-                aiControl.SetTargetNode(_harvesterForCurrentMap.TargetNode);
+                aiControl.TargetNodeIndex = _harvesterForCurrentMap.TargetNode + 2;
 
             _playersToPlaceForNextRound[i].RebornEvent(playersTransform[cpt]);
-            //_playersToPlaceForNextRound[i].gameObject.transform.position = closestNode.Nodes[cpt].transform.position;
             cpt++;
         }
         

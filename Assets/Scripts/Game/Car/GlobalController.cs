@@ -1,5 +1,7 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class GlobalController : MonoBehaviour
@@ -193,7 +195,6 @@ public class GlobalController : MonoBehaviour
                 SphereRB.AddForce(_wantedDirection * ForwardAccel);
                 SphereRB.velocity = Vector3.ClampMagnitude(SphereRB.velocity, MaximumSpeed * SlowFactor);
                 Source.clip = MovingSound;
-
             }
         }
         else
@@ -268,6 +269,12 @@ public class GlobalController : MonoBehaviour
             Destroy(AttacksContainer.transform.GetChild(0).gameObject);
         if (BoostsContainer.transform.childCount > 0)
             Destroy(BoostsContainer.transform.GetChild(0).gameObject);
+
+        if (this.GetType() == typeof(AIController))
+        {
+            GetComponent<AIController>().StopAllCoroutines();
+            Debug.Log(GetComponent<AIController>().Feedback);
+        }
 
         PlayerState = PlayerState.DEAD;
     }

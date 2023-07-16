@@ -136,8 +136,6 @@ public class MenuManager : MonoBehaviour
             
             SceneManager.Instance.LoadGame();
         });
-        
-        
     }
     
     #region Main Menu

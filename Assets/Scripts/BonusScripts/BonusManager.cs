@@ -17,8 +17,8 @@ public class BonusManager : MonoBehaviour
     [SerializeField] private Transform _attackContainer;
 
     [Header("GD")]
-    [SerializeField] private int _maxTimeBetweenBonusSpawn;
-    [SerializeField] private int _minTimeBetweenBonusSpawn;
+    [SerializeField] private float _maxTimeBetweenBonusSpawn;
+    [SerializeField] private float _minTimeBetweenBonusSpawn;
     [SerializeField] private float _firstBonusSpawnTime;
 
     // Intern var
