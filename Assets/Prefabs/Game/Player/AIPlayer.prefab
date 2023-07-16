@@ -220,7 +220,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 8470477559293409358}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8efb194725935554395e3cd4b4a11f18, type: 3}
+  m_Script: {fileID: 11500000, guid: cbd82e4d001b9304cbc6ed660d304176, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   SphereRB: {fileID: 8470477560212682836}
@@ -280,10 +280,18 @@ MonoBehaviour:
   PointsUI: {fileID: 0}
   ProfileUI: {fileID: 0}
   NodesToFollow: []
-  MaxSpeed: 15
-  MinSpeed: 20
-  MinimumTimeBeforeActivatingBonus: 1
+  Feedback: 
+  RedMaterial: {fileID: 0}
+  Speed: 20
+  BrutalDiffSpeed: 20.5
+  MinimumTimeBeforeActivatingBonus: 0.5
   MaximumTimeBeforeActivatingBonus: 5
+  BrutalAIMaximumTimeBeforeActivatingBonus: 3
+  TargetPositionWidthRandomOffset: 4
+  TargetPositionForwardRandomOffset: 2
+  DistanceToNodeLimitForIncrementation: 5
+  MaximumDistanceToCarForTargetting: 8
+  SpeedSlowFactorDuringTurning: 3
 --- !u!1 &8470477559387477689
 GameObject:
   m_ObjectHideFlags: 0

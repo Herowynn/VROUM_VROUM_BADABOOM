@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -33,8 +31,8 @@ public class CarController : GlobalController
 
             if (_isGrounded)
             {
-                Vector3 cross1 = Vector3.Cross(transform.forward, _wantedDirection);
-                float carSignRotation = Mathf.Sign(cross1.y);
+                Vector3 cross = Vector3.Cross(transform.forward, _wantedDirection);
+                float carSignRotation = Mathf.Sign(cross.y);
 
                 if (Mathf.Abs(Mathf.Acos(Vector3.Dot(transform.forward.normalized, _wantedDirection.normalized))) > Mathf.Deg2Rad * 10f)
                 {

@@ -22,8 +22,8 @@ public class BonusManager : MonoBehaviour
     #region Private Fields
 
     [Header("GD")]
-    [SerializeField] private int _maxTimeBetweenBonusSpawn;
-    [SerializeField] private int _minTimeBetweenBonusSpawn;
+    [SerializeField] private float _maxTimeBetweenBonusSpawn;
+    [SerializeField] private float _minTimeBetweenBonusSpawn;
     [SerializeField] private float _firstBonusSpawnTime;
 
     private float _spawnTimer;

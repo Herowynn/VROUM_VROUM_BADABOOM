@@ -110,7 +110,7 @@ public class Harvester : MonoBehaviour
         UpdateTargetNodeAfterReset();
         _roundBeginning = true;
         _canMove = false;
-        StopCoroutine(WaitBeforeMoving());
+        StartCoroutine(WaitBeforeMoving());
     }
 
     /// <summary>

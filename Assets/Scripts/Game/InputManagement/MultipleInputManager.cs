@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.XInput;
@@ -15,12 +16,11 @@ public class MultipleInputManager : MonoBehaviour
     public int NumberOfPlayer;
     public bool NeedKeyboard;
     public int NbAi;
-    public string AiDifficulty;
+    public AIDifficulty AiDifficulty;
     public string MapName;
     public int ScoreToWin;
     
     // intern var
-    private int _currentStartPositionIndex;
     private int _controllersConnected;
     private int _controllerNeeded;
     private InputMenuUI _inputMenuUI;
@@ -31,7 +31,8 @@ public class MultipleInputManager : MonoBehaviour
         NeedKeyboard = MenuManager.Instance.NeedKeyboard;
         NbAi = (MenuManager.Instance.NbAi + MenuManager.Instance.NbLocal > 4) ? (4 - MenuManager.Instance.NbLocal > 0 ? 4 - MenuManager.Instance.NbLocal : 0)
             : MenuManager.Instance.NbAi;
-        AiDifficulty = MenuManager.Instance.AiDifficulty;
+        if (!Enum.TryParse<AIDifficulty>(MenuManager.Instance.AiDifficulty, out AiDifficulty))
+            AiDifficulty = AIDifficulty.Normal;
         MapName = MenuManager.Instance.MapName;
         ScoreToWin = MenuManager.Instance.ScoreToWin;*/
 
@@ -132,4 +133,11 @@ public class MultipleInputManager : MonoBehaviour
     {
         InputSystem.onDeviceChange -= ListenerOnDeviceChange;
     }
+}
+
+public enum AIDifficulty
+{
+    Normal,
+    Hard,
+    Brutal
 }
