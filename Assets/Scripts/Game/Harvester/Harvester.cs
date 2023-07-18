@@ -34,6 +34,7 @@ public class Harvester : MonoBehaviour
     #endregion
 
     public bool CanMove { get { return _canMove; } }
+    public bool RoundBeginning { get { return _roundBeginning; } }
 
     /// <summary>
     /// This method plays the horn sound effect and starts the Horn() coroutine.
@@ -94,6 +95,7 @@ public class Harvester : MonoBehaviour
     {
         yield return new WaitForSeconds(MaximumDelayBeforeMoving + GameManager.Instance.RoundManager.TimeToRestartRound);
         _canMove = true;
+        _roundBeginning = false;
     }
 
     public void InitiateNodesToFollow(List<Transform> nodes)

@@ -224,7 +224,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SphereRB: {fileID: 8470477560212682836}
-  ForwardAccel: 150000
+  ForwardAccel: 50000
   MaximumSpeed: 50
   TurnStrength: 200
   DragOnGround: 1.3
@@ -291,7 +291,7 @@ MonoBehaviour:
   TargetPositionForwardRandomOffset: 2
   DistanceToNodeLimitForIncrementation: 5
   MaximumDistanceToCarForTargetting: 8
-  SpeedSlowFactorDuringTurning: 3
+  SpeedSlowFactorDuringTurning: 2
 --- !u!1 &8470477559387477689
 GameObject:
   m_ObjectHideFlags: 0

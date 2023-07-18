@@ -14,6 +14,11 @@ public class Map : MonoBehaviour
     public List<Transform> HarvesterNodes;
     public List<RoundNode> RoundNodes;
 
+
+    private float _altitudeDifferenceBetweenHarvesterAndCar;
+
+    public float AltitudeDifferenceBetweenHarvesterAndCar { get { return _altitudeDifferenceBetweenHarvesterAndCar; } }
+
     public void Load()
     {
         HarvesterStartPosition = null;
@@ -21,6 +26,8 @@ public class Map : MonoBehaviour
         HarvesterNodes.Clear();
         RoundNodes.Clear();
         InitializeNodesArrays();
+
+        _altitudeDifferenceBetweenHarvesterAndCar = HarvesterStartPosition.position.y - PlayerStartPositions[0].position.y;
 
         gameObject.SetActive(true);
     }

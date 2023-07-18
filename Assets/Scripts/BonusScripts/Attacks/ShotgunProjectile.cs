@@ -57,11 +57,16 @@ public class ShotgunProjectile : MonoBehaviour
             StartCoroutine(WaitBeforeNormalSpeed());
             StartCoroutine(WaitBeforeAutoDestroy());
         }
-        else if(collision.gameObject.layer != _ground)
+        else if (collision.gameObject.layer != _ground && !collision.gameObject.GetComponent<DestructorComponent>())
         {
             _source.clip = BounceSounds[Random.Range(0, BounceSounds.Length)];
             _source.loop = false;
             _source.Play();
+        }
+        else if (collision.gameObject.GetComponent<DestructorComponent>())
+        {
+            _source.Stop();
+            Destroy(gameObject);
         }
     }
 
@@ -85,7 +90,6 @@ public class ShotgunProjectile : MonoBehaviour
     {
         yield return new WaitForSeconds(0.1f);
         GetComponent<SphereCollider>().enabled = true;
-        
     }
 
     IEnumerator WaitBeforeAutoDestroy()

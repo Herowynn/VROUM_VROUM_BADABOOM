@@ -131,7 +131,7 @@ public class RoundManager : MonoBehaviour
         for (int i = _playersToPlaceForNextRound.Count - 1; i >= 0; i--)
         {
             if (_playersToPlaceForNextRound[i].gameObject.TryGetComponent<AIController>(out var aiControl))
-                aiControl.TargetNodeIndex = _harvesterForCurrentMap.TargetNode + 2;
+                aiControl.UpdateTargetNodeOnReborn(playersTransform[cpt]);
 
             _playersToPlaceForNextRound[i].RebornEvent(playersTransform[cpt]);
             cpt++;
