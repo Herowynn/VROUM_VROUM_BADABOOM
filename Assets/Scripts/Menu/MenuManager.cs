@@ -14,19 +14,6 @@ public class MenuManager : MonoBehaviour
 {
     public static MenuManager Instance;
 
-    private void Awake()
-    {
-        if (Instance == null)
-        {
-            Instance = this;
-        }
-
-        foreach (var menu in _menus)
-        {
-            menu.Load();
-        }
-    }
-
     [Header("Instances")] [SerializeField] private Menu _firstMenuToLoad;
     [SerializeField] private Menu _mainMenu;
     [SerializeField] private GameParameters _gameParameters;
@@ -48,9 +35,21 @@ public class MenuManager : MonoBehaviour
     public string[] PossibleMaps;
     public int[] PossibleScores;
 
-    #region private Fields
+
     private Menu _currentMenu;
-    #endregion
+
+    private void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+
+        foreach (var menu in _menus)
+        {
+            menu.Load();
+        }
+    }
 
     private void Start()
     {
@@ -122,18 +121,18 @@ public class MenuManager : MonoBehaviour
     public void LoadGame()
     {
         _currentMenu.CanvasGroup.DOKill();
-            
+
         _currentMenu.CanvasGroup.alpha = 1f;
-            
+
         _currentMenu.CanvasGroup.DOFade(0f, 0.5f).OnComplete(() =>
         {
             _currentMenu.Unload();
-                
+
             _currentMenu = _firstMenuToLoad;
             _currentMenu.CanvasGroup.alpha = 1f;
-                
+
             _currentMenu.Load();
-            
+
             SceneManager.Instance.LoadGame();
         });
     }

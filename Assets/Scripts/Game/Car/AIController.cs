@@ -199,6 +199,13 @@ public class AIController : GlobalController
         _targetPosition = xzNodePosition + _targetNodeTransform.right.normalized * Random.Range(-TargetPositionWidthRandomOffset, TargetPositionWidthRandomOffset) +
             _targetNodeTransform.forward.normalized * Random.Range(-TargetPositionForwardRandomOffset, TargetPositionForwardRandomOffset) +
             _targetNodeTransform.up.normalized * SphereReference.transform.position.y;
+
+        //
+        GameObject aiPathNode = new GameObject();
+        aiPathNode.name = $"Node {_targetNodeIndex} - Node XZ position : {xzNodePosition}";
+        aiPathNode.transform.position = _targetPosition;
+        //
+
         _aiWantedDirection = _targetPosition - SphereReference.transform.position;
     }
 

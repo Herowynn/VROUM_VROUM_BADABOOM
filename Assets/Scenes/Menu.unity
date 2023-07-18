@@ -1374,7 +1374,7 @@ MonoBehaviour:
   - {fileID: 393593710}
   - {fileID: 1319476207}
   - {fileID: 1737757302}
-  NbLocal: 0
+  NbLocal: 1
   NeedKeyboard: 0
   NbAi: 0
   AiDifficulty: Easy
@@ -3601,6 +3601,10 @@ PrefabInstance:
     - target: {fileID: 7112859292745780356, guid: 8d10441b512eb634988761bd4b189628, type: 3}
       propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 7568795973817097222, guid: 8d10441b512eb634988761bd4b189628, type: 3}
+      propertyPath: m_Options.m_Options.Array.data[0].m_Text
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7568795973817097222, guid: 8d10441b512eb634988761bd4b189628, type: 3}
       propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.size
