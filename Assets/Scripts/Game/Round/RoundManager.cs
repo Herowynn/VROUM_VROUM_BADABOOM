@@ -130,10 +130,11 @@ public class RoundManager : MonoBehaviour
         int cpt = 0;
         for (int i = _playersToPlaceForNextRound.Count - 1; i >= 0; i--)
         {
+            _playersToPlaceForNextRound[i].RebornEvent(playersTransform[cpt]);
+
             if (_playersToPlaceForNextRound[i].gameObject.TryGetComponent<AIController>(out var aiControl))
                 aiControl.UpdateTargetNodeOnReborn(playersTransform[cpt]);
 
-            _playersToPlaceForNextRound[i].RebornEvent(playersTransform[cpt]);
             cpt++;
         }
         

@@ -262,8 +262,6 @@ public class GlobalController : MonoBehaviour
 
         _isExploded = false;
         _hitBySaw = false;
-        _isBumped = false;
-        _isTouchedByMachineGun = false;
 
         if (AttacksContainer.transform.childCount > 0)
             Destroy(AttacksContainer.transform.GetChild(0).gameObject);
@@ -272,8 +270,9 @@ public class GlobalController : MonoBehaviour
 
         if (this.GetType() == typeof(AIController))
         {
+            GetComponent<AIController>().TargetCar = null;
             GetComponent<AIController>().StopAllCoroutines();
-            Debug.Log(GetComponent<AIController>().Feedback);
+            /*Debug.Log(GetComponent<AIController>().Feedback);*/
         }
 
         PlayerState = PlayerState.DEAD;

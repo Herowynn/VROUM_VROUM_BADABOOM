@@ -37,6 +37,8 @@ public class AIController : GlobalController
 
     #endregion
 
+    public GameObject TargetCar { set {  _targetCar = value; } }
+
     #region Unity Methods
 
     public void Start()
@@ -53,8 +55,8 @@ public class AIController : GlobalController
 
     private void FixedUpdate()
     {
-        UpdateGraphics();
-        transform.position = SphereReference.transform.position + _carAltitudeOffset;
+        if (PlayerState == PlayerState.ALIVE)
+            UpdateGraphics();
     }
 
     private void Update()
@@ -112,6 +114,8 @@ public class AIController : GlobalController
             SphereReference.transform.position = _lastRebornPosition;
             SphereRB.velocity = Vector3.zero;
         }
+
+        transform.position = SphereReference.transform.position + _carAltitudeOffset;
     }
 
     #endregion
@@ -199,6 +203,9 @@ public class AIController : GlobalController
         //
 
         _aiWantedDirection = _targetPosition - SphereReference.transform.position;
+        //
+        GameObject dir = new GameObject($"{(Color.b > Color.r ? "Blue AI" : "Red AI")} - wanted direction : {_aiWantedDirection}");
+        //
     }
 
     private void IncrementTargetNodeIndex()
