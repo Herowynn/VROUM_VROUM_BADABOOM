@@ -272,7 +272,6 @@ public class GlobalController : MonoBehaviour
         {
             GetComponent<AIController>().TargetCar = null;
             GetComponent<AIController>().StopAllCoroutines();
-            /*Debug.Log(GetComponent<AIController>().Feedback);*/
         }
 
         PlayerState = PlayerState.DEAD;

@@ -54,8 +54,7 @@ public class ShotgunProjectile : MonoBehaviour
             _carControl.SlowFactor = .2f;
             GetComponent<MeshRenderer>().enabled = false;
             GetComponent<SphereCollider>().enabled = false;
-            StartCoroutine(WaitBeforeNormalSpeed());
-            StartCoroutine(WaitBeforeAutoDestroy());
+            StartCoroutine(WaitBeforeNormalSpeedAndDestroy());
         }
         else if (collision.gameObject.layer != _ground && !collision.gameObject.GetComponent<DestructorComponent>())
         {
@@ -74,7 +73,7 @@ public class ShotgunProjectile : MonoBehaviour
     /// This coroutine sets the slow factor of the car hit to its original value after a certain amount of time.
     /// </summary>
     /// <returns></returns>
-    IEnumerator WaitBeforeNormalSpeed()
+    IEnumerator WaitBeforeNormalSpeedAndDestroy()
     {
         yield return new WaitForSeconds(5f);
         _carControl.SlowFactor = 1f;
@@ -90,11 +89,5 @@ public class ShotgunProjectile : MonoBehaviour
     {
         yield return new WaitForSeconds(0.1f);
         GetComponent<SphereCollider>().enabled = true;
-    }
-
-    IEnumerator WaitBeforeAutoDestroy()
-    {
-        yield return new WaitForSeconds(5f);
-        Destroy(gameObject);
     }
 }

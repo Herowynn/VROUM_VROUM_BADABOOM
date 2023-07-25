@@ -151,7 +151,7 @@ public class AIController : GlobalController
 
     private void Move()
     {
-        float moveStep = _speed * Time.deltaTime;
+        float moveStep = _speed * SlowFactor * Time.deltaTime;
         float distance = Vector3.Distance(_targetPosition, SphereReference.transform.position);
 
         // If the vehicule moves away from the next node when it arrives close to it (in a close area behind the node),
