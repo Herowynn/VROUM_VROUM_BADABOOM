@@ -195,17 +195,7 @@ public class AIController : GlobalController
             _targetNodeTransform.forward.normalized * Random.Range(-TargetPositionForwardRandomOffset, TargetPositionForwardRandomOffset) -
             _targetNodeTransform.up.normalized * GameManager.Instance.MapManager.CurrentMap.AltitudeDifferenceBetweenHarvesterAndCar;
 
-        //
-        GameObject targetNodePositionObject = new GameObject($"{(Color.b > Color.r ? "Blue AI" : "Red AI")} - target node");
-        targetNodePositionObject.transform.position = _targetNodeTransform.position;
-        GameObject targetPositionObject = new GameObject($"{(Color.b > Color.r ? "Blue AI" : "Red AI")} - target position");
-        targetPositionObject.transform.position = _targetPosition;
-        //
-
         _aiWantedDirection = _targetPosition - SphereReference.transform.position;
-        //
-        GameObject dir = new GameObject($"{(Color.b > Color.r ? "Blue AI" : "Red AI")} - wanted direction : {_aiWantedDirection}");
-        //
     }
 
     private void IncrementTargetNodeIndex()

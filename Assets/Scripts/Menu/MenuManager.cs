@@ -41,14 +41,10 @@ public class MenuManager : MonoBehaviour
     private void Awake()
     {
         if (Instance == null)
-        {
             Instance = this;
-        }
 
         foreach (var menu in _menus)
-        {
             menu.Load();
-        }
     }
 
     private void Start()
@@ -56,14 +52,24 @@ public class MenuManager : MonoBehaviour
         // Init
         FillAllDropdowns();
         SetQuality(0);
-        
+
         // Finish init
         foreach (var menu in _menus)
-        {
             menu.Unload();
+
+        GameObject[] alreadyPlayedObjects = GameObject.FindGameObjectsWithTag("AlreadyBeenPlayed");
+
+        if (alreadyPlayedObjects.Length == 0)
+        {
+            GameObject alreadyPlayedObject = new GameObject("AlreadyBeenPlayed");
+            alreadyPlayedObject.tag = "AlreadyBeenPlayed";
+            DontDestroyOnLoad(alreadyPlayedObject);
+            LoadMenu(_firstMenuToLoad);
         }
-        
-        LoadMenu(_firstMenuToLoad);
+        else
+        {
+            LoadMenu(_mainMenu);
+        }
         
         AudioManager.Instance.PlayMusicAndLoop("BlazeRushMainMenuMusic");
     }
@@ -71,14 +77,10 @@ public class MenuManager : MonoBehaviour
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Space) && _firstMenuToLoad.gameObject.activeSelf)
-        {
             LoadMenu(_mainMenu);
-        }
 
         if (Input.GetKeyDown(KeyCode.Escape) && _mainMenu.gameObject.activeSelf)
-        {
             LoadMenu(_firstMenuToLoad);
-        }
     }
 
     /// <summary>

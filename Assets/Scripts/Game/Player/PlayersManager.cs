@@ -39,27 +39,28 @@ public class PlayersManager : MonoBehaviour
     private void Update()
     {
         if (GameManager.Instance.GameState == GameState.RACING)
+        {
             CarsOnScreenVerification();
 
-        RankedPlayers = GameManager.Instance.RoundManager.RealtimeCarsRanking(Camera.main.GetComponent<CameraController>().Targets);
-        
-        List<float> rankedSpeed = new List<float>();
+            RankedPlayers = GameManager.Instance.RoundManager.RealtimeCarsRanking(Camera.main.GetComponent<CameraController>().Targets);
 
-        foreach (GameObject player in RankedPlayers)
-        {
-            rankedSpeed.Add(player.GetComponent<GlobalController>().SphereRB.velocity.magnitude);
+            if (RankedPlayers.Length > 1)
+            {
+                List<float> rankedSpeed = new List<float>();
+
+                foreach (GameObject player in RankedPlayers)
+                    rankedSpeed.Add(player.GetComponent<GlobalController>().SphereRB.velocity.magnitude);
+
+                rankedSpeed.Sort();
+
+                float weightedSpeed = 0;
+
+                for (int i = 0; i < rankedSpeed.Count; i++)
+                    weightedSpeed += rankedSpeed[rankedSpeed.Count - 1 - i] * _weights[RankedPlayers.Length][i];
+
+                _carsWeightedSpeed = weightedSpeed;
+            }
         }
-        
-        rankedSpeed.Sort();
-
-        float weightedSpeed = 0;
-
-        for (int i = 0; i < rankedSpeed.Count; i++)
-        {
-            weightedSpeed += rankedSpeed[rankedSpeed.Count - 1 - i] * _weights[RankedPlayers.Length][i];
-        }
-        
-        _carsWeightedSpeed = weightedSpeed;
     }
 
     public void CreateNewPlayer(bool playerUseKeyboard, int startPositionIndex, bool isAi)

@@ -32,6 +32,8 @@ public class RoundManager : MonoBehaviour
 
     #endregion
 
+    public List<RoundNode> RoundNodesForCurrentMap { get { return _roundNodesForCurrentMap; } }
+
     private void Start()
     {
         RoundNumber = 0;
@@ -146,7 +148,7 @@ public class RoundManager : MonoBehaviour
         GameManager.Instance.DestroyBonusEvent();
     }
 
-    private RoundNode FindClosestNodeFromWinner(Vector3 winnerPosition)
+    public RoundNode FindClosestNodeFromWinner(Vector3 winnerPosition)
     {
         RoundNode closestNode = null;
 

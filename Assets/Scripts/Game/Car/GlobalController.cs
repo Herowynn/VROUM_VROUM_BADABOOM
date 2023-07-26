@@ -225,14 +225,20 @@ public class GlobalController : MonoBehaviour
             {
                 case BonusType.Attack:
                     if (AttacksContainer.transform.childCount != 0)
+                    {
+                        PushBonuses(collision.gameObject);
                         return;
+                    }
                     Instantiate(AttackList[collision.gameObject.GetComponent<Bonus>().RndLvl], AttacksContainer);
                     ProfileUI.TookWeapon();
                     _hasAnAttackBonus = true;
                     break;
                 case BonusType.Boost:
                     if (BoostsContainer.transform.childCount != 0)
+                    {
+                        PushBonuses(collision.gameObject);
                         return;
+                    }
                     Instantiate(BoostList[collision.gameObject.GetComponent<Bonus>().RndLvl], BoostsContainer);
                     ProfileUI.TookBoost();
                     _hasABoost = true;
@@ -247,6 +253,13 @@ public class GlobalController : MonoBehaviour
         
         if (collision.gameObject.GetComponent<DestructorComponent>())
             GameManager.Instance.TriggerPlayerDestructionEvent(this);
+    }
+
+    private void PushBonuses(GameObject bonus)
+    {
+/*        int[] directions = { -1, 1 };
+        Vector3 pushDirection = directions[UnityEngine.Random.Range(0, directions.Length)] * transform.right.normalized;
+        bonus.GetComponent<Rigidbody>().AddForce(pushDirection * 20f);*/
     }
 
     #endregion
