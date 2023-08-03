@@ -225,20 +225,14 @@ public class GlobalController : MonoBehaviour
             {
                 case BonusType.Attack:
                     if (AttacksContainer.transform.childCount != 0)
-                    {
-                        PushBonuses(collision.gameObject);
                         return;
-                    }
                     Instantiate(AttackList[collision.gameObject.GetComponent<Bonus>().RndLvl], AttacksContainer);
                     ProfileUI.TookWeapon();
                     _hasAnAttackBonus = true;
                     break;
                 case BonusType.Boost:
                     if (BoostsContainer.transform.childCount != 0)
-                    {
-                        PushBonuses(collision.gameObject);
                         return;
-                    }
                     Instantiate(BoostList[collision.gameObject.GetComponent<Bonus>().RndLvl], BoostsContainer);
                     ProfileUI.TookBoost();
                     _hasABoost = true;
@@ -255,13 +249,6 @@ public class GlobalController : MonoBehaviour
             GameManager.Instance.TriggerPlayerDestructionEvent(this);
     }
 
-    private void PushBonuses(GameObject bonus)
-    {
-/*        int[] directions = { -1, 1 };
-        Vector3 pushDirection = directions[UnityEngine.Random.Range(0, directions.Length)] * transform.right.normalized;
-        bonus.GetComponent<Rigidbody>().AddForce(pushDirection * 20f);*/
-    }
-
     #endregion
 
     #region Related to state in-game
@@ -276,10 +263,7 @@ public class GlobalController : MonoBehaviour
         _isExploded = false;
         _hitBySaw = false;
 
-        if (AttacksContainer.transform.childCount > 0)
-            Destroy(AttacksContainer.transform.GetChild(0).gameObject);
-        if (BoostsContainer.transform.childCount > 0)
-            Destroy(BoostsContainer.transform.GetChild(0).gameObject);
+        ClearMyBonus();
 
         if (this.GetType() == typeof(AIController))
         {

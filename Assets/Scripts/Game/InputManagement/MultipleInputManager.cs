@@ -27,7 +27,7 @@ public class MultipleInputManager : MonoBehaviour
 
     public void InstantiateMultipleInputManager()
     {
-/*        NumberOfPlayer = MenuManager.Instance.NbLocal;
+        NumberOfPlayer = MenuManager.Instance.NbLocal;
         Debug.Log($"Nombre de joueurs : {NumberOfPlayer}");
         NeedKeyboard = MenuManager.Instance.NeedKeyboard;
         NbAi = (MenuManager.Instance.NbAi + MenuManager.Instance.NbLocal > 4) ? (4 - MenuManager.Instance.NbLocal > 0 ? 4 - MenuManager.Instance.NbLocal : 0)
@@ -36,7 +36,7 @@ public class MultipleInputManager : MonoBehaviour
         if (!Enum.TryParse<AIDifficulty>(MenuManager.Instance.AiDifficulty, out AiDifficulty))
             AiDifficulty = AIDifficulty.Normal;
         MapName = MenuManager.Instance.MapName;
-        ScoreToWin = MenuManager.Instance.ScoreToWin;*/
+        ScoreToWin = MenuManager.Instance.ScoreToWin;
 
         _controllerNeeded = NeedKeyboard ? NumberOfPlayer - 1 : NumberOfPlayer;
         CountControllers();

@@ -104,7 +104,7 @@ public class PlayersManager : MonoBehaviour
                         visibleParts++;
                 }
 
-                if (visibleParts == 0)
+                if (visibleParts == 0 && GameManager.Instance.GameState == GameState.RACING)
                     GameManager.Instance.TriggerPlayerDestructionEvent(gc);
             }
         }

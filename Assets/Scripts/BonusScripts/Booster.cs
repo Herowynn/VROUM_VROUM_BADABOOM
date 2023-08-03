@@ -28,10 +28,10 @@ public class Booster : MonoBehaviour
     {
         if (_hasBeenUsed == false) 
         { 
-        StartCoroutine(StartBoost(sphereRB, car));
-        _source = GetComponent<AudioSource>();
-        _source.Play();
-        _hasBeenUsed= true;
+            StartCoroutine(StartBoost(sphereRB, car));
+            _source = GetComponent<AudioSource>();
+            _source.Play();
+            _hasBeenUsed= true;
         }
     }
 
