@@ -8,6 +8,7 @@ public class ShotgunProjectile : MonoBehaviour
     public LayerMask GroundLayerMask;
 
     [SerializeField] private float _force;
+    [SerializeField] private float _timeBeforeComingBackToNormalSpeed;
 
     [SerializeField] GlobalController _carControl;
     private Rigidbody ProjectileRB;

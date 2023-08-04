@@ -1,7 +1,5 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.ProBuilder.Shapes;
 
 /// <summary>
 /// This class is the generic class for the booster bonuses.
@@ -10,6 +8,7 @@ public class Booster : MonoBehaviour
 {
     [SerializeField] private float _durationAfterActivation;
     [SerializeField] private float _speedAdded;
+    [SerializeField] private float _addedSpeedFactorForAI;
     [SerializeField] private float _time;
     private float _timeIncrementation;
     private bool _hasBeenUsed = false;
@@ -45,12 +44,24 @@ public class Booster : MonoBehaviour
     IEnumerator StartBoost(Rigidbody sphereRB, GameObject car)
     {
         _timeIncrementation = 0;
+
         while (_timeIncrementation < _durationAfterActivation)
         {
-            sphereRB.AddForce(car.transform.forward * _speedAdded, ForceMode.VelocityChange);
+            if (car.GetComponent<CarController>())
+                sphereRB.AddForce(car.transform.forward * _speedAdded, ForceMode.VelocityChange);
+            else if (car.GetComponent<AIController>())
+                car.GetComponent<AIController>().Speed += _speedAdded * _addedSpeedFactorForAI;
+
             _timeIncrementation += Time.deltaTime;
             yield return new WaitForSeconds(Time.deltaTime);
         }
+
+        if (car.GetComponent<AIController>())
+        {
+            car.GetComponent<AIController>().Speed = (GameManager.Instance.MultipleInputManager.AiDifficulty == AIDifficulty.Brutal) ?
+                car.GetComponent<AIController>().BrutalDiffSpeed : car.GetComponent<AIController>().ClassicSpeed;
+        }
+
         Destroy(gameObject);
     }
 }

@@ -63,7 +63,8 @@ public class Projectile : MonoBehaviour
             _source.Play();
             Destroy(gameObject);
         }
-        else Destroy(gameObject);
+        else 
+            Destroy(gameObject);
     }
 
     IEnumerator WaitBeforeAutoDestroy()

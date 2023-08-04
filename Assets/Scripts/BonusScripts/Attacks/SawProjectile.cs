@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class SawProjectile : MonoBehaviour
 {
-    [SerializeField] float _speed;
+    [SerializeField] float _force;
     Rigidbody _projectileRB;
 
     [Header("Audio")]
@@ -35,7 +35,7 @@ public class SawProjectile : MonoBehaviour
         _source.loop = true;
         _source.Play();
 
-        _projectileRB.AddForce(direction * _speed, ForceMode.Acceleration);
+        _projectileRB.AddForce(direction * _force, ForceMode.Acceleration);
         StartCoroutine(WaitBeforeAutoDestroy());
         GetComponent<BoxCollider>().enabled = false;
         StartCoroutine(WaitBeforeActivateCollider());

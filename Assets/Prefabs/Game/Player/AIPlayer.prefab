@@ -231,8 +231,16 @@ MonoBehaviour:
   RightFrontWheel: {fileID: 4146829921669097665}
   LeftBackWheel: {fileID: 4713423009772291345}
   LeftFrontWheel: {fileID: 8031376243321959686}
-  BumpForce: 10000
-  ProjectileForce: 100
+  BumpForce: 7500
+  ProjectileForce: 3000
+  SawForce: 1000
+  MissileForce: 1000
+  SawUpFactor: 13
+  MissileUpFactor: 13
+  MachineGunUpFactor: 0.4
+  BumpUpFactor: 2.66
+  TimeBeforeEndOfSawEffect: 1
+  TimeBeforeEndOfMissileEffect: 1
   BumpDirection: {x: 0, y: 0, z: 0}
   ExplosionDirection: {x: 0, y: 0, z: 0}
   ProjectileDirection: {x: 0, y: 0, z: 0}
@@ -268,8 +276,8 @@ MonoBehaviour:
   NodesToFollow: []
   Feedback: 
   RedMaterial: {fileID: 0}
-  Speed: 21
-  BrutalDiffSpeed: 20.5
+  ClassicSpeed: 20.8
+  BrutalDiffSpeed: 21.3
   MinimumTimeBeforeActivatingBonus: 0.5
   MaximumTimeBeforeActivatingBonus: 5
   BrutalDiffMaximumTimeBeforeActivatingBonus: 0

@@ -11,7 +11,7 @@ public class AIController : GlobalController
     public Material RedMaterial;
 
     [Header("GD")]
-    public float Speed;
+    public float ClassicSpeed;
     public float BrutalDiffSpeed;
     public float MinimumTimeBeforeActivatingBonus;
     public float MaximumTimeBeforeActivatingBonus;
@@ -38,13 +38,14 @@ public class AIController : GlobalController
     #endregion
 
     public GameObject TargetCar { set {  _targetCar = value; } }
+    public float Speed { get { return _speed; } set { _speed = value; } }
 
     #region Unity Methods
 
     public void Start()
     {
         Init();
-        _speed = (GameManager.Instance.MultipleInputManager.AiDifficulty == AIDifficulty.Brutal) ? BrutalDiffSpeed : Speed; 
+        _speed = (GameManager.Instance.MultipleInputManager.AiDifficulty == AIDifficulty.Brutal) ? BrutalDiffSpeed : ClassicSpeed; 
         NodesToFollow = GameManager.Instance.MapManager.CurrentMap.HarvesterNodes;
         _targetNodeIndex = 1;
         _targetCar = null;
