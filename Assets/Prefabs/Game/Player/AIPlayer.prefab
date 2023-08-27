@@ -280,7 +280,7 @@ MonoBehaviour:
   BrutalDiffSpeed: 21.3
   MinimumTimeBeforeActivatingBonus: 0.5
   MaximumTimeBeforeActivatingBonus: 5
-  BrutalDiffMaximumTimeBeforeActivatingBonus: 0
+  BrutalDiffMaximumTimeBeforeActivatingBonus: 3
   TargetPositionWidthRandomOffset: 4
   TargetPositionForwardRandomOffset: 2
   DistanceToNodeLimitForIncrementation: 5

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -45,6 +46,7 @@ public class AIController : GlobalController
     public void Start()
     {
         Init();
+        UnityEngine.Random.InitState(DateTime.Now.Millisecond);
         _speed = (GameManager.Instance.MultipleInputManager.AiDifficulty == AIDifficulty.Brutal) ? BrutalDiffSpeed : ClassicSpeed; 
         NodesToFollow = GameManager.Instance.MapManager.CurrentMap.HarvesterNodes;
         _targetNodeIndex = 1;
@@ -192,8 +194,9 @@ public class AIController : GlobalController
     private void UpdateDirectionAndTargetNode()
     {
         _targetNodeTransform = NodesToFollow[_targetNodeIndex];
-        _targetPosition = _targetNodeTransform.position + _targetNodeTransform.right.normalized * Random.Range(-TargetPositionWidthRandomOffset, TargetPositionWidthRandomOffset) +
-            _targetNodeTransform.forward.normalized * Random.Range(-TargetPositionForwardRandomOffset, TargetPositionForwardRandomOffset) -
+
+        _targetPosition = _targetNodeTransform.position + _targetNodeTransform.right.normalized * UnityEngine.Random.Range(-TargetPositionWidthRandomOffset, TargetPositionWidthRandomOffset) +
+            _targetNodeTransform.forward.normalized * UnityEngine.Random.Range(-TargetPositionForwardRandomOffset, TargetPositionForwardRandomOffset) -
             _targetNodeTransform.up.normalized * GameManager.Instance.MapManager.CurrentMap.AltitudeDifferenceBetweenHarvesterAndCar;
 
         _aiWantedDirection = _targetPosition - SphereReference.transform.position;
@@ -265,7 +268,7 @@ public class AIController : GlobalController
 
     private IEnumerator UseBoost()
     {
-        yield return new WaitForSeconds(Random.Range(MinimumTimeBeforeActivatingBonus, (GameManager.Instance.MultipleInputManager.AiDifficulty
+        yield return new WaitForSeconds(UnityEngine.Random.Range(MinimumTimeBeforeActivatingBonus, (GameManager.Instance.MultipleInputManager.AiDifficulty
             == AIDifficulty.Brutal) ? BrutalDiffMaximumTimeBeforeActivatingBonus : MaximumTimeBeforeActivatingBonus));
         BoostsContainer.transform.GetChild(0).GetComponent<Booster>().Boost(SphereRB, gameObject);
         ProfileUI.UseBoost();
@@ -273,7 +276,7 @@ public class AIController : GlobalController
 
     private IEnumerator UseAttackBonus()
     {
-        yield return new WaitForSeconds(Random.Range(MinimumTimeBeforeActivatingBonus, (GameManager.Instance.MultipleInputManager.AiDifficulty
+        yield return new WaitForSeconds(UnityEngine.Random.Range(MinimumTimeBeforeActivatingBonus, (GameManager.Instance.MultipleInputManager.AiDifficulty
             == AIDifficulty.Brutal) ? BrutalDiffMaximumTimeBeforeActivatingBonus : MaximumTimeBeforeActivatingBonus));
         AttacksContainer.transform.GetChild(0).GetComponent<Offensive>().Shoot();
         ProfileUI.UseWeapon();

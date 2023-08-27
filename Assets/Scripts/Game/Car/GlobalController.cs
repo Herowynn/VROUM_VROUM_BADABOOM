@@ -270,6 +270,9 @@ public class GlobalController : MonoBehaviour
 
         ClearMyBonus();
 
+        if (this.GetType() == typeof(AIController))
+            GetComponent<AIController>().StopAllCoroutines();
+
         PlayerState = PlayerState.DEAD;
     }
 
@@ -281,7 +284,7 @@ public class GlobalController : MonoBehaviour
         {
             GetComponent<AIController>().TargetCar = null;
             GetComponent<AIController>().Speed = (GameManager.Instance.MultipleInputManager.AiDifficulty == AIDifficulty.Brutal) ?
-                GetComponent<AIController>().BrutalDiffSpeed : GetComponent<AIController>().ClassicSpeed;
+            GetComponent<AIController>().BrutalDiffSpeed : GetComponent<AIController>().ClassicSpeed;
             GetComponent<AIController>().StopAllCoroutines();
         }
 
