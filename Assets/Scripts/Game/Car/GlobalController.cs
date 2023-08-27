@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.ConstrainedExecution;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -31,8 +32,16 @@ public class GlobalController : MonoBehaviour
     public GameObject LeftFrontWheel;
 
     [Header("Bonus Effects")]
-    public int BumpForce = 10000;
-    public int ProjectileForce = 100;
+    public float BumpForce;
+    public float ProjectileForce;
+    public float SawForce;
+    public float MissileForce;
+    public float SawUpFactor;
+    public float MissileUpFactor;
+    public float MachineGunUpFactor;
+    public float BumpUpFactor;
+    public float TimeBeforeEndOfSawEffect;
+    public float TimeBeforeEndOfMissileEffect;
     public Vector3 BumpDirection;
     public Vector3 ExplosionDirection;
     public Vector3 ProjectileDirection;
@@ -166,25 +175,21 @@ public class GlobalController : MonoBehaviour
 
         if (_hitBySaw && _isGrounded)
         {
-            SphereRB.AddForce(transform.up * 20000, ForceMode.Impulse);
+            SphereRB.AddForce((transform.right + SawUpFactor * Vector3.up) * SawForce, ForceMode.Impulse);
             StartCoroutine(WaitBeforeSawEnd());
         }
 
         if (_hitBySaw && !_isGrounded)
-        {
             transform.Rotate(30 * new Vector3(0, 1, 0));
-        }
 
         if (_isExploded && _isGrounded)
         {
-            SphereRB.AddForce((ExplosionDirection + new Vector3(0, 100, 0)) * 200, ForceMode.Impulse);
+            SphereRB.AddForce((ExplosionDirection.normalized + MissileUpFactor * Vector3.up) * MissileForce, ForceMode.Impulse);
             StartCoroutine(WaitBeforeMissileEnd());
         }
 
         if (_isExploded && !_isGrounded)
-        {
             transform.Rotate(30 * new Vector3(1, 0, 0));
-        }
 
         if (_isGrounded)
         {
@@ -206,13 +211,13 @@ public class GlobalController : MonoBehaviour
 
         if (_isBumped)
         {
-            SphereRB.AddForce(BumpDirection * BumpForce + new Vector3(0f, BumpForce, 0f), ForceMode.Impulse);
+            SphereRB.AddForce((BumpDirection.normalized + BumpUpFactor * Vector3.up) * BumpForce, ForceMode.Impulse);
             _isBumped = false;
         }
 
         if (_isTouchedByMachineGun)
         {
-            SphereRB.AddForce(ProjectileDirection * ProjectileForce, ForceMode.Impulse);
+            SphereRB.AddForce((ProjectileDirection.normalized + MachineGunUpFactor * Vector3.up) * ProjectileForce, ForceMode.Impulse);
             _isTouchedByMachineGun = false;
         }
     }
@@ -262,19 +267,11 @@ public class GlobalController : MonoBehaviour
 
         _isExploded = false;
         _hitBySaw = false;
-        _isBumped = false;
-        _isTouchedByMachineGun = false;
 
-        if (AttacksContainer.transform.childCount > 0)
-            Destroy(AttacksContainer.transform.GetChild(0).gameObject);
-        if (BoostsContainer.transform.childCount > 0)
-            Destroy(BoostsContainer.transform.GetChild(0).gameObject);
+        ClearMyBonus();
 
         if (this.GetType() == typeof(AIController))
-        {
             GetComponent<AIController>().StopAllCoroutines();
-            Debug.Log(GetComponent<AIController>().Feedback);
-        }
 
         PlayerState = PlayerState.DEAD;
     }
@@ -283,6 +280,14 @@ public class GlobalController : MonoBehaviour
     {
         ClearMyBonus();
 
+        if (this.GetType() == typeof(AIController))
+        {
+            GetComponent<AIController>().TargetCar = null;
+            GetComponent<AIController>().Speed = (GameManager.Instance.MultipleInputManager.AiDifficulty == AIDifficulty.Brutal) ?
+            GetComponent<AIController>().BrutalDiffSpeed : GetComponent<AIController>().ClassicSpeed;
+            GetComponent<AIController>().StopAllCoroutines();
+        }
+
         ProfileUI.ResetProfile();
 
         SphereReference.SetActive(true);
@@ -290,6 +295,7 @@ public class GlobalController : MonoBehaviour
         _rigidbody.constraints = RigidbodyConstraints.None;
         _boxCollider.enabled = true;
         _rigidbody.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationY | RigidbodyConstraints.FreezeRotationZ;
+        SlowFactor = 1f;
 
         PlayerState = PlayerState.ALIVE;
 
@@ -307,13 +313,13 @@ public class GlobalController : MonoBehaviour
 
     private IEnumerator WaitBeforeSawEnd()
     {
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(TimeBeforeEndOfSawEffect);
         _hitBySaw = false;
     }
 
     private IEnumerator WaitBeforeMissileEnd()
     {
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(TimeBeforeEndOfMissileEffect);
         _isExploded = false;
     }
 

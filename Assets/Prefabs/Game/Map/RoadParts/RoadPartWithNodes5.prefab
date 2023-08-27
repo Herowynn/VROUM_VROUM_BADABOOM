@@ -203,7 +203,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6355947268290143506}
   - component: {fileID: 3731203873247550638}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: RoundNodes
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -12539,7 +12539,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6355947268457391963}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: HarvesterPathNodes
   m_TagString: HarvesterNodesContainer
   m_Icon: {fileID: 0}
@@ -12574,7 +12574,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6355947268500624866}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: HarvesterPathNode
   m_TagString: Untagged
   m_Icon: {fileID: 5132851093641282708, guid: 0000000000000000d000000000000000, type: 0}
@@ -12605,7 +12605,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6355947268610999700}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: HarvesterPathNode (1)
   m_TagString: Untagged
   m_Icon: {fileID: 5132851093641282708, guid: 0000000000000000d000000000000000, type: 0}
@@ -12636,7 +12636,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6355947269025627073}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: RoadPartWithNodes5
   m_TagString: RoadPart
   m_Icon: {fileID: 0}
@@ -12671,7 +12671,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6355947269075747124}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: 4
   m_TagString: Untagged
   m_Icon: {fileID: -1412012063857583412, guid: 0000000000000000d000000000000000, type: 0}
@@ -12702,7 +12702,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6355947269209150857}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: 2
   m_TagString: Untagged
   m_Icon: {fileID: -1412012063857583412, guid: 0000000000000000d000000000000000, type: 0}
@@ -19368,7 +19368,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6355947269736829461}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: HarvesterPathNode (2)
   m_TagString: Untagged
   m_Icon: {fileID: 5132851093641282708, guid: 0000000000000000d000000000000000, type: 0}
@@ -25655,7 +25655,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6355947269855709965}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Harvester
   m_TagString: Untagged
   m_Icon: {fileID: -1412012063857583412, guid: 0000000000000000d000000000000000, type: 0}
@@ -25774,7 +25774,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6355947270010811961}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: 3
   m_TagString: Untagged
   m_Icon: {fileID: -1412012063857583412, guid: 0000000000000000d000000000000000, type: 0}
@@ -32152,7 +32152,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6355947270311764704}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: 1
   m_TagString: Untagged
   m_Icon: {fileID: -1412012063857583412, guid: 0000000000000000d000000000000000, type: 0}
@@ -32444,7 +32444,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6355947270339671285}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: HarvesterPathNode (3)
   m_TagString: Untagged
   m_Icon: {fileID: 5132851093641282708, guid: 0000000000000000d000000000000000, type: 0}

@@ -8,6 +8,7 @@ public class ShotgunProjectile : MonoBehaviour
     public LayerMask GroundLayerMask;
 
     [SerializeField] private float _force;
+    [SerializeField] private float _timeBeforeComingBackToNormalSpeed;
 
     [SerializeField] GlobalController _carControl;
     private Rigidbody ProjectileRB;
@@ -51,17 +52,21 @@ public class ShotgunProjectile : MonoBehaviour
     {
         if (collision.gameObject.TryGetComponent(out _carControl))
         {
-            _carControl.SlowFactor = .2f;
+            _carControl.SlowFactor = 0.5f;
             GetComponent<MeshRenderer>().enabled = false;
             GetComponent<SphereCollider>().enabled = false;
-            StartCoroutine(WaitBeforeNormalSpeed());
-            StartCoroutine(WaitBeforeAutoDestroy());
+            StartCoroutine(WaitBeforeNormalSpeedAndDestroy());
         }
-        else if(collision.gameObject.layer != _ground)
+        else if (collision.gameObject.layer != _ground && !collision.gameObject.GetComponent<DestructorComponent>())
         {
             _source.clip = BounceSounds[Random.Range(0, BounceSounds.Length)];
             _source.loop = false;
             _source.Play();
+        }
+        else if (collision.gameObject.GetComponent<DestructorComponent>())
+        {
+            _source.Stop();
+            Destroy(gameObject);
         }
     }
 
@@ -69,7 +74,7 @@ public class ShotgunProjectile : MonoBehaviour
     /// This coroutine sets the slow factor of the car hit to its original value after a certain amount of time.
     /// </summary>
     /// <returns></returns>
-    IEnumerator WaitBeforeNormalSpeed()
+    IEnumerator WaitBeforeNormalSpeedAndDestroy()
     {
         yield return new WaitForSeconds(5f);
         _carControl.SlowFactor = 1f;
@@ -85,12 +90,5 @@ public class ShotgunProjectile : MonoBehaviour
     {
         yield return new WaitForSeconds(0.1f);
         GetComponent<SphereCollider>().enabled = true;
-        
-    }
-
-    IEnumerator WaitBeforeAutoDestroy()
-    {
-        yield return new WaitForSeconds(5f);
-        Destroy(gameObject);
     }
 }

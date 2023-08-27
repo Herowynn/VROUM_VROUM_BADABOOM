@@ -40,7 +40,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8470477559293409345}
-  - component: {fileID: 8470477559293409346}
   - component: {fileID: 2758050393437220439}
   - component: {fileID: 7823043666654587697}
   - component: {fileID: 4181034262726389727}
@@ -74,19 +73,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &8470477559293409346
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8470477559293409358}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 0
-  serializedVersion: 2
-  m_Size: {x: 1.9861401, y: 1.4800947, z: 4.7263026}
-  m_Center: {x: 0.0041784644, y: -0.08970019, z: 0.0138299465}
 --- !u!65 &2758050393437220439
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -311,9 +297,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SphereRB: {fileID: 8470477560212682836}
-  ForwardAccel: 50000
-  MaximumSpeed: 50
-  TurnStrength: 150
+  ForwardAccel: 75000
+  MaximumSpeed: 22.7
+  TurnStrength: 180
   DragOnGround: 1.3
   DragInTheAir: 0
   WheelTurnSpeed: 4
@@ -332,8 +318,16 @@ MonoBehaviour:
   RightFrontWheel: {fileID: 4146829921669097665}
   LeftBackWheel: {fileID: 4713423009772291345}
   LeftFrontWheel: {fileID: 8031376243321959686}
-  BumpForce: 10000
-  ProjectileForce: 1000
+  BumpForce: 7500
+  ProjectileForce: 1200
+  SawForce: 1000
+  MissileForce: 1000
+  SawUpFactor: 13
+  MissileUpFactor: 13
+  MachineGunUpFactor: 0.4
+  BumpUpFactor: 2.66
+  TimeBeforeEndOfSawEffect: 1
+  TimeBeforeEndOfMissileEffect: 1
   BumpDirection: {x: 0, y: 0, z: 0}
   ExplosionDirection: {x: 0, y: 0, z: 0}
   ProjectileDirection: {x: 0, y: 0, z: 0}
@@ -637,7 +631,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
-  m_VersionIndex: 1147
+  m_VersionIndex: 1150
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []

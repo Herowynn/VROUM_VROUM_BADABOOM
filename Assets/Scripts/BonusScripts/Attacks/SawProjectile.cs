@@ -1,10 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class SawProjectile : MonoBehaviour
 {
-    [SerializeField] float _speed;
+    [SerializeField] float _force;
     Rigidbody _projectileRB;
 
     [Header("Audio")]
@@ -34,11 +35,10 @@ public class SawProjectile : MonoBehaviour
         _source.loop = true;
         _source.Play();
 
-        _projectileRB.AddForce(direction * _speed, ForceMode.Acceleration);
+        _projectileRB.AddForce(direction * _force, ForceMode.Acceleration);
         StartCoroutine(WaitBeforeAutoDestroy());
         GetComponent<BoxCollider>().enabled = false;
         StartCoroutine(WaitBeforeActivateCollider());
-
     }
 
     /// <summary>
@@ -46,9 +46,9 @@ public class SawProjectile : MonoBehaviour
     /// if it is the case.
     /// </summary>
     /// <param name="other"></param>
-    private void OnTriggerEnter(Collider other)
+/*    private void OnTriggerEnter(Collider other)
     {
-        if(other.gameObject.TryGetComponent<GlobalController>(out var carController))
+        if (other.gameObject.TryGetComponent<GlobalController>(out var carController))
         {
             carController.Source.clip = SawHitCarSounds[Random.Range(0, SawHitCarSounds.Length)];
             carController.Source.loop = false;
@@ -57,7 +57,25 @@ public class SawProjectile : MonoBehaviour
             carController.HitBySaw = true;
             Destroy(gameObject);
         }
+        else if (other.gameObject.GetComponent<DestructorComponent>())
+            Destroy(gameObject);
+    }*/
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.TryGetComponent<GlobalController>(out var carController))
+        {
+            carController.Source.clip = SawHitCarSounds[Random.Range(0, SawHitCarSounds.Length)];
+            carController.Source.loop = false;
+            carController.Source.Play();
+
+            carController.HitBySaw = true;
+            Destroy(gameObject);
+        }
+        else if (collision.gameObject.GetComponent<DestructorComponent>())
+            Destroy(gameObject);
     }
+
     IEnumerator WaitBeforeAutoDestroy()
     {
         yield return new WaitForSeconds(5f);

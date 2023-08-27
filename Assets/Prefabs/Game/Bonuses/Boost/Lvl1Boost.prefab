@@ -102,6 +102,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _durationAfterActivation: 5
   _speedAdded: 0.01
+  _addedSpeedFactorForAI: 0.38
   _time: 0.01
   Sounds: []
 --- !u!82 &2298016997296456361

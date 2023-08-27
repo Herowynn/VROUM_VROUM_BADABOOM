@@ -130,7 +130,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 05b08fc77a089a146b929ab63e0ade5e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _speed: 2500
+  _force: 2100
   SawFlySound: {fileID: 8300000, guid: 306b8d1b48f6a0b4f989419c2a36422d, type: 3}
   SawHitCarSounds:
   - {fileID: 8300000, guid: 8eb8ad430d73d604d8eb5c98981c772c, type: 3}
@@ -160,8 +160,8 @@ BoxCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7268142907401930467}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
+  m_Material: {fileID: 13400000, guid: 27cadfb352db71143afefbabcb1ce69c, type: 2}
+  m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 0.00266464, y: 0.003607334, z: 0.010216119}

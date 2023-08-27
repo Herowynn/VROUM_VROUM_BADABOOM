@@ -57,11 +57,13 @@ public class BonusManager : MonoBehaviour
     {
         int rndBonusType = Random.Range(0, 2);
         GameObject firstPlayerGo = GameManager.Instance.PlayersManager.RankedPlayers[0];
-        
-        Vector3 spawnPosition = new(Random.Range(-5, 5), Random.Range(1, 2), Random.Range(-5, 5));
-        
-        spawnPosition += firstPlayerGo.transform.forward * 15;
-        spawnPosition += firstPlayerGo.transform.position;
+
+        Vector3 positionOffset = new Vector3(Random.Range(-4.5f, 4.5f), Random.Range(1f, 2f), Random.Range(-4.5f, 4.5f));
+        int closestNodeFromFirstIndex = GameManager.Instance.RoundManager.RoundNodesForCurrentMap.IndexOf(
+            GameManager.Instance.RoundManager.FindClosestNodeFromWinner(firstPlayerGo.transform.position));
+        RoundNode targetNode = GameManager.Instance.RoundManager.RoundNodesForCurrentMap[closestNodeFromFirstIndex];
+        Vector3 targetNodePosition = (targetNode.Nodes[1].position + targetNode.Nodes[2].position) / 2f;
+        Vector3 spawnPosition = targetNodePosition + positionOffset;
 
         switch (rndBonusType)
         {

@@ -28,11 +28,9 @@ public class MultipleInputManager : MonoBehaviour
     public void InstantiateMultipleInputManager()
     {
         NumberOfPlayer = MenuManager.Instance.NbLocal;
-        Debug.Log($"Nombre de joueurs : {NumberOfPlayer}");
         NeedKeyboard = MenuManager.Instance.NeedKeyboard;
         NbAi = (MenuManager.Instance.NbAi + MenuManager.Instance.NbLocal > 4) ? (4 - MenuManager.Instance.NbLocal > 0 ? 4 - MenuManager.Instance.NbLocal : 0)
             : (MenuManager.Instance.NbAi + MenuManager.Instance.NbLocal < 2) ? 1 : MenuManager.Instance.NbAi;
-        Debug.Log($"Nombre d'IA : {NbAi}");
         if (!Enum.TryParse<AIDifficulty>(MenuManager.Instance.AiDifficulty, out AiDifficulty))
             AiDifficulty = AIDifficulty.Normal;
         MapName = MenuManager.Instance.MapName;

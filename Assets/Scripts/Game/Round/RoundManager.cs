@@ -32,6 +32,8 @@ public class RoundManager : MonoBehaviour
 
     #endregion
 
+    public List<RoundNode> RoundNodesForCurrentMap { get { return _roundNodesForCurrentMap; } }
+
     private void Start()
     {
         RoundNumber = 0;
@@ -130,10 +132,11 @@ public class RoundManager : MonoBehaviour
         int cpt = 0;
         for (int i = _playersToPlaceForNextRound.Count - 1; i >= 0; i--)
         {
-            if (_playersToPlaceForNextRound[i].gameObject.TryGetComponent<AIController>(out var aiControl))
-                aiControl.TargetNodeIndex = _harvesterForCurrentMap.TargetNode + 2;
-
             _playersToPlaceForNextRound[i].RebornEvent(playersTransform[cpt]);
+
+            if (_playersToPlaceForNextRound[i].gameObject.TryGetComponent<AIController>(out var aiControl))
+                aiControl.UpdateTargetNodeOnReborn(playersTransform[cpt]);
+
             cpt++;
         }
         
@@ -145,7 +148,7 @@ public class RoundManager : MonoBehaviour
         GameManager.Instance.DestroyBonusEvent();
     }
 
-    private RoundNode FindClosestNodeFromWinner(Vector3 winnerPosition)
+    public RoundNode FindClosestNodeFromWinner(Vector3 winnerPosition)
     {
         RoundNode closestNode = null;
 
@@ -188,7 +191,7 @@ public class RoundManager : MonoBehaviour
                 Vector3 carPosition = new Vector3(player.transform.position.x, nodesToFollow[i].position.y, player.transform.position.z);
                 float distanceToNode = Vector3.Distance(nodesToFollow[i].position, carPosition);
 
-                if (distance > distanceToNode && Vector3.Dot(nodesToFollow[i].transform.forward.normalized, (carPosition - nodesToFollow[i].transform.position).normalized) < 0f)
+                if (distance > distanceToNode && Mathf.Abs(Vector3.Angle(nodesToFollow[i].transform.forward, carPosition - nodesToFollow[i].transform.position)) > 90f)
                 {
                     nodeIndex = i;
                     distance = distanceToNode;
@@ -203,12 +206,29 @@ public class RoundManager : MonoBehaviour
 
         nodeIndexAndDistanceList.Sort(delegate (KeyValuePair<GameObject, NodeIndexAndDistance> pair1, KeyValuePair<GameObject, NodeIndexAndDistance> pair2)
         {
-            int result = nodesIndexesFromHarvester.IndexOf(pair1.Value.NodeIndex).CompareTo(nodesIndexesFromHarvester.IndexOf(pair2.Value.NodeIndex));
+            int car1AboveRoad = 0;
+            int car2AboveRoad = 0;
+
+            if (Physics.Raycast(pair1.Key.transform.position, Vector3.down, float.MaxValue, 1 << pair1.Key.GetComponent<GlobalController>().GroundLayerNumber))
+                car1AboveRoad = 1;
+            if (Physics.Raycast(pair2.Key.transform.position, Vector3.down, float.MaxValue, 1 << pair2.Key.GetComponent<GlobalController>().GroundLayerNumber))
+                car2AboveRoad = 1;
+
+            int result = car1AboveRoad - car2AboveRoad;
+
+            // If both cars are above the road or if they are both above void, the ranking is determined by their location on the track compared to other's.
+            // Otherwise, the car above the road is considered to be better placed than the car above the void (regardless of its position).
             if (result == 0)
-                return pair1.Value.DistanceFromNode.CompareTo(pair2.Value.DistanceFromNode);
+            {
+                result = nodesIndexesFromHarvester.IndexOf(pair1.Value.NodeIndex).CompareTo(nodesIndexesFromHarvester.IndexOf(pair2.Value.NodeIndex));
+                if (result == 0)
+                    return pair1.Value.DistanceFromNode.CompareTo(pair2.Value.DistanceFromNode);
+                else
+                    return -result;
+        }
             else
-                return -result;
-        });
+            return -result;
+    });
 
         for (int i = 0; i < nodeIndexAndDistanceList.Count; i++)
             result[i] = nodeIndexAndDistanceList[i].Key;

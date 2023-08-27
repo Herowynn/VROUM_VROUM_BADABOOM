@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -11,12 +12,11 @@ public class AIController : GlobalController
     public Material RedMaterial;
 
     [Header("GD")]
-    public float Speed;
+    public float ClassicSpeed;
     public float BrutalDiffSpeed;
     public float MinimumTimeBeforeActivatingBonus;
     public float MaximumTimeBeforeActivatingBonus;
     public float BrutalDiffMaximumTimeBeforeActivatingBonus;
-    private float TimeBeforeUnclogging;
     public float TargetPositionWidthRandomOffset;
     public float TargetPositionForwardRandomOffset;
     public float DistanceToNodeLimitForIncrementation;
@@ -35,18 +35,19 @@ public class AIController : GlobalController
     private GameObject _targetCar;
     private Vector3 _targetCarPosition;
     private Vector3 _aiWantedDirection;
-    private Vector3 _previousPosition;
 
     #endregion
 
-    public int TargetNodeIndex { set { _targetNodeIndex = value; } }
+    public GameObject TargetCar { set {  _targetCar = value; } }
+    public float Speed { get { return _speed; } set { _speed = value; } }
 
     #region Unity Methods
 
     public void Start()
     {
         Init();
-        _speed = (GameManager.Instance.MultipleInputManager.AiDifficulty == AIDifficulty.Brutal) ? BrutalDiffSpeed : Speed; 
+        UnityEngine.Random.InitState(DateTime.Now.Millisecond);
+        _speed = (GameManager.Instance.MultipleInputManager.AiDifficulty == AIDifficulty.Brutal) ? BrutalDiffSpeed : ClassicSpeed; 
         NodesToFollow = GameManager.Instance.MapManager.CurrentMap.HarvesterNodes;
         _targetNodeIndex = 1;
         _targetCar = null;
@@ -57,16 +58,14 @@ public class AIController : GlobalController
 
     private void FixedUpdate()
     {
-        UpdateGraphics();
-        transform.position = SphereReference.transform.position + _carAltitudeOffset;
+        if (PlayerState == PlayerState.ALIVE)
+            UpdateGraphics();
     }
 
     private void Update()
     {
         Feedback = $"Index of the target node : {_targetNodeIndex} - Position of the target node :" +
             $" {_targetNodeTransform.position} - Target position : {_targetPosition}";
-
-        _previousPosition = SphereReference.transform.position;
 
         if (GameManager.Instance.GameState == GameState.RACING && PlayerState == PlayerState.ALIVE && _isGrounded)
         {
@@ -101,7 +100,7 @@ public class AIController : GlobalController
                 else
                 {
                     if (_targetCar == null)
-                        _targetCar = GetCarTarget();
+                        _targetCar = GetTargetCar();
 
                     if (_targetCar != null)
                         _targetCarPosition = _targetCar.GetComponent<GlobalController>().SphereReference.transform.position;
@@ -113,13 +112,13 @@ public class AIController : GlobalController
                 }
             }
         }
-
-        // If the car gets stuck in the borders of the road, a coroutine is executed to unclog it after a certain amount of time.
-        if (GameManager.Instance.GameState == GameState.RACING && PlayerState == PlayerState.ALIVE)
+        else if (GameManager.Instance.GameState != GameState.RACING)
         {
-            if (SphereReference.transform.position == _previousPosition)
-                StartCoroutine(Unclogging());
+            SphereReference.transform.position = _lastRebornPosition;
+            SphereRB.velocity = Vector3.zero;
         }
+
+        transform.position = SphereReference.transform.position + _carAltitudeOffset;
     }
 
     #endregion
@@ -155,7 +154,7 @@ public class AIController : GlobalController
 
     private void Move()
     {
-        float moveStep = _speed * Time.deltaTime;
+        float moveStep = _speed * SlowFactor * Time.deltaTime;
         float distance = Vector3.Distance(_targetPosition, SphereReference.transform.position);
 
         // If the vehicule moves away from the next node when it arrives close to it (in a close area behind the node),
@@ -195,16 +194,10 @@ public class AIController : GlobalController
     private void UpdateDirectionAndTargetNode()
     {
         _targetNodeTransform = NodesToFollow[_targetNodeIndex];
-        Vector3 xzNodePosition = new Vector3(_targetNodeTransform.position.x, 0, _targetNodeTransform.position.z);
-        _targetPosition = xzNodePosition + _targetNodeTransform.right.normalized * Random.Range(-TargetPositionWidthRandomOffset, TargetPositionWidthRandomOffset) +
-            _targetNodeTransform.forward.normalized * Random.Range(-TargetPositionForwardRandomOffset, TargetPositionForwardRandomOffset) +
-            _targetNodeTransform.up.normalized * SphereReference.transform.position.y;
 
-        //
-        GameObject aiPathNode = new GameObject();
-        aiPathNode.name = $"Node {_targetNodeIndex} - Node XZ position : {xzNodePosition}";
-        aiPathNode.transform.position = _targetPosition;
-        //
+        _targetPosition = _targetNodeTransform.position + _targetNodeTransform.right.normalized * UnityEngine.Random.Range(-TargetPositionWidthRandomOffset, TargetPositionWidthRandomOffset) +
+            _targetNodeTransform.forward.normalized * UnityEngine.Random.Range(-TargetPositionForwardRandomOffset, TargetPositionForwardRandomOffset) -
+            _targetNodeTransform.up.normalized * GameManager.Instance.MapManager.CurrentMap.AltitudeDifferenceBetweenHarvesterAndCar;
 
         _aiWantedDirection = _targetPosition - SphereReference.transform.position;
     }
@@ -219,6 +212,28 @@ public class AIController : GlobalController
         UpdateDirectionAndTargetNode();
     }
 
+    public void UpdateTargetNodeOnReborn(Transform rebornTransform)
+    {
+        int targetNodeIndex = -1;
+        float distanceToNode = float.MaxValue;
+
+        for(int i = 0; i < NodesToFollow.Count; i++)
+        {
+            Vector3 xzNodePosition = new Vector3(NodesToFollow[i].position.x, rebornTransform.position.y, NodesToFollow[i].position.z);
+            Vector3 rebornPointToNodeVector = xzNodePosition - rebornTransform.position;
+            float currentDistance = rebornPointToNodeVector.magnitude;
+
+            if(Mathf.Abs(Vector3.Angle(rebornTransform.forward, rebornPointToNodeVector)) < 90f && currentDistance < distanceToNode)
+            {
+                distanceToNode = currentDistance;
+                targetNodeIndex = i;
+            }
+        }
+
+        _targetNodeIndex = targetNodeIndex;
+        UpdateDirectionAndTargetNode();
+    }
+
     #endregion
 
     /// <summary>
@@ -226,7 +241,7 @@ public class AIController : GlobalController
     /// If the car with the smallest distance to this one is in front of it and close enough, it becomes a target to shoot.
     /// </summary>
     /// <returns></returns>
-    private GameObject GetCarTarget()
+    private GameObject GetTargetCar()
     {
         float distance = float.MaxValue;
         GameObject targetPlayer = null;
@@ -253,7 +268,7 @@ public class AIController : GlobalController
 
     private IEnumerator UseBoost()
     {
-        yield return new WaitForSeconds(Random.Range(MinimumTimeBeforeActivatingBonus, (GameManager.Instance.MultipleInputManager.AiDifficulty
+        yield return new WaitForSeconds(UnityEngine.Random.Range(MinimumTimeBeforeActivatingBonus, (GameManager.Instance.MultipleInputManager.AiDifficulty
             == AIDifficulty.Brutal) ? BrutalDiffMaximumTimeBeforeActivatingBonus : MaximumTimeBeforeActivatingBonus));
         BoostsContainer.transform.GetChild(0).GetComponent<Booster>().Boost(SphereRB, gameObject);
         ProfileUI.UseBoost();
@@ -261,16 +276,9 @@ public class AIController : GlobalController
 
     private IEnumerator UseAttackBonus()
     {
-        yield return new WaitForSeconds(Random.Range(MinimumTimeBeforeActivatingBonus, (GameManager.Instance.MultipleInputManager.AiDifficulty
+        yield return new WaitForSeconds(UnityEngine.Random.Range(MinimumTimeBeforeActivatingBonus, (GameManager.Instance.MultipleInputManager.AiDifficulty
             == AIDifficulty.Brutal) ? BrutalDiffMaximumTimeBeforeActivatingBonus : MaximumTimeBeforeActivatingBonus));
         AttacksContainer.transform.GetChild(0).GetComponent<Offensive>().Shoot();
         ProfileUI.UseWeapon();
-    }
-
-    private IEnumerator Unclogging()
-    {
-        yield return new WaitForSeconds(TimeBeforeUnclogging);
-        Vector3 lookingDirection = (_targetCar == null) ? _aiWantedDirection : _targetCarPosition - SphereReference.transform.position;
-        SphereReference.transform.position += lookingDirection.normalized;
     }
 }

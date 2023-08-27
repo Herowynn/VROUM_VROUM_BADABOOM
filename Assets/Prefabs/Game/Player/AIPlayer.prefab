@@ -40,7 +40,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8470477559293409345}
-  - component: {fileID: 8470477559293409346}
   - component: {fileID: 1303695468369792413}
   - component: {fileID: 7823043666654587697}
   - component: {fileID: 6860740909563417045}
@@ -73,19 +72,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &8470477559293409346
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8470477559293409358}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 0
-  serializedVersion: 2
-  m_Size: {x: 1.9861401, y: 1.4800947, z: 4.7263026}
-  m_Center: {x: 0.0041784644, y: -0.08970019, z: 0.0138299465}
 --- !u!65 &1303695468369792413
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -224,9 +210,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SphereRB: {fileID: 8470477560212682836}
-  ForwardAccel: 150000
+  ForwardAccel: 50000
   MaximumSpeed: 50
-  TurnStrength: 200
+  TurnStrength: 180
   DragOnGround: 1.3
   DragInTheAir: 0
   WheelTurnSpeed: 4
@@ -245,8 +231,16 @@ MonoBehaviour:
   RightFrontWheel: {fileID: 4146829921669097665}
   LeftBackWheel: {fileID: 4713423009772291345}
   LeftFrontWheel: {fileID: 8031376243321959686}
-  BumpForce: 10000
-  ProjectileForce: 100
+  BumpForce: 7500
+  ProjectileForce: 3000
+  SawForce: 1000
+  MissileForce: 1000
+  SawUpFactor: 13
+  MissileUpFactor: 13
+  MachineGunUpFactor: 0.4
+  BumpUpFactor: 2.66
+  TimeBeforeEndOfSawEffect: 1
+  TimeBeforeEndOfMissileEffect: 1
   BumpDirection: {x: 0, y: 0, z: 0}
   ExplosionDirection: {x: 0, y: 0, z: 0}
   ProjectileDirection: {x: 0, y: 0, z: 0}
@@ -282,16 +276,16 @@ MonoBehaviour:
   NodesToFollow: []
   Feedback: 
   RedMaterial: {fileID: 0}
-  Speed: 20
-  BrutalDiffSpeed: 20.5
+  ClassicSpeed: 20.8
+  BrutalDiffSpeed: 21.3
   MinimumTimeBeforeActivatingBonus: 0.5
   MaximumTimeBeforeActivatingBonus: 5
-  BrutalDiffMaximumTimeBeforeActivatingBonus: 0
+  BrutalDiffMaximumTimeBeforeActivatingBonus: 3
   TargetPositionWidthRandomOffset: 4
   TargetPositionForwardRandomOffset: 2
   DistanceToNodeLimitForIncrementation: 5
   MaximumDistanceToCarForTargetting: 8
-  SpeedSlowFactorDuringTurning: 3
+  SpeedSlowFactorDuringTurning: 2
 --- !u!1 &8470477559387477689
 GameObject:
   m_ObjectHideFlags: 0
