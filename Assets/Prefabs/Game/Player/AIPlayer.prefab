@@ -212,7 +212,7 @@ MonoBehaviour:
   SphereRB: {fileID: 8470477560212682836}
   ForwardAccel: 50000
   MaximumSpeed: 50
-  TurnStrength: 180
+  TurnStrength: 150
   DragOnGround: 1.3
   DragInTheAir: 0
   WheelTurnSpeed: 4
@@ -276,8 +276,8 @@ MonoBehaviour:
   NodesToFollow: []
   Feedback: 
   RedMaterial: {fileID: 0}
-  ClassicSpeed: 20.8
-  BrutalDiffSpeed: 21.3
+  ClassicSpeed: 23.3
+  BrutalDiffSpeed: 23.8
   MinimumTimeBeforeActivatingBonus: 0.5
   MaximumTimeBeforeActivatingBonus: 5
   BrutalDiffMaximumTimeBeforeActivatingBonus: 3
