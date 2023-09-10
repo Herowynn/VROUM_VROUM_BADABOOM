@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -11,12 +12,21 @@ public class CarController : GlobalController
 
     #endregion
 
+    #region Private Fields
+
+    private InputAction _pauseInputAction;
+
+    #endregion
+
     #region Unity Functions
 
     private void Start()
     {
          Init();
         _distArrowRayPoint = Arrow.transform.position - RayPoint.position;
+        
+        _pauseInputAction = GetComponent<PlayerInput>().currentActionMap.FindAction("Pause");
+        _pauseInputAction.performed += OnPauseOrResumeGame;
     }
 
     private void Update()
@@ -49,7 +59,7 @@ public class CarController : GlobalController
                     ArrowRotationCenter.transform.forward = _wantedDirection;
             }
         }
-        else if (GameManager.Instance.GameState != GameState.RACING)
+        else if (GameManager.Instance.GameState != GameState.RACING && !GameManager.Instance.GamePaused)
         {
             Arrow.SetActive(false);
             _canMove = false;
@@ -109,6 +119,11 @@ public class CarController : GlobalController
 
             ProfileUI.UseWeapon();
         }
+    }
+
+    public void OnPauseOrResumeGame(InputAction.CallbackContext context)
+    {
+        GameManager.Instance.LoadPauseMenuOrResume();
     }
 
     public void OnNewBoost(InputAction.CallbackContext context) => ProfileUI.TookBoost();

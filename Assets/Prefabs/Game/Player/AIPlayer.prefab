@@ -276,8 +276,8 @@ MonoBehaviour:
   NodesToFollow: []
   Feedback: 
   RedMaterial: {fileID: 0}
-  ClassicSpeed: 23.3
-  BrutalDiffSpeed: 23.8
+  ClassicSpeed: 23
+  BrutalDiffSpeed: 23.5
   MinimumTimeBeforeActivatingBonus: 0.5
   MaximumTimeBeforeActivatingBonus: 5
   BrutalDiffMaximumTimeBeforeActivatingBonus: 3

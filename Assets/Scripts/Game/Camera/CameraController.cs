@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -98,20 +99,6 @@ public class CameraController : MonoBehaviour
                 return Targets[0].transform.position;
 
             GameObject[] carsRanking = GameManager.Instance.RoundManager.RealtimeCarsRanking(Targets);
-
-            //
-            /*        if (carsRanking.Length < Ranks.Length)
-                    {
-                        for (int i = Ranks.Length - 1; i > carsRanking.Length - 1; i++)
-                            Ranks[i].gameObject.SetActive(false);
-                    }
-
-                    for (int i = 0; i < carsRanking.Length; i++)
-                    {
-                        Ranks[i].gameObject.SetActive(true);
-                        Ranks[i].rectTransform.position = GetComponent<Camera>().WorldToScreenPoint(carsRanking[i].transform.position) + new Vector3(0, 30f, 0);
-                    }*/
-            //
 
             switch (Targets.Count)
             {

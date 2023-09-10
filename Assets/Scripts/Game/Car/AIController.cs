@@ -112,7 +112,7 @@ public class AIController : GlobalController
                 }
             }
         }
-        else if (GameManager.Instance.GameState != GameState.RACING)
+        else if (GameManager.Instance.GameState != GameState.RACING && !GameManager.Instance.GamePaused) 
         {
             SphereReference.transform.position = _lastRebornPosition;
             SphereRB.velocity = Vector3.zero;

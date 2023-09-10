@@ -28,9 +28,17 @@ public class GameManager : MonoBehaviour
     [Header("FX")]
     public float OnScreenExplosionDuration;
     public GameObject ExplosionEffectObject;
-    
+
     #endregion
-    
+
+    #region Private Fields
+
+    private bool _gamePaused;
+
+    #endregion
+
+    public bool GamePaused { get { return _gamePaused; } }
+
     //Singleton
     public static GameManager Instance;
 
@@ -45,6 +53,7 @@ public class GameManager : MonoBehaviour
         //LoadPreGame();
         //test
         StartGame();
+        _gamePaused = false;
     }
 
     #region Game State
@@ -56,7 +65,7 @@ public class GameManager : MonoBehaviour
         MultipleInputManager.InstantiateMultipleInputManager();
     }
 
-    public void LoadPauseGame()
+    public void LoadDeviceRemovedMenu()
     {
         GameState = GameState.NOT_RACING;
         UIManager.DisplayInputMenu();
@@ -77,19 +86,28 @@ public class GameManager : MonoBehaviour
         StartCoroutine(RoundManager.StartRound());
     }
 
+    public void LoadPauseMenuOrResume()
+    {
+        if (GameState == GameState.RACING)
+        {
+            _gamePaused = true;
+            Time.timeScale = 0;
+            GameState = GameState.NOT_RACING;
+            UIManager.DisplayPauseMenu();
+        }
+        else if (GameState == GameState.NOT_RACING) 
+        {
+            UIManager.ResumeGame();
+            GameState = GameState.RACING;
+            Time.timeScale = 1;
+            _gamePaused = false;
+        }
+    }
+
     public void ResumeGame()
     {
         GameState = GameState.RACING;
         UIManager.TriggerResumeGameUi();
-    }
-    
-    public void ReturnToMenu()
-    {
-        GameState = GameState.PRE_GAME;
-        DestroyPlayersInstance();
-        UIManager.InputMenuUI.DestroyPlayersInput();
-        
-        SceneManager.Instance.LoadMenu();
     }
 
     public void LoadEndGame()

@@ -225,10 +225,10 @@ public class RoundManager : MonoBehaviour
                     return pair1.Value.DistanceFromNode.CompareTo(pair2.Value.DistanceFromNode);
                 else
                     return -result;
-        }
+            }
             else
             return -result;
-    });
+        });
 
         for (int i = 0; i < nodeIndexAndDistanceList.Count; i++)
             result[i] = nodeIndexAndDistanceList[i].Key;

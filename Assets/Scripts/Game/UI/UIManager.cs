@@ -1,4 +1,6 @@
 using UnityEngine;
+using DG.Tweening;
+using UnityEngine.UI;
 
 /// <summary>
 /// UIManager is the global UI manager. His role is to display the right UI at the right time.
@@ -10,6 +12,7 @@ public class UIManager : MonoBehaviour
     public InputMenuUI InputMenuUI;
     public GameUI GameUI;
     public PostGameUI PostGameUI;
+    public GameObject PauseMenu;
     public GameObject[] UisGo;
 
     public void DisplayInputMenu()
@@ -21,15 +24,27 @@ public class UIManager : MonoBehaviour
     private void DisplayGameUI()
     {
         HideAllUIs();
-        GameUI.transform.gameObject.SetActive(true);
+        GameUI.gameObject.SetActive(true);
     }
 
     private void DisplayPostGameUI()
     {
         HideAllUIs();
-        PostGameUI.transform.gameObject.SetActive(true);
+        PostGameUI.gameObject.SetActive(true);
     }
-    
+
+    public void DisplayPauseMenu()
+    {
+        HideAllUIs();
+        PauseMenu.SetActive(true);
+    }
+
+    public void ResumeGame()
+    {
+        PauseMenu.SetActive(false);
+        DisplayGameUI();
+    }
+
     private void HideAllUIs()
     {
         foreach (var ui in UisGo)
@@ -58,6 +73,9 @@ public class UIManager : MonoBehaviour
 
     public void OnClickRestart()
     {
+        if (Time.timeScale == 0)
+            Time.timeScale = 1;
+
         SceneManager.Instance.LoadMenu();  
     }
 }

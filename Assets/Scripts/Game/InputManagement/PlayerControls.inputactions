@@ -110,7 +110,7 @@
                 {
                     "name": "",
                     "id": "88c01f97-7794-4a9e-900b-78406fbd64a8",
-                    "path": "<Gamepad>/select",
+                    "path": "<Gamepad>/start",
                     "interactions": "",
                     "processors": "",
                     "groups": "Controller",

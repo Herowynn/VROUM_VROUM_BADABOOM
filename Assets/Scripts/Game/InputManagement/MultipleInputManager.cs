@@ -91,7 +91,7 @@ public class MultipleInputManager : MonoBehaviour
             return;
         }
         
-        GameManager.Instance.LoadPauseGame();
+        GameManager.Instance.LoadDeviceRemovedMenu();
         DeviceRemoved();
     }
 

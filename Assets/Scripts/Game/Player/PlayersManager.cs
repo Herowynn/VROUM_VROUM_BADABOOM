@@ -49,7 +49,12 @@ public class PlayersManager : MonoBehaviour
                 List<float> rankedSpeed = new List<float>();
 
                 foreach (GameObject player in RankedPlayers)
-                    rankedSpeed.Add(player.GetComponent<GlobalController>().SphereRB.velocity.magnitude);
+                {
+                    if (player.GetComponent<AIController>())
+                        rankedSpeed.Add(player.GetComponent<AIController>().Speed);
+                    else
+                        rankedSpeed.Add(player.GetComponent<GlobalController>().SphereRB.velocity.magnitude);
+                }
 
                 rankedSpeed.Sort();
 
@@ -58,7 +63,7 @@ public class PlayersManager : MonoBehaviour
                 for (int i = 0; i < rankedSpeed.Count; i++)
                     weightedSpeed += rankedSpeed[rankedSpeed.Count - 1 - i] * _weights[RankedPlayers.Length][i];
 
-                _carsWeightedSpeed = weightedSpeed;
+                _carsWeightedSpeed = 0.85f * weightedSpeed;
             }
         }
     }
